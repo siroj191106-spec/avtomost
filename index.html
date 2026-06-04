@@ -453,6 +453,53 @@ input:focus,select.field:focus,textarea:focus{background:#fff;box-shadow:0 0 0 3
 .faq-item,.formbox{background:#fff;border:1px solid var(--line)}
 footer{border-top:1px solid var(--line)}
 ::selection{background:rgba(37,99,235,.18);color:#101524}
+/* ===== Minimalist polish ===== */
+.iconbtn{position:relative;width:39px;height:39px;border-radius:50%;border:1px solid var(--line2);background:#fff;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:.16s;padding:0}
+.iconbtn:hover{color:var(--a2);border-color:var(--a1);background:#f4f8ff}
+.iconbtn .navbadge{position:absolute;top:-3px;right:-3px;margin:0}
+header{background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px)}
+.nav{gap:20px}
+.menu{gap:26px}
+.menu a{font-size:14.5px;font-weight:600;color:#6b7488;letter-spacing:-.1px}
+.menu a:hover,.menu a.act{color:var(--a2)}
+.controls{gap:12px}
+.carcard,.lcard{box-shadow:none}
+.carcard:hover{box-shadow:0 14px 36px rgba(20,30,60,.09)}
+.btn{box-shadow:none}
+.panel,.card,.buybox,.formbox,.faq-item{box-shadow:none}
+h1{letter-spacing:-1.2px}
+@media(max-width:900px){.navhide{display:none}}
+/* kabinet / auth modal */
+.authmodal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(16,21,36,.45);backdrop-filter:blur(4px);padding:20px}
+.authmodal.show{display:flex;animation:fadein .2s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.authcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 26px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(20,30,60,.25);animation:popin .24s cubic-bezier(.2,.8,.2,1)}
+@keyframes popin{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.authx{position:absolute;right:14px;top:12px;border:none;background:none;font-size:24px;color:var(--faint);cursor:pointer;line-height:1}
+.authlogo{font-family:'Manrope';font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px}
+.authlogo .mk{width:30px;height:30px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center}.authlogo .mk svg{width:18px}
+.authlogo b{color:var(--a2)}
+.authsub{color:var(--muted);font-size:13.5px;margin:6px 0 16px}
+.authtabs{display:flex;background:#f1f4f8;border-radius:11px;padding:4px;margin-bottom:14px}
+.authtabs button{flex:1;border:none;background:none;padding:9px;border-radius:8px;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer;transition:.15s}
+.authtabs button.on{background:#fff;color:var(--a2);box-shadow:0 1px 4px rgba(20,30,60,.08)}
+.auin{width:100%;border:1px solid var(--line2);border-radius:11px;padding:12px 14px;font-size:14.5px;margin-bottom:10px;outline:none;transition:.15s;color:var(--txt)}
+.auin:focus{border-color:var(--a1);background:#f9fbff}
+.auerr{color:var(--danger);font-size:13px;min-height:18px;margin-bottom:2px}
+.aunote{color:var(--faint);font-size:11.5px;text-align:center;margin-top:12px;line-height:1.5}
+.iconbtn.logged{background:var(--grad);color:#04122e;border-color:transparent}
+.acchead{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.accav{width:60px;height:60px;border-radius:50%;background:var(--grad);color:#04122e;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:26px;font-family:'Manrope'}
+.accname{font-size:20px;font-weight:800;font-family:'Manrope'}
+.accmail{color:var(--faint);font-size:13.5px}
+.accgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.acctile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;text-align:center;cursor:pointer;transition:.16s}
+.acctile:hover{border-color:var(--a1);transform:translateY(-2px)}
+.acctn{font-size:24px;font-weight:800;color:var(--a2);font-family:'Manrope'}
+.acctl{font-size:12.5px;color:var(--muted);margin-top:3px}
+.setrow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.setrow:last-child{border-bottom:none}
+.setrow select{border:1px solid var(--line2);border-radius:8px;padding:6px 10px;font-size:14px}
 
 /* ===== Yengil animatsiyalar ===== */
 @keyframes cardin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -488,14 +535,14 @@ footer{border-top:1px solid var(--line)}
     </a>
     <nav class="menu" id="menu">
       <a data-view="catalog" onclick="nav('catalog')" data-i="nav_catalog">Moshinalar</a>
-      <a data-view="advisor" onclick="nav('advisor')" class="navai"><span data-i="nav_advisor">🤖 AI Maslahatchi</span></a>
-      <a onclick="nav('home');setTimeout(()=>scrollToId('how'),80)" data-i="nav_how">Qanday ishlaydi</a>
+      <a data-view="advisor" onclick="nav('advisor')" class="navai"><span data-i="nav_advisor">AI tanlash</span></a>
       <a onclick="nav('home');setTimeout(()=>scrollToId('calc'),80)" data-i="nav_calc">Kalkulyator</a>
       <a data-view="tracking" onclick="nav('tracking')" data-i="nav_track">Kuzatuv</a>
-      <a data-view="favorites" onclick="nav('favorites')"><span data-i="nav_fav">Sevimlilar</span> <span id="favCount" class="navbadge"></span></a>
-      <a data-view="faq" onclick="nav('faq')" data-i="nav_faq">Savol-javob</a>
+      <a data-view="faq" onclick="nav('faq')" data-i="nav_faq" class="navhide">Savol-javob</a>
     </nav>
     <div class="controls">
+      <button class="iconbtn" onclick="nav('favorites')" title="Sevimlilar" aria-label="fav"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg><span id="favCount" class="navbadge"></span></button>
+      <button class="iconbtn" id="accBtn" onclick="openAccount()" title="Kabinet" aria-label="account"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></button>
       <div class="lang"><select id="langSel" onchange="setLang(this.value)">
         <option value="uz">🇺🇿 O'zbek</option><option value="ru">🇷🇺 Русский</option><option value="kz">🇰🇿 Qazaq</option>
         <option value="kg">🇰🇬 Кыргыз</option><option value="tg">🇹🇯 Тоҷик</option><option value="en">🇬🇧 English</option>
@@ -507,6 +554,7 @@ footer{border-top:1px solid var(--line)}
 </header>
 
 <main id="app"></main>
+<div id="authModal" class="authmodal" onclick="if(event.target===this)closeAuth()"></div>
 
 <footer>
   <div class="wrap foot">
@@ -521,7 +569,7 @@ footer{border-top:1px solid var(--line)}
       <a onclick="nav('faq')" data-i="nav_faq">Savol-javob</a>
     </div>
     <div>
-      <div>📧 info@avtomost.uz</div><div>📱 +998 90 000 00 00</div><div>📍 Toshkent · Busan</div>
+      <div>📧 <a href="mailto:info@avtomostuz.com" style="color:inherit">info@avtomostuz.com</a></div><div>📱 +998 90 000 00 00</div><div>📍 Toshkent · Busan</div>
       <div style="margin-top:10px;opacity:.55">© 2026 AVTOMOST. <span data-i="foot_demo">Demo MVP versiya.</span></div>
     </div>
   </div>
@@ -793,7 +841,8 @@ const I18N={
   cmp_title:"Moshinalarni solishtirish",cmp_need2:"Solishtirish uchun kamida 2 ta moshina tanlang.",cmp_elig:"Import holati",cmp_markup:"Ustama",cmp_best:"eng arzon",cmp_note:"Narxlar taxminiy. Aniq summa EnCarAPI ulanganda yangilanadi.",
   rate_live:"Jonli kurs",rate_approx:"Taxminiy kurs",
   nav_fav:"Sevimlilar",fav_title:"Sevimli moshinalar",fav_sub:"Saqlangan moshinalar va narx o'zgarishi kuzatuvi.",fav_empty:"Hali sevimli moshina yo'q. Katalogdan ❤ bosib saqlang.",fav_saved:"Saqlangan narx",fav_down:"arzonlashdi",fav_up:"qimmatlashdi",fav_nochange:"narx o'zgarmadi",
-  nav_advisor:"🤖 AI Maslahatchi",adv_title:"AI moshina maslahatchi",adv_sub:"Byudjet va ehtiyojingizni ayting — eng mos moshinalarni tanlab beraman va tuzoqlardan ogohlantiraman.",adv_budget:"Byudjetingiz (eshikkacha, $)",adv_use:"Nima uchun kerak?",adv_fuelpref:"Yoqilg'i (ixtiyoriy)",adv_any:"Farqi yo'q",adv_family:"Oilaviy",adv_economy:"Tejamkor",adv_business:"Biznes",adv_premium:"Premium",adv_first:"Birinchi moshina",adv_go:"Tavsiya ber",adv_found:"Sizga {n} ta moshina topdim",adv_none:"Bu byudjetda mos moshina topilmadi. Byudjetni oshiring.",adv_trap:"Tuzoqdan saqlaning",adv_trap_txt:"katta motor — boj va utilizatsiya juda qimmat, import tavsiya etilmaydi.",adv_r_good:"✓ Importga juda mos",adv_r_lowmk:"✓ Past ustama (+{m}%)",adv_r_eco:"✓ Tejamkor (gibrid/elektro)",adv_r_lowkm:"✓ Kam yurgan",adv_r_new:"✓ Yangi (≤4 yil)",adv_r_af:"✓ Avariyasiz",adv_r_family:"✓ Oila uchun keng",adv_r_premium:"✓ Premium brend",adv_r_fit:"✓ Byudjetingizga mos",
+  nav_advisor:"AI tanlash",adv_title:"AI moshina maslahatchi",
+  au_login:"Kirish",au_reg:"Ro'yxatdan o'tish",au_sub:"Hisobingizga kiring yoki yangi hisob oching.",au_name:"Ism",au_email:"Email",au_pass:"Parol",au_note:"Hisob brauzeringizda saqlanadi. Parolingizni hech kim ko'rmaydi.",au_logout:"Chiqish",au_need:"Davom etish uchun kiring.",au_e_fill:"Barcha maydonlarni to'ldiring.",au_e_email:"Email noto'g'ri.",au_e_pass:"Parol kamida 4 belgi.",au_e_exist:"Bu email allaqachon ro'yxatdan o'tgan.",au_e_cred:"Email yoki parol noto'g'ri.",set_title:"Sozlamalar",set_lang:"Til",set_acc:"Hisob",adv_sub:"Byudjet va ehtiyojingizni ayting — eng mos moshinalarni tanlab beraman va tuzoqlardan ogohlantiraman.",adv_budget:"Byudjetingiz (eshikkacha, $)",adv_use:"Nima uchun kerak?",adv_fuelpref:"Yoqilg'i (ixtiyoriy)",adv_any:"Farqi yo'q",adv_family:"Oilaviy",adv_economy:"Tejamkor",adv_business:"Biznes",adv_premium:"Premium",adv_first:"Birinchi moshina",adv_go:"Tavsiya ber",adv_found:"Sizga {n} ta moshina topdim",adv_none:"Bu byudjetda mos moshina topilmadi. Byudjetni oshiring.",adv_trap:"Tuzoqdan saqlaning",adv_trap_txt:"katta motor — boj va utilizatsiya juda qimmat, import tavsiya etilmaydi.",adv_r_good:"✓ Importga juda mos",adv_r_lowmk:"✓ Past ustama (+{m}%)",adv_r_eco:"✓ Tejamkor (gibrid/elektro)",adv_r_lowkm:"✓ Kam yurgan",adv_r_new:"✓ Yangi (≤4 yil)",adv_r_af:"✓ Avariyasiz",adv_r_family:"✓ Oila uchun keng",adv_r_premium:"✓ Premium brend",adv_r_fit:"✓ Byudjetingizga mos",
   body_sedan:"Sedan",body_suv:"SUV",body_crossover:"Krossover",body_minivan:"Minivan",
   d_specs:"Xususiyatlar",d_year:"Yili",d_engine:"Dvigatel",d_km:"Probeg",d_fuel:"Yoqilg'i",d_tr:"Transmissiya",d_body:"Kuzov",d_options:"Jihozlar",d_breakdown:"Narx tarkibi",d_total:"JAMI eshikkacha",d_order:"Buyurtma berish →",d_inspect:"Koreyada inspeksiya",d_inspect_d:"Sotib olishdan oldin moshina jismonan tekshiriladi.",
   o_title:"Buyurtma berish",o_s1:"Moshina",o_s2:"Ma'lumotlar",o_s3:"To'lov",o_s4:"Tasdiqlash",
@@ -839,7 +888,8 @@ const I18N={
   cmp_title:"Сравнение авто",cmp_need2:"Выберите минимум 2 авто для сравнения.",cmp_elig:"Статус ввоза",cmp_markup:"Наценка",cmp_best:"дешевле",cmp_note:"Цены примерные. Точная сумма обновится после подключения EnCarAPI.",
   rate_live:"Живой курс",rate_approx:"Примерный курс",
   nav_fav:"Избранное",fav_title:"Избранные авто",fav_sub:"Сохранённые авто и отслеживание изменения цены.",fav_empty:"Пока нет избранных авто. Нажмите ❤ в каталоге.",fav_saved:"Сохранённая цена",fav_down:"дешевле",fav_up:"дороже",fav_nochange:"цена не изменилась",
-  nav_advisor:"🤖 AI Советник",adv_title:"AI подбор авто",adv_sub:"Укажите бюджет и потребности — подберу лучшие авто и предупрежу о ловушках.",adv_budget:"Ваш бюджет (до двери, $)",adv_use:"Для чего нужно?",adv_fuelpref:"Топливо (необязательно)",adv_any:"Без разницы",adv_family:"Семейное",adv_economy:"Экономное",adv_business:"Бизнес",adv_premium:"Премиум",adv_first:"Первое авто",adv_go:"Подобрать",adv_found:"Нашёл для вас {n} авто",adv_none:"В этом бюджете подходящих авто нет. Увеличьте бюджет.",adv_trap:"Избегайте ловушки",adv_trap_txt:"большой двигатель — пошлина и утильсбор очень дорогие, ввоз не рекомендуется.",adv_r_good:"✓ Отлично подходит для ввоза",adv_r_lowmk:"✓ Низкая наценка (+{m}%)",adv_r_eco:"✓ Экономичное (гибрид/электро)",adv_r_lowkm:"✓ Малый пробег",adv_r_new:"✓ Новое (≤4 лет)",adv_r_af:"✓ Без ДТП",adv_r_family:"✓ Просторное для семьи",adv_r_premium:"✓ Премиум-бренд",adv_r_fit:"✓ Подходит под бюджет",
+  nav_advisor:"AI подбор",adv_title:"AI подбор авто",
+  au_login:"Вход",au_reg:"Регистрация",au_sub:"Войдите или создайте новый аккаунт.",au_name:"Имя",au_email:"Email",au_pass:"Пароль",au_note:"Аккаунт хранится в вашем браузере. Пароль никто не видит.",au_logout:"Выйти",au_need:"Войдите, чтобы продолжить.",au_e_fill:"Заполните все поля.",au_e_email:"Неверный email.",au_e_pass:"Пароль минимум 4 символа.",au_e_exist:"Этот email уже зарегистрирован.",au_e_cred:"Неверный email или пароль.",set_title:"Настройки",set_lang:"Язык",set_acc:"Аккаунт",adv_sub:"Укажите бюджет и потребности — подберу лучшие авто и предупрежу о ловушках.",adv_budget:"Ваш бюджет (до двери, $)",adv_use:"Для чего нужно?",adv_fuelpref:"Топливо (необязательно)",adv_any:"Без разницы",adv_family:"Семейное",adv_economy:"Экономное",adv_business:"Бизнес",adv_premium:"Премиум",adv_first:"Первое авто",adv_go:"Подобрать",adv_found:"Нашёл для вас {n} авто",adv_none:"В этом бюджете подходящих авто нет. Увеличьте бюджет.",adv_trap:"Избегайте ловушки",adv_trap_txt:"большой двигатель — пошлина и утильсбор очень дорогие, ввоз не рекомендуется.",adv_r_good:"✓ Отлично подходит для ввоза",adv_r_lowmk:"✓ Низкая наценка (+{m}%)",adv_r_eco:"✓ Экономичное (гибрид/электро)",adv_r_lowkm:"✓ Малый пробег",adv_r_new:"✓ Новое (≤4 лет)",adv_r_af:"✓ Без ДТП",adv_r_family:"✓ Просторное для семьи",adv_r_premium:"✓ Премиум-бренд",adv_r_fit:"✓ Подходит под бюджет",
   body_sedan:"Седан",body_suv:"Внедорожник",body_crossover:"Кроссовер",body_minivan:"Минивэн",
   d_specs:"Характеристики",d_year:"Год",d_engine:"Двигатель",d_km:"Пробег",d_fuel:"Топливо",d_tr:"Коробка",d_body:"Кузов",d_options:"Опции",d_breakdown:"Состав цены",d_total:"ИТОГО до двери",d_order:"Оформить заказ →",d_inspect:"Инспекция в Корее",d_inspect_d:"Перед покупкой авто проверяется физически.",
   o_title:"Оформление заказа",o_s1:"Авто",o_s2:"Данные",o_s3:"Оплата",o_s4:"Подтверждение",
@@ -887,7 +937,8 @@ I18N.en=Object.assign({},I18N.ru,{
   cmp_title:"Compare cars",cmp_need2:"Select at least 2 cars to compare.",cmp_elig:"Import status",cmp_markup:"Markup",cmp_best:"cheapest",cmp_note:"Prices are approximate. Exact figures update once EnCarAPI is connected.",
   rate_live:"Live rate",rate_approx:"Approx. rate",
   nav_fav:"Saved",fav_title:"Saved cars",fav_sub:"Your saved cars with price-change tracking.",fav_empty:"No saved cars yet. Tap ❤ in the catalog.",fav_saved:"Saved price",fav_down:"cheaper",fav_up:"pricier",fav_nochange:"no price change",
-  nav_advisor:"🤖 AI Advisor",adv_title:"AI car advisor",adv_sub:"Tell us your budget and needs — we'll pick the best-fit cars and warn you about traps.",adv_budget:"Your budget (door-to-door, $)",adv_use:"What is it for?",adv_fuelpref:"Fuel (optional)",adv_any:"Any",adv_family:"Family",adv_economy:"Economy",adv_business:"Business",adv_premium:"Premium",adv_first:"First car",adv_go:"Recommend",adv_found:"Found {n} cars for you",adv_none:"No matching cars in this budget. Try a higher budget.",adv_trap:"Avoid this trap",adv_trap_txt:"big engine — duty and recycling fee are very expensive, import not recommended.",adv_r_good:"✓ Great for import",adv_r_lowmk:"✓ Low markup (+{m}%)",adv_r_eco:"✓ Economical (hybrid/EV)",adv_r_lowkm:"✓ Low mileage",adv_r_new:"✓ Newer (≤4 yrs)",adv_r_af:"✓ Accident-free",adv_r_family:"✓ Roomy for family",adv_r_premium:"✓ Premium brand",adv_r_fit:"✓ Fits your budget",
+  nav_advisor:"AI pick",adv_title:"AI car advisor",
+  au_login:"Log in",au_reg:"Sign up",au_sub:"Log in or create a new account.",au_name:"Name",au_email:"Email",au_pass:"Password",au_note:"Your account is stored in your browser. No one sees your password.",au_logout:"Log out",au_need:"Log in to continue.",au_e_fill:"Please fill all fields.",au_e_email:"Invalid email.",au_e_pass:"Password min 4 characters.",au_e_exist:"This email is already registered.",au_e_cred:"Wrong email or password.",set_title:"Settings",set_lang:"Language",set_acc:"Account",adv_sub:"Tell us your budget and needs — we'll pick the best-fit cars and warn you about traps.",adv_budget:"Your budget (door-to-door, $)",adv_use:"What is it for?",adv_fuelpref:"Fuel (optional)",adv_any:"Any",adv_family:"Family",adv_economy:"Economy",adv_business:"Business",adv_premium:"Premium",adv_first:"First car",adv_go:"Recommend",adv_found:"Found {n} cars for you",adv_none:"No matching cars in this budget. Try a higher budget.",adv_trap:"Avoid this trap",adv_trap_txt:"big engine — duty and recycling fee are very expensive, import not recommended.",adv_r_good:"✓ Great for import",adv_r_lowmk:"✓ Low markup (+{m}%)",adv_r_eco:"✓ Economical (hybrid/EV)",adv_r_lowkm:"✓ Low mileage",adv_r_new:"✓ Newer (≤4 yrs)",adv_r_af:"✓ Accident-free",adv_r_family:"✓ Roomy for family",adv_r_premium:"✓ Premium brand",adv_r_fit:"✓ Fits your budget",
  body_sedan:"Sedan",body_suv:"SUV",body_crossover:"Crossover",body_minivan:"Minivan",
  d_specs:"Specifications",d_year:"Year",d_engine:"Engine",d_km:"Mileage",d_fuel:"Fuel",d_tr:"Transmission",d_body:"Body",d_options:"Options",d_breakdown:"Price breakdown",d_total:"TOTAL door-to-door",d_order:"Place an order →",d_inspect:"Inspection in Korea",d_inspect_d:"Before purchase the car is physically checked.",
  o_title:"Place an order",o_s1:"Car",o_s2:"Details",o_s3:"Payment",o_s4:"Confirm",
@@ -1000,6 +1051,7 @@ function render(){
   else if(VIEW.name==='compare')app.innerHTML=compareView();
   else if(VIEW.name==='favorites')app.innerHTML=favoritesView();
   else if(VIEW.name==='advisor')app.innerHTML=advisorView();
+  else if(VIEW.name==='account')app.innerHTML=accountView();
   else if(VIEW.name==='faq')app.innerHTML=faqView();
   // post-render hooks
   if(VIEW.name==='home'){bindCalc();}
@@ -1014,6 +1066,7 @@ function render(){
   // faol menyu
   document.querySelectorAll('#menu a[data-view]').forEach(a=>a.classList.toggle('act',a.dataset.view===VIEW.name));
   updateFavBadge();
+  updateAccBtn();
 }
 
 /* ---------- HOME ---------- */
@@ -1609,10 +1662,67 @@ function rateStatusHtml(){
     : `<span class="ratechip" title="zaxira">⚪ ${T('rate_approx')}</span>`;
 }
 
+/* ===== KABINET — ro'yxatdan o'tish / kirish (localStorage) ===== */
+function usersLoad(){try{return JSON.parse(localStorage.getItem('avtomost_users')||'[]');}catch(e){return[];}}
+function usersSave(u){try{localStorage.setItem('avtomost_users',JSON.stringify(u));}catch(e){}}
+function curUser(){try{return JSON.parse(localStorage.getItem('avtomost_cur')||'null');}catch(e){return null;}}
+function setCur(u){try{u?localStorage.setItem('avtomost_cur',JSON.stringify(u)):localStorage.removeItem('avtomost_cur');}catch(e){}updateAccBtn();}
+function pwHash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return 'h'+(h>>>0);}
+let AUTHTAB='login';
+function badgeSvg(){return `<svg viewBox="0 0 24 24" fill="none"><path d="M3 13l2-5a3 3 0 0 1 2.8-2h8.4A3 3 0 0 1 19 8l2 5M5 17h14M6 13h12" stroke="#04122e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="17.5" r="1.6" fill="#04122e"/><circle cx="16.5" cy="17.5" r="1.6" fill="#04122e"/></svg>`;}
+function openAccount(){curUser()?nav('account'):openAuth('login');}
+function openAuth(t){AUTHTAB=t||'login';const m=document.getElementById('authModal');m.innerHTML=authModalHtml();m.classList.add('show');}
+function closeAuth(){const m=document.getElementById('authModal');m.classList.remove('show');m.innerHTML='';}
+function authTab(t){AUTHTAB=t;document.getElementById('authModal').innerHTML=authModalHtml();}
+function authModalHtml(){const r=AUTHTAB==='reg';
+ return `<div class="authcard">
+  <button class="authx" onclick="closeAuth()">×</button>
+  <div class="authlogo"><span class="mk">${badgeSvg()}</span> AVTO<b>MOST</b></div>
+  <p class="authsub">${T('au_sub')}</p>
+  <div class="authtabs"><button class="${!r?'on':''}" onclick="authTab('login')">${T('au_login')}</button><button class="${r?'on':''}" onclick="authTab('reg')">${T('au_reg')}</button></div>
+  ${r?`<input id="au_name" class="auin" placeholder="${T('au_name')}">`:''}
+  <input id="au_email" class="auin" type="email" placeholder="${T('au_email')}" autocomplete="email">
+  <input id="au_pass" class="auin" type="password" placeholder="${T('au_pass')}">
+  <div id="au_err" class="auerr"></div>
+  <button class="btn lg" style="width:100%;margin-top:4px" onclick="${r?'doRegister()':'doLogin()'}">${r?T('au_reg'):T('au_login')} →</button>
+  <div class="aunote">${T('au_note')}</div>
+ </div>`;}
+function av(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function doRegister(){const name=av('au_name'),email=av('au_email').toLowerCase(),pass=av('au_pass'),err=document.getElementById('au_err');
+ if(!name||!email||!pass){err.textContent=T('au_e_fill');return;}
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent=T('au_e_email');return;}
+ if(pass.length<4){err.textContent=T('au_e_pass');return;}
+ const users=usersLoad();if(users.some(u=>u.email===email)){err.textContent=T('au_e_exist');return;}
+ users.push({name,email,pass:pwHash(pass),t:Date.now()});usersSave(users);setCur({name,email});closeAuth();nav('account');}
+function doLogin(){const email=av('au_email').toLowerCase(),pass=av('au_pass'),err=document.getElementById('au_err');
+ const u=usersLoad().find(x=>x.email===email);
+ if(!u||u.pass!==pwHash(pass)){err.textContent=T('au_e_cred');return;}
+ setCur({name:u.name,email:u.email});closeAuth();nav('account');}
+function doLogout(){setCur(null);nav('home');}
+function updateAccBtn(){const b=document.getElementById('accBtn');if(b)b.classList.toggle('logged',!!curUser());}
+function accountView(){const u=curUser();
+ if(!u)return `<div class="wrap" style="padding-top:24px"><div class="card" style="text-align:center;padding:46px 20px"><div style="font-size:40px">👤</div><p style="color:var(--muted);margin:10px 0 16px">${T('au_need')}</p><button class="btn" onclick="openAuth('login')">${T('au_login')}</button></div></div>`;
+ const favN=(typeof FAV!=='undefined'?FAV.length:0),initials=(u.name||u.email)[0].toUpperCase();
+ return `<div class="wrap" style="padding-top:24px;max-width:720px">
+  <div class="acchead"><div class="accav">${initials}</div><div><div class="accname">${u.name}</div><div class="accmail">${u.email}</div></div></div>
+  <div class="accgrid">
+    <div class="acctile" onclick="nav('favorites')"><div class="acctn">${favN}</div><div class="acctl">${T('nav_fav')}</div></div>
+    <div class="acctile" onclick="nav('catalog')"><div class="acctn">105</div><div class="acctl">${T('nav_catalog')}</div></div>
+    <div class="acctile" onclick="nav('tracking')"><div class="acctn">🚚</div><div class="acctl">${T('nav_track')}</div></div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3 style="font-size:16px;margin-bottom:12px">${T('set_title')}</h3>
+    <div class="setrow"><span>${T('set_lang')}</span><select onchange="setLang(this.value)">${['uz','ru','kz','kg','tg','en'].map(l=>`<option value="${l}" ${LANG===l?'selected':''}>${l.toUpperCase()}</option>`).join('')}</select></div>
+    <div class="setrow"><span>${T('set_acc')}</span><span style="color:var(--muted)">${u.email}</span></div>
+  </div>
+  <button class="btn ghost" style="margin-top:16px" onclick="doLogout()">${T('au_logout')}</button>
+ </div>`;}
+
 /* ---------- INIT ---------- */
 applyStatic();
 render();
 loadRates();
+updateAccBtn();
 </script>
 </body>
 </html>
