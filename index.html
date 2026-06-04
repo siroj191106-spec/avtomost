@@ -1665,8 +1665,8 @@ async function loadRates(){
   const cached=rateCacheGet();
   if(cached){applyRates(cached.rates,cached.time);return;}
   // 1) Kalitli endpoint (asosiy)  2) kalitsiz ochiq endpoint (zaxira)
-  const KEY='3329235cc4f0d4b61f41bb75';
-  const sources=[`https://v6.exchangerate-api.com/v6/${KEY}/latest/USD`,'https://open.er-api.com/v6/latest/USD'];
+  // Kalitsiz bepul manba — xavfsizlik uchun maxfiy kalit koddan olib tashlandi.
+  const sources=['https://open.er-api.com/v6/latest/USD'];
   for(const url of sources){
     try{
       const res=await fetch(url,{cache:'no-store'});
