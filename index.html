@@ -469,6 +469,26 @@ header{background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(12px)
 .panel,.card,.buybox,.formbox,.faq-item{box-shadow:none}
 h1{letter-spacing:-1.2px}
 @media(max-width:900px){.navhide{display:none}}
+/* ===== Mobil header + menyu tuzatishlari ===== */
+.menu-lang{display:none}
+@media(max-width:880px){
+  .menu.open{background:#fff!important;color:var(--txt);box-shadow:0 16px 44px rgba(20,30,60,.16);border-bottom:1px solid var(--line);padding:12px 20px 18px!important;gap:2px!important}
+  .menu.open a{color:#1b2330!important;font-size:16px;font-weight:600;padding:13px 2px;border-bottom:1px solid var(--line)}
+  .menu.open .navhide{display:block!important}
+  .menu.open .menu-lang{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .menu.open .menu-lang button{border:1px solid var(--line2);background:#f5f7fa;border-radius:10px;padding:9px 13px;font-size:13.5px;cursor:pointer;font-weight:600;color:var(--txt)}
+}
+@media(max-width:680px){
+  .nav{height:58px}
+  .controls .lang{display:none}
+  .controls{gap:8px}
+  .iconbtn{width:36px;height:36px}
+  .controls .btn{padding:9px 13px;font-size:13.5px}
+  .menu-btn{width:36px;height:36px;font-size:16px;border-radius:9px}
+  .logo{font-size:18px}
+  .menu.open{top:58px}
+  h1{letter-spacing:-.6px}
+}
 /* kabinet / auth modal */
 .authmodal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(16,21,36,.45);backdrop-filter:blur(4px);padding:20px}
 .authmodal.show{display:flex;animation:fadein .2s}
@@ -539,6 +559,9 @@ h1{letter-spacing:-1.2px}
       <a onclick="nav('home');setTimeout(()=>scrollToId('calc'),80)" data-i="nav_calc">Kalkulyator</a>
       <a data-view="tracking" onclick="nav('tracking')" data-i="nav_track">Kuzatuv</a>
       <a data-view="faq" onclick="nav('faq')" data-i="nav_faq" class="navhide">Savol-javob</a>
+      <div class="menu-lang">
+        <button onclick="setLang('uz')">🇺🇿 O'zbek</button><button onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('kz')">🇰🇿 Qazaq</button><button onclick="setLang('kg')">🇰🇬 Кыргыз</button><button onclick="setLang('tg')">🇹🇯 Тоҷик</button><button onclick="setLang('en')">🇬🇧 English</button>
+      </div>
     </nav>
     <div class="controls">
       <button class="iconbtn" onclick="nav('favorites')" title="Sevimlilar" aria-label="fav"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg><span id="favCount" class="navbadge"></span></button>
@@ -1036,7 +1059,7 @@ let CALCSTATE={cond:'clean',fuel:'petrol'};
 
 function nav(name,id){VIEW={name,id:id||null};document.getElementById('menu').classList.remove('open');window.scrollTo(0,0);render();}
 function scrollToId(x){const e=document.getElementById(x);if(e)e.scrollIntoView({behavior:'smooth'});}
-function setLang(l){LANG=l;document.documentElement.lang=l;document.getElementById('langSel').value=l;applyStatic();render();}
+function setLang(l){LANG=l;document.documentElement.lang=l;var ls=document.getElementById('langSel');if(ls)ls.value=l;var m=document.getElementById('menu');if(m)m.classList.remove('open');applyStatic();render();}
 function applyStatic(){
   document.querySelectorAll('header [data-i],footer [data-i]').forEach(el=>{el.textContent=T(el.dataset.i);});
 }
