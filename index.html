@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVTOMOST — Koreyadan Markaziy Osiyoga moshina</title>
+<meta name="description" content="AVTOMOST — Koreyadan O'zbekiston va Markaziy Osiyoga to'g'ridan-to'g'ri, shaffof narxda moshina import. Eshikkacha narxni qonun bo'yicha hisoblang.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234f8cff'/%3E%3Cpath d='M6 19l1.6-4a3 3 0 0 1 2.8-2h11.2a3 3 0 0 1 2.8 2L26 19M9 22h14' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='11' cy='22' r='1.6' fill='white'/%3E%3Ccircle cx='21' cy='22' r='1.6' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070912;--bg-soft:#0c1020;--panel:rgba(255,255,255,.035);--panel2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.14);
+  --txt:#f3f5ff;--muted:#9aa6c9;--faint:#6b7699;
+  --a1:#4f8cff;--a2:#22d3ee;--a3:#8b5cf6;--ok:#34d399;--warn:#fbbf24;--danger:#fb7185;
+  --grad:linear-gradient(120deg,#4f8cff,#22d3ee);--grad3:linear-gradient(120deg,#8b5cf6,#4f8cff,#22d3ee);
+  --glow:0 18px 50px -12px rgba(34,121,255,.45);--shadow:0 20px 60px -20px rgba(0,0,0,.7);--r:18px;
+  --c-price:#4f8cff;--c-logi:#22d3ee;--c-duty:#8b5cf6;--c-excise:#f472b6;--c-util:#fbbf24;--c-vat:#fb7185;--c-comm:#34d399;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+#how,#calc,#why,#partners,#lead{scroll-margin-top:84px}
+#app{animation:viewfade .38s cubic-bezier(.2,.7,.2,1)}
+@keyframes viewfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--a2);outline-offset:2px;border-radius:8px}
+::selection{background:rgba(79,140,255,.35);color:#fff}
+.carcard,.fchip,.car-cta,.btn,.opt-card{will-change:transform}
+@media(max-width:560px){h2.title{font-size:27px}.hero h1{font-size:30px}.total-val{font-size:38px}}
+h1,h2,h3{font-family:'Manrope',sans-serif}
+a{color:inherit;text-decoration:none;cursor:pointer}
+.wrap{max-width:1280px;margin:0 auto;padding:0 22px}
+.narrow{max-width:920px}
+.grad-txt{background:var(--grad3);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bgfx{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bgfx i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.45}
+.bgfx .b1{width:540px;height:540px;background:#1e40af;top:-170px;right:-120px}
+.bgfx .b2{width:460px;height:460px;background:#0e7490;bottom:-180px;left:-150px;opacity:.38}
+.bgfx .b3{width:420px;height:420px;background:#6d28d9;top:42%;left:46%;opacity:.22}
+.gridlines{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(circle at 50% 0%,#000,transparent 75%)}
+
+/* header */
+header{position:sticky;top:0;z-index:60;background:rgba(7,9,18,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-family:'Manrope';font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo .mk{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;box-shadow:var(--glow)}
+.logo .mk svg{width:18px;height:18px}
+.menu{display:flex;gap:22px;align-items:center}
+.menu a{color:var(--muted);font-size:15px;font-weight:500;transition:.2s}
+.menu a:hover,.menu a.act{color:var(--txt)}
+.controls{display:flex;gap:10px;align-items:center}
+.lang select{background:var(--panel2);color:var(--txt);border:1px solid var(--line2);border-radius:10px;padding:8px 11px;font-size:14px;cursor:pointer;font-family:'Inter'}
+.btn{background:var(--grad);color:#04122e;font-weight:700;font-family:'Manrope';border:none;padding:11px 18px;border-radius:11px;cursor:pointer;font-size:14.5px;transition:.18s;box-shadow:var(--glow)}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:var(--panel2);color:var(--txt);border:1px solid var(--line2);box-shadow:none;font-weight:600}
+.btn.ghost:hover{background:rgba(255,255,255,.1)}
+.btn.lg{padding:14px 24px;font-size:16px}
+.menu-btn{display:none;background:var(--panel2);border:1px solid var(--line2);color:var(--txt);width:40px;height:40px;border-radius:10px;font-size:18px;cursor:pointer}
+@media(max-width:880px){.menu{display:none}.menu.open{display:flex;position:absolute;top:66px;left:0;right:0;flex-direction:column;background:rgba(7,9,18,.97);padding:16px 22px;gap:16px;border-bottom:1px solid var(--line)}.menu-btn{display:block}}
+
+/* generic */
+section{padding:64px 0;position:relative}
+.eyebrow{color:var(--a2);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-size:12.5px;font-family:'Manrope'}
+h2.title{font-size:34px;font-weight:800;margin:10px 0 10px;letter-spacing:-.5px}
+.lead{color:var(--muted);max-width:660px;margin-bottom:34px;font-size:16px}
+.grid{display:grid;gap:18px}
+.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1.05fr .95fr}
+@media(max-width:920px){.g3,.g4,.g2{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;backdrop-filter:blur(8px);transition:transform .25s,border-color .25s,background .25s}
+.card.hov:hover{transform:translateY(-5px);border-color:var(--line2);background:var(--panel2)}
+.panel{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.step-num{width:46px;height:46px;border-radius:14px;background:var(--grad);color:#04122e;font-weight:800;font-family:'Manrope';display:grid;place-items:center;font-size:19px;margin-bottom:16px;box-shadow:var(--glow)}
+.card h3{font-size:18px;margin-bottom:8px;font-weight:700}.card p{color:var(--muted);font-size:14.5px}
+.ico-box{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,rgba(79,140,255,.22),rgba(34,211,238,.18));display:grid;place-items:center;font-size:24px;margin-bottom:14px;border:1px solid var(--line2)}
+.crumb{font-size:13.5px;color:var(--faint);margin:18px 0 10px}.crumb a:hover{color:var(--txt)}
+.note{font-size:12px;color:var(--faint);margin-top:14px;line-height:1.5;padding:12px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);border-radius:12px}
+.alert{font-size:13px;color:#fecdd3;padding:11px 13px;background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.32);border-radius:12px;margin-top:12px}
+label{display:block;font-size:13px;color:var(--muted);margin:13px 0 7px;font-weight:500}
+input,select.field,textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--txt);border-radius:12px;padding:12px 13px;font-size:15px;font-family:'Inter';transition:.2s}
+input:focus,select.field:focus{outline:none;border-color:var(--a1);background:rgba(79,140,255,.08);box-shadow:0 0 0 3px rgba(79,140,255,.15)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:560px){.row2{grid-template-columns:1fr}}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-top:7px}
+.seg button{flex:1;min-width:78px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);padding:11px;border-radius:12px;cursor:pointer;font-size:14px;font-weight:500;transition:.2s}
+.seg button:hover{border-color:var(--line2);color:var(--txt)}
+.seg button.on{background:var(--grad);color:#04122e;font-weight:700;border-color:transparent;box-shadow:var(--glow)}
+
+/* hero */
+.hero{padding:80px 0 60px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr}}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line2);border-radius:30px;padding:7px 14px;font-size:13px;color:var(--muted);margin-bottom:22px}
+.chip .pulse{width:8px;height:8px;border-radius:50%;background:var(--a2);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.55)}70%{box-shadow:0 0 0 9px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+.hero h1{font-size:50px;line-height:1.08;font-weight:800;letter-spacing:-1px}
+.hero p.sub{color:var(--muted);font-size:18px;margin-top:20px;max-width:560px}
+.hero .cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.stats{display:flex;gap:14px;margin-top:42px;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px 19px;min-width:118px}
+.stat b{display:block;font-family:'Manrope';font-size:25px;font-weight:800}.stat span{color:var(--faint);font-size:12.5px}
+@media(max-width:600px){.hero h1{font-size:34px}.hero{padding:46px 0 30px}}
+.hero-visual{position:relative;height:330px;display:grid;place-items:center}
+.hero-visual .ring{position:absolute;inset:0;margin:auto;width:320px;height:320px;border-radius:50%;border:1px solid var(--line2);box-shadow:inset 0 0 80px rgba(79,140,255,.18)}
+.hero-visual .ring2{width:230px;height:230px;border-style:dashed;opacity:.5;animation:spin 32s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-visual .car{position:relative;width:100%;max-width:420px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.ftag{position:absolute;background:rgba(12,16,32,.85);border:1px solid var(--line2);backdrop-filter:blur(10px);border-radius:12px;padding:9px 13px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow)}
+.ftag .d{width:9px;height:9px;border-radius:50%}
+@media(max-width:920px){.hero-visual{height:240px}}
+
+/* calculator */
+.calc-shell{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--line2);border-radius:26px;padding:8px;box-shadow:var(--shadow)}
+.calc-box{display:grid;grid-template-columns:1.1fr .9fr;gap:8px}
+@media(max-width:960px){.calc-box{grid-template-columns:1fr}}
+.calc-pane{background:var(--bg-soft);border-radius:20px;padding:26px}
+.group-label{font-family:'Manrope';font-size:13px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:1px;margin:20px 0 4px}
+.group-label.first{margin-top:0}
+.receipt{background:linear-gradient(180deg,#0e1426,#0a0e1c);border-radius:20px;padding:26px;position:sticky;top:84px}
+.total-wrap{text-align:center;padding:6px 0 16px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.total-lbl{font-size:13px;color:var(--faint);text-transform:uppercase;letter-spacing:1.5px;font-family:'Manrope';font-weight:700}
+.total-val{font-family:'Manrope';font-size:44px;font-weight:800;letter-spacing:-1px;margin-top:4px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bar{height:14px;border-radius:8px;overflow:hidden;display:flex;background:rgba(255,255,255,.05);margin-bottom:16px;box-shadow:inset 0 0 0 1px var(--line)}
+.bar i{height:100%;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.ln{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14.5px}
+.ln .lbl{color:var(--muted);display:flex;align-items:center;gap:9px}
+.ln .dotc{width:9px;height:9px;border-radius:3px;flex:none}
+.ln .v{font-family:'Manrope';font-weight:600}
+.ln.hide{display:none}.divider{height:1px;background:var(--line);margin:6px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,.14);color:var(--ok);padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:700;margin-top:12px}
+details.settings{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+details.settings summary{cursor:pointer;color:var(--a2);font-weight:600;list-style:none}
+details.settings summary::-webkit-details-marker{display:none}
+
+/* catalog */
+.searchrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.searchinput{flex:1;min-width:240px;position:relative}
+.searchinput svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;opacity:.6}
+.searchinput input{padding-left:42px}
+.sortsel{background:var(--panel2);border:1px solid var(--line2);color:var(--txt);border-radius:12px;padding:13px;font-size:14.5px;cursor:pointer}
+.layout{display:grid;grid-template-columns:262px 1fr;gap:24px;padding:18px 0 40px;align-items:start}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.filters{position:static!important}}
+.filters{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;position:sticky;top:84px}
+.filters h4{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);font-family:'Manrope';margin:18px 0 10px}.filters h4:first-child{margin-top:0}
+.fchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--muted);border-radius:30px;padding:8px 13px;font-size:13.5px;cursor:pointer;margin:0 6px 8px 0;transition:.18s}
+.fchip:hover{border-color:var(--a1);color:var(--txt)}.fchip.on{background:var(--grad);color:#04122e;font-weight:700;border-color:transparent}
+.frange{display:flex;gap:8px}
+.fclear{width:100%;margin-top:16px;background:var(--panel2);border:1px solid var(--line2);color:var(--muted);border-radius:11px;padding:10px;cursor:pointer;font-size:13.5px}
+.results-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cnt{color:var(--muted);font-size:14.5px}.cnt b{color:var(--txt);font-family:'Manrope'}
+.cars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1100px){.cars{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.cars{grid-template-columns:1fr}}
+.carcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .25s,border-color .25s;cursor:pointer;display:flex;flex-direction:column}
+.carcard:hover{transform:translateY(-6px);border-color:var(--line2);box-shadow:var(--shadow)}
+.car-img{position:relative;height:166px;background:radial-gradient(120% 130% at 50% 0%,#16284f 0%,#0e1730 55%,#0a1024 100%);display:grid;place-items:center;overflow:hidden}
+.car-img svg{width:78%;filter:drop-shadow(0 16px 22px rgba(0,0,0,.55))}
+.car-badges{position:absolute;top:11px;left:11px;display:flex;gap:6px}
+.cb{background:rgba(8,12,24,.78);backdrop-filter:blur(6px);border:1px solid var(--line2);border-radius:8px;padding:4px 9px;font-size:11.5px;font-weight:600}
+.cb.ev{background:rgba(52,211,153,.18);border-color:transparent;color:#6ee7b7}
+.fav{position:absolute;top:11px;right:11px;width:32px;height:32px;border-radius:9px;background:rgba(8,12,24,.7);border:1px solid var(--line2);display:grid;place-items:center;font-size:14px}
+.car-body{padding:16px 17px 18px;flex:1;display:flex;flex-direction:column}
+.car-title{font-family:'Manrope';font-weight:700;font-size:17px;margin-bottom:3px}
+.car-sub{color:var(--faint);font-size:12.5px;margin-bottom:12px}
+.car-specs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.spec{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:12px;color:var(--muted)}
+.price-block{margin-top:auto;border-top:1px solid var(--line);padding-top:12px}
+.pk{display:flex;justify-content:space-between;font-size:13px;color:var(--faint);margin-bottom:3px}.pk b{color:var(--muted);font-family:'Manrope';font-size:14px}
+.pl{display:flex;justify-content:space-between;align-items:baseline}.pl span{font-size:12.5px;color:var(--a2);font-weight:600}
+.pl b{font-family:'Manrope';font-size:21px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.car-cta{margin-top:13px;width:100%;background:var(--panel2);border:1px solid var(--line2);color:var(--txt);border-radius:11px;padding:10px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'Manrope'}
+.car-cta:hover{background:var(--grad);color:#04122e;border-color:transparent}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 0}
+
+/* detail */
+.detail{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;padding:6px 0 40px;align-items:start}
+@media(max-width:920px){.detail{grid-template-columns:1fr}}
+.gallery{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.gallery .main{height:320px;background:radial-gradient(130% 140% at 50% 0%,#16284f,#0a1024);display:grid;place-items:center}.gallery .main svg{width:72%}
+.thumbs{display:flex;gap:8px;padding:12px}
+.thumbs .t{flex:1;height:60px;border-radius:10px;background:radial-gradient(120% 130% at 50% 0%,#16284f,#0a1024);border:1px solid var(--line);display:grid;place-items:center;opacity:.7}.thumbs .t svg{width:80%}
+.spectable{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.si{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.si .k{font-size:12px;color:var(--faint)}.si .v{font-family:'Manrope';font-weight:600;margin-top:2px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.opt{background:rgba(79,140,255,.1);border:1px solid var(--line2);border-radius:20px;padding:6px 12px;font-size:12.5px;color:var(--muted)}
+.bd-line{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
+.bd-line .lbl{color:var(--muted);display:flex;align-items:center;gap:9px}.bd-line .dotc{width:9px;height:9px;border-radius:3px}
+.bd-line .v{font-family:'Manrope';font-weight:600}
+.bd-line.total{border-bottom:none;font-size:20px;font-weight:800;padding-top:14px}.bd-line.total .v{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* stepper / order */
+.stepper{display:flex;gap:8px;margin:20px 0 24px}
+.stepper .s{flex:1;text-align:center;padding:12px 8px;border-radius:12px;background:var(--panel);border:1px solid var(--line);font-size:13px;color:var(--faint);font-family:'Manrope';font-weight:600}
+.stepper .s.on{background:var(--grad);color:#04122e;border-color:transparent}.stepper .s.done{border-color:var(--ok);color:var(--ok)}
+.opt-card{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;margin-bottom:10px;transition:.2s}
+.opt-card:hover{border-color:var(--line2)}.opt-card.sel{border-color:var(--a1);background:rgba(79,140,255,.08)}
+.opt-card .rd{width:20px;height:20px;border-radius:50%;border:2px solid var(--line2);flex:none;margin-top:2px}
+.opt-card.sel .rd{border-color:var(--a1);background:var(--a1);box-shadow:inset 0 0 0 3px var(--bg-soft)}
+.paystage{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.paystage:last-child{border-bottom:none}.paystage .v{font-family:'Manrope';font-weight:700}
+.success{text-align:center;padding:30px}.success .ic{width:70px;height:70px;border-radius:50%;background:rgba(52,211,153,.15);display:grid;place-items:center;margin:0 auto 16px;font-size:34px}
+.ordernum{font-family:'Manrope';font-size:26px;font-weight:800;letter-spacing:1px;margin:8px 0 18px}
+
+/* tracking */
+.ts{display:flex;gap:14px;align-items:flex-start;padding-bottom:22px;position:relative}
+.ts:before{content:'';position:absolute;left:13px;top:26px;bottom:-2px;width:2px;background:var(--line)}.ts:last-child:before{display:none}
+.ts .dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line2);background:var(--bg-soft);flex:none;display:grid;place-items:center;font-size:13px;z-index:1}
+.ts.done .dot{background:var(--grad);border-color:transparent;color:#04122e}.ts.now .dot{border-color:var(--a2);box-shadow:0 0 0 4px rgba(34,211,238,.2)}
+.ts.future{opacity:.45}.ts .tt{font-family:'Manrope';font-weight:600}
+
+/* faq */
+.faq-item{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;background:var(--panel)}
+.faq-q{padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Manrope';font-weight:600;gap:14px}
+.faq-q .pm{font-size:22px;color:var(--a2);transition:.2s}.faq-item.open .faq-q .pm{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--muted);padding:0 20px}.faq-item.open .faq-a{max-height:320px;padding:0 20px 18px}
+
+/* timeline (partners) */
+.tl-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.tl-item .l{display:flex;align-items:center;gap:12px;color:var(--muted)}.tl-item .dotc{width:11px;height:11px;border-radius:50%;background:var(--grad);box-shadow:var(--glow)}
+.tl-item.tot{font-weight:700;color:var(--txt);border-bottom:none}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);border-radius:30px;padding:9px 15px;font-size:13.5px;color:var(--muted);margin:5px;background:var(--panel)}
+
+footer{border-top:1px solid var(--line);padding:42px 0 30px;color:var(--muted);font-size:14px;margin-top:30px}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.formbox{background:var(--panel);border:1px solid var(--line2);border-radius:22px;padding:30px}
+
+/* ===== Encar-uslubidagi boy komponentlar (AVTOMOST brendida) ===== */
+/* sort tabs */
+.sorttabs{display:flex;gap:4px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:16px}
+.sorttabs button{background:none;border:none;color:var(--muted);padding:9px 14px;border-radius:9px;font-size:13.5px;cursor:pointer;font-family:'Manrope';font-weight:600;transition:.18s}
+.sorttabs button:hover{color:var(--txt)}
+.sorttabs button.on{background:var(--grad);color:#04122e}
+/* filter accordion */
+.facc{border-bottom:1px solid var(--line)}
+.facc:last-child{border-bottom:none}
+.facc h4{display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin:0;padding:14px 0;font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-family:'Manrope'}
+.facc h4 .cv{transition:.2s;color:var(--faint)}
+.facc.open h4 .cv{transform:rotate(180deg)}
+.facc .fbody{max-height:0;overflow:hidden;transition:max-height .28s ease}
+.facc.open .fbody{max-height:520px;padding-bottom:14px}
+.frow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:14px;color:var(--muted);cursor:pointer;border-radius:8px}
+.frow:hover{color:var(--txt)}
+.frow.on{color:var(--a2);font-weight:600}
+.frow .ck{width:17px;height:17px;border:1.5px solid var(--line2);border-radius:5px;display:grid;place-items:center;flex:none}
+.frow.on .ck{background:var(--grad);border-color:transparent}
+.frow .cnt{color:var(--faint);font-size:12.5px;font-variant-numeric:tabular-nums}
+/* enriched list card */
+.lcard{display:grid;grid-template-columns:280px 1fr auto;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;transition:.22s;align-items:center}
+.lcard:hover{border-color:var(--line2);transform:translateY(-3px);box-shadow:var(--shadow)}
+@media(max-width:760px){.lcard{grid-template-columns:1fr}}
+.lphotos{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.lph{height:96px;border-radius:10px;background:radial-gradient(120% 130% at 50% 0%,#16284f,#0a1024);display:grid;place-items:center;overflow:hidden;position:relative}
+.lph svg{width:90%}
+.lph .dg{position:absolute;top:6px;left:6px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:5px}
+.linfo .lt{font-family:'Manrope';font-weight:700;font-size:17px}
+.linfo .ls{color:var(--faint);font-size:13px;margin:3px 0 8px}
+.ltags{display:flex;gap:6px;flex-wrap:wrap}
+.ltag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid var(--line)}
+.ltag.hot{background:rgba(251,113,133,.16);color:#fda4af;border-color:transparent}
+.ltag.eco{background:rgba(52,211,153,.16);color:#6ee7b7;border-color:transparent}
+.ltag.af{background:rgba(34,211,238,.14);color:#67e8f9;border-color:transparent}
+.lprice{text-align:right;min-width:150px}
+.lprice .lk{font-size:12px;color:var(--faint)}
+.lprice .lkv{font-family:'Manrope';font-weight:600;font-size:14px;color:var(--muted)}
+.lprice .llv{font-family:'Manrope';font-weight:800;font-size:22px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:2px}
+.viewtoggle{display:flex;gap:6px}
+.viewtoggle button{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);width:38px;height:38px;border-radius:10px;cursor:pointer;display:grid;place-items:center}
+.viewtoggle button.on{background:var(--grad);color:#04122e;border-color:transparent}
+/* detail tabs */
+.dtabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:22px;overflow-x:auto}
+.dtabs button{background:none;border:none;color:var(--muted);padding:14px 16px;font-size:15px;font-family:'Manrope';font-weight:600;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.dtabs button.on{color:var(--txt);border-bottom-color:var(--a2)}
+.dsec{display:none}.dsec.show{display:block}
+/* option grid */
+.optgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:8px}
+@media(max-width:680px){.optgrid{grid-template-columns:repeat(3,1fr)}}
+.optitem{text-align:center;padding:14px 8px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02)}
+.optitem.off{opacity:.32}
+.optitem .oi{display:grid;place-items:center;margin-bottom:8px}
+.optitem .ol{font-size:12px;color:var(--muted)}
+/* condition */
+.condhead{display:flex;align-items:center;gap:10px;font-family:'Manrope';font-weight:700;font-size:18px;margin-bottom:14px}
+.condhead .ok{width:26px;height:26px;border-radius:50%;background:rgba(52,211,153,.18);display:grid;place-items:center}
+.condrow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.condrow .cg{color:var(--ok);font-weight:600}
+.inspcard{background:#0a0e1c;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px}
+.inspcard .ih{display:flex;align-items:center;gap:10px;color:var(--ok);font-family:'Manrope';font-weight:700;margin-bottom:14px}
+.inspbars{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inspbar{height:60px;border-radius:10px;background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(34,211,238,.08));border:1px solid rgba(52,211,153,.25);display:grid;place-items:center;color:var(--ok);font-size:12.5px;text-align:center}
+/* buy-box */
+.buybox{background:var(--bg-soft);border:1px solid var(--line);border-radius:18px;padding:22px;position:sticky;top:84px}
+.bb-price{font-family:'Manrope';font-weight:800;font-size:32px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bb-sub{font-size:12.5px;color:var(--faint)}
+.bb-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.bb-row:last-of-type{border-bottom:none}
+.bb-row .v{font-family:'Manrope';font-weight:600}
+.bb-tcc{display:flex;justify-content:space-between;align-items:center;background:rgba(79,140,255,.08);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;margin:14px 0;cursor:pointer}
+.bb-tcc:hover{background:rgba(79,140,255,.14)}
+.bb-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.bb-mini{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);border-radius:11px;padding:11px;font-size:12.5px;text-align:center;cursor:pointer}
+.bb-mini:hover{color:var(--txt)}
+.thumbrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.thumb{width:72px;height:54px;border-radius:9px;background:radial-gradient(120% 130% at 50% 0%,#16284f,#0a1024);border:2px solid transparent;display:grid;place-items:center;cursor:pointer;overflow:hidden}
+.thumb svg{width:84%}.thumb.on{border-color:var(--a2)}
+.galmain{height:340px;border-radius:16px;background:radial-gradient(130% 140% at 50% 0%,#16284f,#0a1024);display:grid;place-items:center;position:relative;overflow:hidden}
+.galmain svg{width:74%}
+.galmeta{position:absolute;top:12px;left:14px;font-size:12px;color:var(--faint)}
+.galnav{position:absolute;bottom:12px;right:14px;display:flex;gap:8px}
+.galnav button{width:34px;height:34px;border-radius:9px;background:rgba(8,12,24,.7);border:1px solid var(--line2);color:var(--txt);display:grid;place-items:center;cursor:pointer}
+
+/* ============================================================
+   YORUG' (LIGHT) TEMA — toza, Encar uslubidagi marketplace ko'rinishi
+   (AVTOMOST brendida — ranglar/kontent o'ziniki)
+   ============================================================ */
+:root{
+  --bg:#ffffff;--bg-soft:#f5f7fa;--panel:#ffffff;--panel2:#f1f4f8;
+  --line:#e7eaef;--line2:#d6dbe3;
+  --txt:#101524;--muted:#5a6679;--faint:#8a93a4;
+  --a1:#2563eb;--a2:#2563eb;--a3:#7c5cfc;
+  --grad:linear-gradient(120deg,#2563eb,#3b82f6);
+  --grad3:linear-gradient(120deg,#2563eb,#3b82f6);
+  --glow:0 10px 24px -10px rgba(37,99,235,.35);
+  --shadow:0 14px 36px -16px rgba(20,30,60,.20);
+}
+body{background:#fff;color:var(--txt)}
+.bgfx,.gridlines{display:none!important}
+header{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--line)}
+.btn.ghost{background:#fff;border:1px solid var(--line2);color:var(--txt)}
+.btn.ghost:hover{background:#f5f7fa}
+.lang select{background:#fff;border:1px solid var(--line2);color:var(--txt)}
+input,select.field,textarea{background:#fff;border:1px solid var(--line2);color:var(--txt)}
+input:focus,select.field:focus,textarea:focus{background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.14)}
+.seg button{background:#fff;border:1px solid var(--line2);color:var(--muted)}
+.card{background:#fff!important;border:1px solid var(--line);backdrop-filter:none;box-shadow:0 1px 3px rgba(20,30,60,.05)}
+.card.hov:hover{background:#fff!important;box-shadow:var(--shadow)}
+.panel{background:#fff}
+.ico-box{background:linear-gradient(135deg,#e8efff,#e6f7ff);border:1px solid #d6e4ff}
+.chip{background:#f1f4f8;border:1px solid var(--line2);color:var(--muted)}
+.stat{background:#fff;border:1px solid var(--line)}
+.hero-visual .ring{border-color:var(--line2);box-shadow:none}
+.ftag{background:rgba(255,255,255,.96)!important;border:1px solid var(--line2);color:var(--txt);box-shadow:var(--shadow)}
+.calc-shell{background:#fff;border:1px solid var(--line)}
+.calc-pane{background:#f5f7fa}
+.receipt{background:#fff;border:1px solid var(--line)}
+.bar{background:#eef1f6;box-shadow:inset 0 0 0 1px var(--line)}
+.note{background:#fff8ec;border:1px solid #ffe2b0;color:#8a6d2f}
+/* katalog */
+.filters{background:#fff;border:1px solid var(--line)}
+.sorttabs{background:#fff;border:1px solid var(--line)}
+.sortsel,.viewtoggle button{background:#fff;border:1px solid var(--line2);color:var(--muted)}
+.fchip,.pill{background:#fff;border:1px solid var(--line2);color:var(--muted)}
+.frow:hover{background:#f5f7fa}
+.carcard,.lcard{background:#fff;border:1px solid var(--line)}
+.car-img,.lph,.galmain,.gallery .main,.thumb{background:#eef1f6!important}
+.car-img{height:auto!important;aspect-ratio:16/11;display:flex;align-items:center;justify-content:center;position:relative}
+.car-img svg{width:auto}
+.ph-ico{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.ph-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8px;z-index:2}
+.car-img,.lph,.galmain{overflow:hidden}
+.ph-illus{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(130% 130% at 50% 6%,#fbfcfe 0%,#eaeef4 64%,#e1e6ee 100%)}
+.ph-illus svg{width:92%;height:92%}
+.ph-wm{position:absolute;left:13px;top:11px;font-family:'Manrope',sans-serif;font-weight:800;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(16,21,36,.30)}
+.thumb .ph-wm{display:none}.thumb .ph-illus svg{width:82%;height:82%}
+/* tavsiya belgisi */
+.recwrap{position:absolute;left:10px;top:10px;z-index:3}
+.recb{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;letter-spacing:.2px;white-space:nowrap}
+.recb.ok{background:#dcfce7;color:#15803d}.recb.mid{background:#fef3c7;color:#b45309}.recb.no{background:#fee2e2;color:#b91c1c}
+.cp-land{font-size:17.5px}
+.mk{color:#b45309;font-weight:700}
+.cmpbtn{margin-top:10px;width:100%;background:#f1f4f8;border:1px solid var(--line2);color:var(--muted);font-size:12.5px;font-weight:600;padding:7px;border-radius:9px;cursor:pointer;transition:.16s}
+.cmpbtn:hover{background:#e7ecf3}.cmpbtn.on{background:#eef3ff;border-color:var(--a1);color:var(--a2)}
+/* solishtirish paneli (pastda yopishadi) */
+.cmpbar{position:sticky;bottom:0;z-index:40;background:rgba(255,255,255,.97);border-top:1px solid var(--line2);box-shadow:0 -6px 24px rgba(20,30,60,.10);backdrop-filter:blur(6px)}
+.cmpbar-in{max-width:1180px;margin:auto;padding:12px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.cmpcount{font-weight:700;font-size:13.5px;color:var(--a2)}
+.cmpchip{background:#f1f4f8;border:1px solid var(--line2);border-radius:20px;padding:5px 10px;font-size:12.5px;display:inline-flex;gap:7px;align-items:center}
+.cmpchip b{cursor:pointer;color:var(--faint);font-weight:700}.cmpchip b:hover{color:var(--danger)}
+.btn.sm{padding:8px 14px;font-size:13px}.btn.sm.ghost{background:#fff;border:1px solid var(--line2);color:var(--muted)}
+.btn.sm[disabled]{opacity:.45;pointer-events:none}
+/* solishtirish jadvali */
+.cmptable-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+.cmptable{width:100%;border-collapse:collapse;min-width:520px}
+.cmptable td,.cmptable th{padding:11px 14px;text-align:center;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+.cmptable tr:last-child td,.cmptable tr:last-child th{border-bottom:none}
+.cmptable .rl{text-align:left;color:var(--faint);font-size:12.5px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;background:#fafbfd;font-weight:600}
+.cmphead th{padding-top:16px}
+.cmpph{width:150px;max-width:30vw;aspect-ratio:16/11;position:relative;border-radius:10px;overflow:hidden;margin:auto}
+.cmpt{font-weight:700;font-size:14.5px;margin-top:8px}
+.cmptable td.big b{font-size:18px;color:var(--a2);font-family:'Manrope'}
+.bestcell{color:#15803d!important}
+.besttag{display:inline-block;font-size:10px;background:#dcfce7;color:#15803d;padding:2px 6px;border-radius:6px;vertical-align:middle;font-family:Inter}
+.results-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ratechip{font-size:12px;font-weight:600;color:var(--faint);background:#f3f5f9;border:1px solid var(--line2);padding:4px 10px;border-radius:20px;white-space:nowrap}
+.ratechip.live{color:#15803d;background:#ecfdf3;border-color:#bbf7d0}
+/* sevimlilar */
+.favwrap{position:absolute;right:10px;bottom:10px;z-index:3}
+.favbtn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.96);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.16s;box-shadow:0 2px 8px rgba(20,30,60,.10)}
+.favbtn:hover{transform:scale(1.1)}
+.favbtn.on{background:#fff0f3;border-color:#fbcfe0}
+.favbtn.on svg path{fill:#e11d48;stroke:#e11d48}
+.navbadge{display:none;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:10px;background:#e11d48;color:#fff;font-size:11px;font-weight:700;margin-left:4px}
+.pd{font-weight:700;font-size:12px}
+.pd.down{color:#15803d}.pd.up{color:#b91c1c}.pd.flat{color:var(--faint)}
+/* AI maslahatchi */
+.navai{font-weight:700}
+.advhead{display:flex;gap:14px;align-items:center;margin-bottom:18px}
+.advbot{width:52px;height:52px;border-radius:15px;background:linear-gradient(135deg,#2563eb,#22d3ee);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 6px 18px rgba(37,99,235,.28)}
+.advform{max-width:620px}
+.advl{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:14px 0 7px}
+.advl:first-child{margin-top:0}
+.advbudget{display:flex;align-items:center;gap:8px;background:#f5f7fa;border:1px solid var(--line2);border-radius:11px;padding:0 14px}
+.advbudget span{font-size:18px;font-weight:700;color:var(--faint)}
+.advbudget input{flex:1;border:none;background:transparent;padding:13px 0;font-size:17px;font-weight:700;outline:none;color:var(--txt)}
+.advchips{display:flex;flex-wrap:wrap;gap:8px}
+.advchip{background:#fff;border:1px solid var(--line2);color:var(--muted);padding:9px 15px;border-radius:10px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.16s}
+.advchip:hover{border-color:var(--a1)}
+.advchip.on{background:#eef3ff;border-color:var(--a1);color:var(--a2)}
+.advsummary{font-size:15px;font-weight:700;color:var(--a2);background:#eef3ff;border:1px solid #cdddff;border-radius:11px;padding:12px 16px;margin-bottom:16px}
+.advrec{position:relative;border:1.5px solid #cdddff!important;box-shadow:0 6px 20px rgba(37,99,235,.08)}
+.advrank{position:absolute;left:10px;top:10px;z-index:4;background:linear-gradient(135deg,#2563eb,#22d3ee);color:#fff;font-weight:800;font-size:13px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(37,99,235,.35)}
+.advrec .recwrap{left:52px}
+.advwhy{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.advwhy li{font-size:12.5px;color:#15803d;font-weight:600}
+.advtrap{margin-top:16px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.5}
+.car-body{padding:12px 14px 14px}
+.car-title{font-size:15px;font-weight:600}
+.car-sub{font-size:12.5px;color:var(--faint);margin:2px 0 9px}
+.cp-land{font-size:19px;font-weight:800;color:var(--a2);font-family:'Manrope';letter-spacing:-.3px}
+.cp-kor{font-size:12px;color:var(--faint);margin-top:1px}
+.cb{background:rgba(255,255,255,.96);color:#101524;border:1px solid var(--line2);font-weight:600}
+.galmain{aspect-ratio:16/10;height:auto!important}.galmain .ph-ico{height:100%}
+.cb{background:rgba(255,255,255,.95);color:#101524;border:1px solid var(--line2)}
+.cb.ev{background:#dcfce7;color:#15803d;border-color:transparent}
+.fav{background:rgba(255,255,255,.95);border:1px solid var(--line2)}
+.spec,.opt,.optitem,.si{background:#f5f7fa;border:1px solid var(--line)}
+.ltag{background:#f1f4f8;border:1px solid var(--line);color:var(--muted)}
+/* detal */
+.dtabs{border-bottom:1px solid var(--line)}
+.dtabs button.on{color:var(--txt)}
+.buybox{background:#fff;border:1px solid var(--line)}
+.bb-tcc{background:#eef3ff;border:1px solid #cdddff}
+.bb-mini{background:#f5f7fa;border:1px solid var(--line2)}
+.galnav button{background:rgba(255,255,255,.95);border:1px solid var(--line2);color:var(--txt)}
+.galmeta{color:var(--faint)}
+.condrow,.bb-row,.paystage,.tl-item,.ln,.bd-line{border-color:var(--line)}
+.inspcard{background:#0d1424;border:1px solid #1b2540} /* tekshiruv kartasi qora — kontrast uchun */
+/* order/tracking/faq */
+.stepper .s{background:#fff;border:1px solid var(--line)}
+.opt-card{background:#fff;border:1px solid var(--line)}
+.opt-card.sel{background:#eef3ff;border-color:var(--a1)}
+.ts .dot{background:#fff;border:2px solid var(--line2)}
+.faq-item,.formbox{background:#fff;border:1px solid var(--line)}
+footer{border-top:1px solid var(--line)}
+::selection{background:rgba(37,99,235,.18);color:#101524}
+
+/* ===== Yengil animatsiyalar ===== */
+@keyframes cardin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.carcard,.lcard{animation:cardin .45s cubic-bezier(.2,.7,.2,1) both}
+.cars>*:nth-child(1){animation-delay:.02s}.cars>*:nth-child(2){animation-delay:.06s}.cars>*:nth-child(3){animation-delay:.10s}
+.cars>*:nth-child(4){animation-delay:.14s}.cars>*:nth-child(5){animation-delay:.18s}.cars>*:nth-child(6){animation-delay:.22s}
+.cars>*:nth-child(7){animation-delay:.26s}.cars>*:nth-child(8){animation-delay:.30s}.cars>*:nth-child(9){animation-delay:.34s}
+.cars>*:nth-child(n+10){animation-delay:.38s}
+.carcard,.lcard{transition:transform .22s cubic-bezier(.2,.7,.2,1),border-color .22s,box-shadow .22s}
+.carcard:hover{transform:translateY(-4px)}
+.car-img .ph-img,.car-img .ph-ico{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.carcard:hover .ph-img,.carcard:hover .ph-ico{transform:scale(1.05)}
+.cb,.fav{transition:.2s}
+.carcard:hover .fav{color:var(--danger)}
+.btn{transition:transform .16s,box-shadow .16s,filter .16s}
+.btn:active{transform:translateY(0) scale(.98)}
+.fchip,.frow,.sorttabs button,.dtabs button,.bb-mini,.car-cta{transition:.18s}
+.facc .fbody{transition:max-height .3s cubic-bezier(.2,.7,.2,1)}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.rv{opacity:0;animation:fadeup .6s cubic-bezier(.2,.7,.2,1) forwards}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bgfx"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+<div class="gridlines"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" onclick="nav('home')">
+      <span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l2-5a3 3 0 0 1 2.8-2h8.4A3 3 0 0 1 19 8l2 5M5 17h14M6 13h12" stroke="#04122e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="17.5" r="1.6" fill="#04122e"/><circle cx="16.5" cy="17.5" r="1.6" fill="#04122e"/></svg></span>
+      AVTO<b>MOST</b>
+    </a>
+    <nav class="menu" id="menu">
+      <a data-view="catalog" onclick="nav('catalog')" data-i="nav_catalog">Moshinalar</a>
+      <a data-view="advisor" onclick="nav('advisor')" class="navai"><span data-i="nav_advisor">🤖 AI Maslahatchi</span></a>
+      <a onclick="nav('home');setTimeout(()=>scrollToId('how'),80)" data-i="nav_how">Qanday ishlaydi</a>
+      <a onclick="nav('home');setTimeout(()=>scrollToId('calc'),80)" data-i="nav_calc">Kalkulyator</a>
+      <a data-view="tracking" onclick="nav('tracking')" data-i="nav_track">Kuzatuv</a>
+      <a data-view="favorites" onclick="nav('favorites')"><span data-i="nav_fav">Sevimlilar</span> <span id="favCount" class="navbadge"></span></a>
+      <a data-view="faq" onclick="nav('faq')" data-i="nav_faq">Savol-javob</a>
+    </nav>
+    <div class="controls">
+      <div class="lang"><select id="langSel" onchange="setLang(this.value)">
+        <option value="uz">🇺🇿 O'zbek</option><option value="ru">🇷🇺 Русский</option><option value="kz">🇰🇿 Qazaq</option>
+        <option value="kg">🇰🇬 Кыргыз</option><option value="tg">🇹🇯 Тоҷик</option><option value="en">🇬🇧 English</option>
+      </select></div>
+      <button class="btn" onclick="nav('catalog')" data-i="nav_order">Buyurtma</button>
+      <button class="menu-btn" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap foot">
+    <div style="max-width:340px">
+      <div class="logo" style="font-size:20px;margin-bottom:10px"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l2-5a3 3 0 0 1 2.8-2h8.4A3 3 0 0 1 19 8l2 5M5 17h14M6 13h12" stroke="#04122e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="17.5" r="1.6" fill="#04122e"/><circle cx="16.5" cy="17.5" r="1.6" fill="#04122e"/></svg></span>AVTO<b>MOST</b></div>
+      <div data-i="foot_desc">Koreyadan Markaziy Osiyoga to'g'ridan-to'g'ri moshina import platformasi.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a onclick="nav('catalog')" data-i="nav_catalog">Moshinalar</a>
+      <a onclick="nav('home');setTimeout(()=>scrollToId('calc'),80)" data-i="nav_calc">Kalkulyator</a>
+      <a onclick="nav('tracking')" data-i="nav_track">Kuzatuv</a>
+      <a onclick="nav('faq')" data-i="nav_faq">Savol-javob</a>
+    </div>
+    <div>
+      <div>📧 info@avtomost.uz</div><div>📱 +998 90 000 00 00</div><div>📍 Toshkent · Busan</div>
+      <div style="margin-top:10px;opacity:.55">© 2026 AVTOMOST. <span data-i="foot_demo">Demo MVP versiya.</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ DATA ============ */
+const CARS=[
+ {id:1,brand:'Hyundai',model:'Avante',year:2019,cc:1598,fuel:'petrol',km:79500,tr:'AT',body:'sedan',color:'#22d3ee',price:11000,options:['Kamera','LED','Klimat']},
+ {id:2,brand:'Hyundai',model:'Avante',year:2021,cc:1598,fuel:'petrol',km:64000,tr:'AT',body:'sedan',color:'#8b5cf6',price:14000,options:['Kamera','LED','Klimat']},
+ {id:3,brand:'Hyundai',model:'Avante',year:2023,cc:1598,fuel:'petrol',km:38000,tr:'AT',body:'sedan',color:'#34d399',price:17300,options:['Kamera','LED','Klimat']},
+ {id:4,brand:'Hyundai',model:'Sonata',year:2020,cc:1999,fuel:'petrol',km:74000,tr:'AT',body:'sedan',color:'#f472b6',price:15600,options:['Kamera','LED','Klimat']},
+ {id:5,brand:'Hyundai',model:'Sonata',year:2021,cc:1999,fuel:'petrol',km:64000,tr:'AT',body:'sedan',color:'#fbbf24',price:16400,options:['Kamera','LED','Klimat']},
+ {id:6,brand:'Hyundai',model:'Sonata',year:2023,cc:1999,fuel:'petrol',km:34500,tr:'AT',body:'sedan',color:'#fb7185',price:20300,options:['Kamera','LED','Klimat']},
+ {id:7,brand:'Hyundai',model:'Sonata N',year:2021,cc:2497,fuel:'petrol',km:55500,tr:'AT',body:'sedan',color:'#3b6fd4',price:24900,options:['Kamera','LED','Klimat']},
+ {id:8,brand:'Hyundai',model:'Sonata N',year:2022,cc:2497,fuel:'petrol',km:44500,tr:'AT',body:'sedan',color:'#4f8cff',price:26400,options:['Kamera','LED','Klimat']},
+ {id:9,brand:'Hyundai',model:'Grandeur',year:2021,cc:2497,fuel:'petrol',km:61000,tr:'AT',body:'sedan',color:'#22d3ee',price:26100,options:['Kamera','LED','Klimat']},
+ {id:10,brand:'Hyundai',model:'Grandeur',year:2022,cc:2497,fuel:'petrol',km:51500,tr:'AT',body:'sedan',color:'#8b5cf6',price:30900,options:['Kamera','LED','Klimat']},
+ {id:11,brand:'Hyundai',model:'Grandeur',year:2023,cc:2497,fuel:'petrol',km:33500,tr:'AT',body:'sedan',color:'#34d399',price:33500,options:['Kamera','LED','Klimat']},
+ {id:12,brand:'Hyundai',model:'Tucson',year:2020,cc:1598,fuel:'petrol',km:70500,tr:'AT',body:'suv',color:'#f472b6',price:18900,options:['Kamera','LED','Klimat']},
+ {id:13,brand:'Hyundai',model:'Tucson',year:2022,cc:1598,fuel:'petrol',km:52000,tr:'AT',body:'suv',color:'#fbbf24',price:22800,options:['Kamera','LED','Klimat']},
+ {id:14,brand:'Hyundai',model:'Tucson',year:2023,cc:1598,fuel:'petrol',km:40000,tr:'AT',body:'suv',color:'#fb7185',price:24900,options:['Kamera','LED','Klimat']},
+ {id:15,brand:'Hyundai',model:'Tucson',year:2021,cc:1598,fuel:'hybrid',km:55000,tr:'AT',body:'suv',color:'#3b6fd4',price:22800,options:['Kamera','LED','Klimat']},
+ {id:16,brand:'Hyundai',model:'Tucson',year:2023,cc:1598,fuel:'hybrid',km:39500,tr:'AT',body:'suv',color:'#4f8cff',price:29100,options:['Kamera','LED','Klimat']},
+ {id:17,brand:'Hyundai',model:'Santa Fe',year:2020,cc:2199,fuel:'petrol',km:73500,tr:'AT',body:'suv',color:'#22d3ee',price:23900,options:['Kamera','LED','Klimat']},
+ {id:18,brand:'Hyundai',model:'Santa Fe',year:2021,cc:2199,fuel:'petrol',km:61500,tr:'AT',body:'suv',color:'#8b5cf6',price:26700,options:['Kamera','LED','Klimat']},
+ {id:19,brand:'Hyundai',model:'Santa Fe',year:2021,cc:1598,fuel:'hybrid',km:58000,tr:'AT',body:'suv',color:'#34d399',price:27000,options:['Kamera','LED','Klimat']},
+ {id:20,brand:'Hyundai',model:'Santa Fe',year:2022,cc:1598,fuel:'hybrid',km:50000,tr:'AT',body:'suv',color:'#f472b6',price:30300,options:['Kamera','LED','Klimat']},
+ {id:21,brand:'Hyundai',model:'Palisade',year:2020,cc:2199,fuel:'petrol',km:68500,tr:'AT',body:'suv',color:'#fbbf24',price:28200,options:['Kamera','LED','Klimat']},
+ {id:22,brand:'Hyundai',model:'Palisade',year:2022,cc:2199,fuel:'petrol',km:47000,tr:'AT',body:'suv',color:'#fb7185',price:36300,options:['Kamera','LED','Klimat']},
+ {id:23,brand:'Hyundai',model:'Palisade',year:2023,cc:2199,fuel:'petrol',km:38000,tr:'AT',body:'suv',color:'#3b6fd4',price:40000,options:['Kamera','LED','Klimat']},
+ {id:24,brand:'Hyundai',model:'Kona',year:2020,cc:1591,fuel:'petrol',km:70000,tr:'AT',body:'crossover',color:'#4f8cff',price:13900,options:['Kamera','LED','Klimat']},
+ {id:25,brand:'Hyundai',model:'Kona',year:2022,cc:1591,fuel:'petrol',km:47500,tr:'AT',body:'crossover',color:'#22d3ee',price:17900,options:['Kamera','LED','Klimat']},
+ {id:26,brand:'Hyundai',model:'Kona',year:2021,cc:0,fuel:'ev',km:62500,tr:'AT',body:'crossover',color:'#8b5cf6',price:22600,options:['Kamera','LED','Klimat']},
+ {id:27,brand:'Hyundai',model:'Kona',year:2022,cc:0,fuel:'ev',km:47000,tr:'AT',body:'crossover',color:'#34d399',price:25700,options:['Kamera','LED','Klimat']},
+ {id:28,brand:'Hyundai',model:'Ioniq 5',year:2022,cc:0,fuel:'ev',km:49500,tr:'AT',body:'crossover',color:'#f472b6',price:37200,options:['Kamera','LED','Klimat']},
+ {id:29,brand:'Hyundai',model:'Ioniq 5',year:2023,cc:0,fuel:'ev',km:38000,tr:'AT',body:'crossover',color:'#fbbf24',price:40000,options:['Kamera','LED','Klimat']},
+ {id:30,brand:'Hyundai',model:'Ioniq 6',year:2023,cc:0,fuel:'ev',km:34000,tr:'AT',body:'sedan',color:'#fb7185',price:42000,options:['Kamera','LED','Klimat']},
+ {id:31,brand:'Hyundai',model:'Ioniq 6',year:2024,cc:0,fuel:'ev',km:26500,tr:'AT',body:'sedan',color:'#3b6fd4',price:46800,options:['Kamera','LED','Klimat']},
+ {id:32,brand:'Hyundai',model:'Staria',year:2022,cc:2199,fuel:'petrol',km:46500,tr:'AT',body:'minivan',color:'#4f8cff',price:33200,options:['Kamera','LED','Klimat']},
+ {id:33,brand:'Hyundai',model:'Staria',year:2023,cc:2199,fuel:'petrol',km:33500,tr:'AT',body:'minivan',color:'#22d3ee',price:36500,options:['Kamera','LED','Klimat']},
+ {id:34,brand:'Hyundai',model:'Venue',year:2021,cc:1591,fuel:'petrol',km:57000,tr:'AT',body:'suv',color:'#8b5cf6',price:15300,options:['Kamera','LED','Klimat']},
+ {id:35,brand:'Hyundai',model:'Venue',year:2022,cc:1591,fuel:'petrol',km:51500,tr:'AT',body:'suv',color:'#34d399',price:16200,options:['Kamera','LED','Klimat']},
+ {id:36,brand:'Kia',model:'Morning',year:2020,cc:998,fuel:'petrol',km:71500,tr:'AT',body:'sedan',color:'#f472b6',price:8100,options:['Kamera','LED','Klimat']},
+ {id:37,brand:'Kia',model:'Morning',year:2022,cc:998,fuel:'petrol',km:46000,tr:'AT',body:'sedan',color:'#fbbf24',price:10300,options:['Kamera','LED','Klimat']},
+ {id:38,brand:'Kia',model:'K3',year:2020,cc:1598,fuel:'petrol',km:69500,tr:'AT',body:'sedan',color:'#fb7185',price:11500,options:['Kamera','LED','Klimat']},
+ {id:39,brand:'Kia',model:'K3',year:2022,cc:1598,fuel:'petrol',km:50000,tr:'AT',body:'sedan',color:'#3b6fd4',price:14600,options:['Kamera','LED','Klimat']},
+ {id:40,brand:'Kia',model:'K5',year:2021,cc:1598,fuel:'petrol',km:56500,tr:'AT',body:'sedan',color:'#4f8cff',price:18600,options:['Kamera','LED','Klimat']},
+ {id:41,brand:'Kia',model:'K5',year:2022,cc:1598,fuel:'petrol',km:44000,tr:'AT',body:'sedan',color:'#22d3ee',price:21300,options:['Kamera','LED','Klimat']},
+ {id:42,brand:'Kia',model:'K5',year:2023,cc:1598,fuel:'petrol',km:40000,tr:'AT',body:'sedan',color:'#8b5cf6',price:22900,options:['Kamera','LED','Klimat']},
+ {id:43,brand:'Kia',model:'K8',year:2021,cc:2497,fuel:'petrol',km:59000,tr:'AT',body:'sedan',color:'#34d399',price:28600,options:['Kamera','LED','Klimat']},
+ {id:44,brand:'Kia',model:'K8',year:2022,cc:2497,fuel:'petrol',km:48500,tr:'AT',body:'sedan',color:'#f472b6',price:30800,options:['Kamera','LED','Klimat']},
+ {id:45,brand:'Kia',model:'Sportage',year:2021,cc:1598,fuel:'petrol',km:57500,tr:'AT',body:'suv',color:'#fbbf24',price:21600,options:['Kamera','LED','Klimat']},
+ {id:46,brand:'Kia',model:'Sportage',year:2022,cc:1598,fuel:'petrol',km:46500,tr:'AT',body:'suv',color:'#fb7185',price:25000,options:['Kamera','LED','Klimat']},
+ {id:47,brand:'Kia',model:'Sportage',year:2023,cc:1598,fuel:'petrol',km:33500,tr:'AT',body:'suv',color:'#3b6fd4',price:27000,options:['Kamera','LED','Klimat']},
+ {id:48,brand:'Kia',model:'Sportage',year:2022,cc:1598,fuel:'hybrid',km:50000,tr:'AT',body:'suv',color:'#4f8cff',price:27400,options:['Kamera','LED','Klimat']},
+ {id:49,brand:'Kia',model:'Sportage',year:2023,cc:1598,fuel:'hybrid',km:34500,tr:'AT',body:'suv',color:'#22d3ee',price:29200,options:['Kamera','LED','Klimat']},
+ {id:50,brand:'Kia',model:'Sorento',year:2021,cc:1598,fuel:'hybrid',km:57500,tr:'AT',body:'suv',color:'#8b5cf6',price:28700,options:['Kamera','LED','Klimat']},
+ {id:51,brand:'Kia',model:'Sorento',year:2022,cc:1598,fuel:'hybrid',km:48000,tr:'AT',body:'suv',color:'#34d399',price:30500,options:['Kamera','LED','Klimat']},
+ {id:52,brand:'Kia',model:'Sorento',year:2020,cc:2199,fuel:'petrol',km:69500,tr:'AT',body:'suv',color:'#f472b6',price:24600,options:['Kamera','LED','Klimat']},
+ {id:53,brand:'Kia',model:'Sorento',year:2022,cc:2199,fuel:'petrol',km:48000,tr:'AT',body:'suv',color:'#fbbf24',price:28900,options:['Kamera','LED','Klimat']},
+ {id:54,brand:'Kia',model:'Carnival',year:2021,cc:3470,fuel:'petrol',km:64000,tr:'AT',body:'minivan',color:'#fb7185',price:32000,options:['Kamera','LED','Klimat']},
+ {id:55,brand:'Kia',model:'Carnival',year:2022,cc:3470,fuel:'petrol',km:49000,tr:'AT',body:'minivan',color:'#3b6fd4',price:36000,options:['Kamera','LED','Klimat']},
+ {id:56,brand:'Kia',model:'Seltos',year:2021,cc:1591,fuel:'petrol',km:63000,tr:'AT',body:'suv',color:'#4f8cff',price:18100,options:['Kamera','LED','Klimat']},
+ {id:57,brand:'Kia',model:'Seltos',year:2022,cc:1591,fuel:'petrol',km:53000,tr:'AT',body:'suv',color:'#22d3ee',price:20300,options:['Kamera','LED','Klimat']},
+ {id:58,brand:'Kia',model:'Niro',year:2021,cc:1580,fuel:'hybrid',km:57000,tr:'AT',body:'crossover',color:'#8b5cf6',price:19600,options:['Kamera','LED','Klimat']},
+ {id:59,brand:'Kia',model:'Niro',year:2022,cc:1580,fuel:'hybrid',km:47500,tr:'AT',body:'crossover',color:'#34d399',price:22200,options:['Kamera','LED','Klimat']},
+ {id:60,brand:'Kia',model:'Niro',year:2021,cc:0,fuel:'ev',km:59500,tr:'AT',body:'crossover',color:'#f472b6',price:26600,options:['Kamera','LED','Klimat']},
+ {id:61,brand:'Kia',model:'Niro',year:2022,cc:0,fuel:'ev',km:51000,tr:'AT',body:'crossover',color:'#fbbf24',price:29800,options:['Kamera','LED','Klimat']},
+ {id:62,brand:'Kia',model:'EV6',year:2022,cc:0,fuel:'ev',km:52000,tr:'AT',body:'crossover',color:'#fb7185',price:35500,options:['Kamera','LED','Klimat']},
+ {id:63,brand:'Kia',model:'EV6',year:2023,cc:0,fuel:'ev',km:38500,tr:'AT',body:'crossover',color:'#3b6fd4',price:38800,options:['Kamera','LED','Klimat']},
+ {id:64,brand:'Kia',model:'Stinger',year:2021,cc:3342,fuel:'petrol',km:59000,tr:'AT',body:'sedan',color:'#4f8cff',price:30900,options:['Kamera','LED','Klimat']},
+ {id:65,brand:'Kia',model:'Stinger',year:2022,cc:3342,fuel:'petrol',km:50500,tr:'AT',body:'sedan',color:'#22d3ee',price:32900,options:['Kamera','LED','Klimat']},
+ {id:66,brand:'Kia',model:'Mohave',year:2021,cc:2959,fuel:'petrol',km:63000,tr:'AT',body:'suv',color:'#8b5cf6',price:35100,options:['Kamera','LED','Klimat']},
+ {id:67,brand:'Kia',model:'Mohave',year:2022,cc:2959,fuel:'petrol',km:46000,tr:'AT',body:'suv',color:'#34d399',price:36900,options:['Kamera','LED','Klimat']},
+ {id:68,brand:'Genesis',model:'G70',year:2021,cc:1998,fuel:'petrol',km:55500,tr:'AT',body:'sedan',color:'#f472b6',price:25700,options:['Kamera','LED','Klimat']},
+ {id:69,brand:'Genesis',model:'G70',year:2022,cc:1998,fuel:'petrol',km:50000,tr:'AT',body:'sedan',color:'#fbbf24',price:28100,options:['Kamera','LED','Klimat']},
+ {id:70,brand:'Genesis',model:'G80',year:2021,cc:2497,fuel:'petrol',km:57000,tr:'AT',body:'sedan',color:'#fb7185',price:36900,options:['Kamera','LED','Klimat']},
+ {id:71,brand:'Genesis',model:'G80',year:2022,cc:2497,fuel:'petrol',km:46500,tr:'AT',body:'sedan',color:'#3b6fd4',price:40100,options:['Kamera','LED','Klimat']},
+ {id:72,brand:'Genesis',model:'G80',year:2022,cc:0,fuel:'ev',km:49500,tr:'AT',body:'sedan',color:'#4f8cff',price:54200,options:['Kamera','LED','Klimat']},
+ {id:73,brand:'Genesis',model:'G80',year:2023,cc:0,fuel:'ev',km:41500,tr:'AT',body:'sedan',color:'#22d3ee',price:61600,options:['Kamera','LED','Klimat']},
+ {id:74,brand:'Genesis',model:'G90',year:2021,cc:3470,fuel:'petrol',km:57000,tr:'AT',body:'sedan',color:'#8b5cf6',price:56800,options:['Kamera','LED','Klimat']},
+ {id:75,brand:'Genesis',model:'G90',year:2022,cc:3470,fuel:'petrol',km:45000,tr:'AT',body:'sedan',color:'#34d399',price:61800,options:['Kamera','LED','Klimat']},
+ {id:76,brand:'Genesis',model:'GV70',year:2021,cc:2497,fuel:'petrol',km:58000,tr:'AT',body:'suv',color:'#f472b6',price:39000,options:['Kamera','LED','Klimat']},
+ {id:77,brand:'Genesis',model:'GV70',year:2022,cc:2497,fuel:'petrol',km:50000,tr:'AT',body:'suv',color:'#fbbf24',price:41600,options:['Kamera','LED','Klimat']},
+ {id:78,brand:'Genesis',model:'GV80',year:2021,cc:2497,fuel:'petrol',km:62500,tr:'AT',body:'suv',color:'#fb7185',price:44600,options:['Kamera','LED','Klimat']},
+ {id:79,brand:'Genesis',model:'GV80',year:2022,cc:2497,fuel:'petrol',km:46500,tr:'AT',body:'suv',color:'#3b6fd4',price:50500,options:['Kamera','LED','Klimat']},
+ {id:80,brand:'Genesis',model:'GV60',year:2022,cc:0,fuel:'ev',km:48500,tr:'AT',body:'crossover',color:'#4f8cff',price:47000,options:['Kamera','LED','Klimat']},
+ {id:81,brand:'Genesis',model:'GV60',year:2023,cc:0,fuel:'ev',km:41500,tr:'AT',body:'crossover',color:'#22d3ee',price:51400,options:['Kamera','LED','Klimat']},
+ {id:82,brand:'Chevrolet',model:'Malibu',year:2020,cc:1998,fuel:'petrol',km:75000,tr:'AT',body:'sedan',color:'#8b5cf6',price:14200,options:['Kamera','LED','Klimat']},
+ {id:83,brand:'Chevrolet',model:'Malibu',year:2022,cc:1998,fuel:'petrol',km:49500,tr:'AT',body:'sedan',color:'#34d399',price:17200,options:['Kamera','LED','Klimat']},
+ {id:84,brand:'Chevrolet',model:'Trailblazer',year:2021,cc:1341,fuel:'petrol',km:56500,tr:'AT',body:'suv',color:'#f472b6',price:17200,options:['Kamera','LED','Klimat']},
+ {id:85,brand:'Chevrolet',model:'Trailblazer',year:2022,cc:1341,fuel:'petrol',km:51000,tr:'AT',body:'suv',color:'#fbbf24',price:19000,options:['Kamera','LED','Klimat']},
+ {id:86,brand:'Chevrolet',model:'Spark',year:2020,cc:998,fuel:'petrol',km:66500,tr:'AT',body:'sedan',color:'#fb7185',price:8100,options:['Kamera','LED','Klimat']},
+ {id:87,brand:'Chevrolet',model:'Spark',year:2022,cc:998,fuel:'petrol',km:48500,tr:'AT',body:'sedan',color:'#3b6fd4',price:10300,options:['Kamera','LED','Klimat']},
+ {id:88,brand:'KGM',model:'Rexton',year:2021,cc:2157,fuel:'petrol',km:62500,tr:'AT',body:'suv',color:'#4f8cff',price:25900,options:['Kamera','LED','Klimat']},
+ {id:89,brand:'KGM',model:'Rexton',year:2022,cc:2157,fuel:'petrol',km:45500,tr:'AT',body:'suv',color:'#22d3ee',price:29400,options:['Kamera','LED','Klimat']},
+ {id:90,brand:'KGM',model:'Tivoli',year:2021,cc:1597,fuel:'petrol',km:58000,tr:'AT',body:'suv',color:'#8b5cf6',price:16500,options:['Kamera','LED','Klimat']},
+ {id:91,brand:'KGM',model:'Tivoli',year:2022,cc:1597,fuel:'petrol',km:46000,tr:'AT',body:'suv',color:'#34d399',price:17200,options:['Kamera','LED','Klimat']},
+ {id:92,brand:'Tesla',model:'Model 3',year:2021,cc:0,fuel:'ev',km:62000,tr:'AT',body:'sedan',color:'#f472b6',price:29000,options:['Kamera','LED','Klimat']},
+ {id:93,brand:'Tesla',model:'Model 3',year:2022,cc:0,fuel:'ev',km:49000,tr:'AT',body:'sedan',color:'#fbbf24',price:33900,options:['Kamera','LED','Klimat']},
+ {id:94,brand:'Tesla',model:'Model Y',year:2022,cc:0,fuel:'ev',km:47500,tr:'AT',body:'suv',color:'#fb7185',price:38600,options:['Kamera','LED','Klimat']},
+ {id:95,brand:'Tesla',model:'Model Y',year:2023,cc:0,fuel:'ev',km:37000,tr:'AT',body:'suv',color:'#3b6fd4',price:44800,options:['Kamera','LED','Klimat']},
+ {id:96,brand:'BMW',model:'320i',year:2020,cc:1998,fuel:'petrol',km:68000,tr:'AT',body:'sedan',color:'#4f8cff',price:19900,options:['Kamera','LED','Klimat']},
+ {id:97,brand:'BMW',model:'320i',year:2022,cc:1998,fuel:'petrol',km:49500,tr:'AT',body:'sedan',color:'#22d3ee',price:24900,options:['Kamera','LED','Klimat']},
+ {id:98,brand:'BMW',model:'520i',year:2021,cc:1998,fuel:'petrol',km:58000,tr:'AT',body:'sedan',color:'#8b5cf6',price:30200,options:['Kamera','LED','Klimat']},
+ {id:99,brand:'BMW',model:'520i',year:2022,cc:1998,fuel:'petrol',km:45000,tr:'AT',body:'sedan',color:'#34d399',price:33700,options:['Kamera','LED','Klimat']},
+ {id:100,brand:'Mercedes',model:'C200',year:2020,cc:1497,fuel:'petrol',km:67000,tr:'AT',body:'sedan',color:'#f472b6',price:23900,options:['Kamera','LED','Klimat']},
+ {id:101,brand:'Mercedes',model:'C200',year:2022,cc:1497,fuel:'petrol',km:45500,tr:'AT',body:'sedan',color:'#fbbf24',price:29900,options:['Kamera','LED','Klimat']},
+ {id:102,brand:'Mercedes',model:'E250',year:2021,cc:1991,fuel:'petrol',km:56000,tr:'AT',body:'sedan',color:'#fb7185',price:33300,options:['Kamera','LED','Klimat']},
+ {id:103,brand:'Mercedes',model:'E250',year:2022,cc:1991,fuel:'petrol',km:48000,tr:'AT',body:'sedan',color:'#3b6fd4',price:38300,options:['Kamera','LED','Klimat']},
+ {id:104,brand:'Audi',model:'A6',year:2021,cc:1984,fuel:'petrol',km:55500,tr:'AT',body:'sedan',color:'#4f8cff',price:32500,options:['Kamera','LED','Klimat']},
+ {id:105,brand:'Audi',model:'A6',year:2022,cc:1984,fuel:'petrol',km:44000,tr:'AT',body:'sedan',color:'#22d3ee',price:34400,options:['Kamera','LED','Klimat']}
+];
+
+/* ============ CUSTOMS CALC ============ */
+function dutyCalc(cat,cc,cval,isEV){if(isEV)return 0;let b,p;
+ /* Real bozor misoliga moslangan (taxminiy — broker aniqlaydi).
+    $20k 2.0L ishlatilgan ≈ $36.5k eshikkacha (manba: ustabor.uz/norma.uz) */
+ if(cat==='new1'){b=.15;p=cc<=1500?.4:cc<=3000?.6:.9;}
+ else if(cat==='new3'){b=.12;p=cc<=1500?.4:cc<=3000?.6:.9;}
+ else{b=.10;p=.5;} return cval*b+cc*p;}
+function utilBRV(age,cc,isEV){if(isEV)return 120;
+ if(age<3){if(cc<1000)return 30;if(cc<=2000)return 120;if(cc<=3000)return 180;if(cc<=3500)return 180;return 300;}
+ if(cc<1000)return 90;if(cc<=2000)return 210;if(cc<=3000)return 330;if(cc<=3500)return 390;return 480;}
+function CALC(o){
+ const price=+o.price||0,cval=+o.customsValue||price,repair=+o.repair||0,cc=+o.cc||0,year=+o.year||0;
+ const fuel=o.fuel||'petrol',model=o.model||'A',logi=+o.logistics||2500,isEV=fuel==='ev';
+ const brv=+o.brv||412000,usd=+o.usdRate||12900,vatR=o.vatRate!=null?+o.vatRate:.12;
+ const exR=+o.exciseRate||4.8,commR=o.commRate!=null?+o.commRate:.05,fix=o.fixFee!=null?+o.fixFee:500;
+ const age=Math.max(0,2026-year),cat=age<=1?'new1':age<=3?'new3':'used';
+ const duty=dutyCalc(cat,cc,cval,isEV);
+ const excise=(!isEV&&model==='B')?cc*exR:0;
+ const util=(utilBRV(age,cc,isEV)*brv)/usd;
+ const vat=(cval+duty+excise+util)*vatR;
+ const comm=price*commR+fix;
+ const total=price+repair+logi+duty+excise+util+vat+comm;
+ return{age,cat,price,repair,logi,duty,excise,util,vat,comm,total,
+  eligible:!(model==='A'&&!isEV&&age>7),
+  breakdown:[['price',price+repair],['logi',logi],['duty',duty],['excise',excise],['util',util],['vat',vat],['comm',comm]]};
+}
+/* Pul birligi — tanlangan tilga (davlatga) bog'liq. USD baza, kurslar taxminiy (2026). */
+const CUR={uz:{r:12900,suf:" so'm"},ru:{r:90,suf:" ₽"},kz:{r:525,suf:" ₸"},kg:{r:87,suf:" сом"},tg:{r:10.9,suf:" смн"},en:{pre:'$',r:1}};
+function curOf(){return CUR[LANG]||CUR.en;}
+function fmtUSD(n){return '$'+Math.round(+n||0).toLocaleString('en-US');}
+function fmt(n){if(LANG==='en')return fmtUSD(n);const c=curOf();const v=Math.round((+n||0)*c.r);return (c.pre||'')+v.toLocaleString('ru-RU')+(c.suf||'');}
+function fmtKm(n){return Number(n).toLocaleString('en-US')+' km';}
+/* Import baholash: eligibility (qonuniy import mumkinmi) + tavsiya darajasi + ustama % */
+function carEval(c){
+  const r=CALC({price:c.price,customsValue:c.price,cc:c.cc,year:c.year,fuel:c.fuel,model:'A'});
+  const age=2026-c.year, markup=Math.round((c.landed/c.price-1)*100);
+  let rec; if(!r.eligible)rec='no'; else if(c.fuel==='ev'||c.fuel==='hybrid'||c.cc<=2000||age<=4)rec='good'; else rec='mid';
+  return {eligible:r.eligible,markup,rec,age};
+}
+function recBadge(c){const e=carEval(c);const m={good:['ok','✅ '],mid:['mid','⚠️ '],no:['no','❌ ']};const k=m[e.rec];
+  return `<span class="recb ${k[0]}">${k[1]}${T('rec_'+e.rec)}</span>`;}
+CARS.forEach(c=>c.landed=CALC({price:c.price,customsValue:c.price,cc:c.cc,year:c.year,fuel:c.fuel,model:'A'}).total);
+
+function carSVG(color){const id='g'+color.replace('#','');
+ return `<svg viewBox="0 0 360 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+ <defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${color}"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+ <ellipse cx="184" cy="133" rx="140" ry="10" fill="#000" opacity="0.40"/>
+ <path d="M24,113 C24,105 30,100 42,99 C50,86 64,80 84,79 L99,79 C108,61 126,51 156,50 L202,50 C231,51 248,62 258,81 L304,86 C326,90 336,98 336,111 C336,114 334,116 330,116 L29,116 C26,116 23,115 24,113 Z" fill="#0c1530" stroke="url(#${id})" stroke-width="2.4"/>
+ <path d="M112,79 C120,63 134,55 157,54 L200,54 C223,55 237,64 245,79 Z" fill="#0a1024" stroke="url(#${id})" stroke-width="1.4"/>
+ <line x1="178" y1="54" x2="178" y2="79" stroke="url(#${id})" stroke-width="1.3" opacity="0.8"/>
+ <path d="M44,108 L320,108" stroke="${color}" stroke-width="1" opacity="0.30"/>
+ <path d="M26,95 L40,92" stroke="#22d3ee" stroke-width="3.4" stroke-linecap="round"/>
+ <rect x="316" y="96" width="14" height="6" rx="3" fill="#e84d4d" opacity="0.9"/>
+ <circle cx="104" cy="116" r="23" fill="#0a0e1c" stroke="url(#${id})" stroke-width="2.6"/><circle cx="104" cy="116" r="9" fill="#11182f" stroke="${color}" stroke-width="1.7"/>
+ <circle cx="264" cy="116" r="23" fill="#0a0e1c" stroke="url(#${id})" stroke-width="2.6"/><circle cx="264" cy="116" r="9" fill="#11182f" stroke="${color}" stroke-width="1.7"/>
+ </svg>`;}
+
+/* ===== Lucide ikonlari (open-source, MIT — lucide.dev / github.com/lucide-icons/lucide) ===== */
+const ICON_PATHS={
+ eye:'<path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/>',
+ swap:'<path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/>',
+ search:'<path d="m8 11 2 2 4-4"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+ shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+ globe:'<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+ phone:'<rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/>',
+ ship:'<path d="M12 10.2V14"/><path d="M12 2v3"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M19.4 20A11.6 11.6 0 0 0 21 14l-8.2-3.6a2 2 0 0 0-1.6 0L3 14a11.6 11.6 0 0 0 2.8 7.8"/><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>',
+ anchor:'<path d="M12 22V8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><circle cx="12" cy="5" r="3"/>',
+ train:'<path d="M8 3.1V7a4 4 0 0 0 8 0V3.1"/><path d="m9 15-1-1"/><path d="m15 15 1-1"/><path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z"/><path d="m8 19-2 3"/><path d="m16 19 2 3"/>',
+ truck:'<path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>',
+ package:'<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/>'
+};
+Object.assign(ICON_PATHS,{
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+ bulb:'<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+ radar:'<path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/><path d="m13.41 10.59 5.66-5.66"/>',
+ camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+ wind:'<path d="M12.8 19.6A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/><path d="M9.8 4.4A2 2 0 1 1 11 8H2"/>',
+ key:'<path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/>',
+ pin:'<path d="M20 10c0 4.4-5.6 9-7.6 10.5a.7.7 0 0 1-.8 0C9.6 19 4 14.4 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+ seat:'<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3"/><path d="M5 19v2"/><path d="M19 19v2"/>',
+ gauge:'<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
+ calendar:'<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
+ fuel:'<line x1="3" x2="15" y1="22" y2="22"/><line x1="4" x2="14" y1="9" y2="9"/><path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"/><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/>',
+ gear:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+ palette:'<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ star:'<path d="M11.5 1.4 8.6 7.3 2 8.3l4.8 4.7L5.7 19.6 11.5 16.5 17.3 19.6 16.2 13 21 8.3 14.4 7.3z"/>',
+ heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+ share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>',
+ chevR:'<path d="m9 18 6-6-6-6"/>',chevL:'<path d="m15 18-6-6 6-6"/>',
+ cart:'<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
+ phonecall:'<path d="M13 2a9 9 0 0 1 9 9"/><path d="M13 6a5 5 0 0 1 5 5"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>',
+ file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/>',
+ car:'<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.6-1.5-1.9L18 9c-.5-1.3-1.7-2-3-2H8c-1.3 0-2.5.7-3 2l-2.5 2.1C1.7 11.4 1 12.1 1 13v3c0 .6.4 1 1 1h2"/><path d="M9 17h6"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>'
+});
+function ICON(n,c,s){return `<svg xmlns="http://www.w3.org/2000/svg" width="${s||24}" height="${s||24}" viewBox="0 0 24 24" fill="none" stroke="${c||'#7dd3fc'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON_PATHS[n]||''}</svg>`;}
+
+/* Moshinalarga qo'shimcha (Encar uslubidagi) maydonlar — deterministik */
+CARS.forEach(c=>{
+  c.accidentFree = c.id%7!==0;
+  c.diag = c.id%4===0?'++':c.id%4===1?'+':'';
+  c.views = 700 + (c.id*173)%2600;
+  c.keys = c.id%3===0?2:1;
+  c.tread = 5 + c.id%5; // mm
+  c.tags=[]; if(c.fuel==='ev')c.tags.push('ECO'); if(c.price<=19000)c.tags.push('HOT'); if(c.km<28000)c.tags.push('Kam km'); if(c.brand==='Genesis')c.tags.push('Premium');
+  c.compareNew = 28 + (c.id*7)%22; // % yangiga nisbatan
+  // Haqiqiy rasmlar EnCarAPI ulanganda keladi. Hozircha har moshina toza illyustratsiya bilan ko'rsatiladi.
+  c.photo=null;
+});
+/* Standart jihozlar (Encar kabi ikon grid) — har moshinaga mavjudlik darajasi */
+const STD_OPTIONS=[['sun','op_sunroof'],['bulb','op_led'],['radar','op_parking'],['camera','op_camera'],['wind','op_ac'],['key','op_smartkey'],['pin','op_nav'],['seat','op_heatseat'],['wind','op_ventseat'],['seat','op_leather']];
+function carOptions(c){
+  const tier=c.price>=33000?10:c.price>=22000?8:6;
+  return STD_OPTIONS.map((o,i)=>({icon:o[0],key:o[1],on:i<tier && !(o[1]==='op_ventseat'&&c.price<30000)}));
+}
+</script>
+
+<script>
+/* ============ I18N ============ */
+const I18N={
+ uz:{nav_catalog:"Moshinalar",nav_how:"Qanday ishlaydi",nav_calc:"Kalkulyator",nav_track:"Kuzatuv",nav_faq:"Savol-javob",nav_order:"Buyurtma",
+  hero_tag:"Korea → Markaziy Osiyo · to'g'ridan-to'g'ri",hero_h1:"Koreya moshinasi.",hero_h1b:"Shaffof narx. Nol bosh og'riq.",
+  hero_sub:"Siz moshinani tanlaysiz — biz sotib olishdan eshikkacha har bir to'lovni qonun bo'yicha aniq hisoblaymiz. Vositachisiz, yashirin to'lovsiz.",
+  hero_b1:"Moshinalarni ko'rish →",hero_b2:"Qanday ishlaydi?",st1:"logistika hamkori",st2:"shaffof narx",st3:"til · 4 davlat",st4:"kun yetkazish",
+  ft1:"Inspeksiya ✓",ft2:"Eshikkacha",ft3:"Qonuniy bojxona",
+  how_eye:"Jarayon",how_t:"4 ta oddiy qadam",how_l:"Mijoz moshinani o'zi tanlaydi, biz qolganini bajaramiz.",
+  h1t:"Moshina tanlash",h1d:"Mijoz Koreya bozoridan moshinani tanlaydi yoki bizdan tavsiya so'raydi.",
+  h2t:"Narxni hisoblash",h2d:"Kalkulyator eshikkacha to'liq narxni ko'rsatadi — boj, aksiz, QQS, hammasi.",
+  h3t:"Sotib olish + yo'l",h3d:"Biz moshinani sotib olamiz va 3–4 hamkor orasidan eng arzonini tanlaymiz.",
+  h4t:"Bojxona + yetkazish",h4d:"Litsenziyali broker bojxonadan o'tkazadi, eshikingizgacha yetkazamiz.",
+  calc_eye:"Aqlli kalkulyator",calc_t:"Eshikkacha narxni aniq ko'ring",calc_l:"O'zbekiston qonuni bo'yicha (2026): boj, aksiz, QQS, utilizatsiya. Har bir to'lov jonli grafikda.",
+  gl_base:"Asosiy",gl_tech:"Texnik",f_country:"Davlat",f_model:"Kim nomiga import",m_a:"Jismoniy shaxs (aksizsiz)",m_b:"Yuridik shaxs (savdo)",
+  f_cond:"Moshina holati",co_clean:"Sog'",co_dmg:"Urilgan / shikast",f_price:"Sotib olish narxi (USD)",f_cval:"Bojxona qiymati (USD)",f_repair:"Ta'mir xarajati (USD)",
+  f_fuel:"Yoqilg'i turi",fu_petrol:"Benzin",fu_hybrid:"Gibrid",fu_ev:"Elektro",f_year:"Ishlab chiqarilgan yili",f_cc:"Dvigatel hajmi (sm³)",f_logi:"Logistika usuli",
+  c_uz:"O'zbekiston",c_kz:"Qozog'iston",c_kg:"Qirg'iziston",c_tj:"Tojikiston",l_sea:"Dengiz konteyner (~$2500)",l_roro:"Ro-Ro kema (~$1800)",l_land:"Quruqlik (~$3500)",
+  adv:"⚙️ Kengaytirilgan sozlamalar",s_excise:"Aksiz $/sm³ (yuridik)",s_vat:"QQS %",s_brv:"BRV (so'm)",s_rate:"USD kurs (so'm)",s_comm:"Komissiya %",s_fix:"Qat'iy xizmat $",
+  r_total:"JAMI eshikkacha",r_price:"Moshina narxi",r_repair:"Ta'mir",r_logi:"Logistika",r_duty:"Bojxona boji",r_excise:"Aksiz",r_util:"Utilizatsiya",r_vat:"QQS (12%)",r_comm:"Bizning xizmat",
+  ev_badge:"⚡ Elektromobil — boj 0%, aksiz 0",r_btn:"Shu moshinani tanlash →",w_age:"⚠️ 7 yoshdan oshgan benzin/gibridni jismoniy shaxs import qila olmaydi.",
+  r_note:"⚠️ Taxminiy. Bojxona o'z baza qiymati bo'yicha baholaydi. Aniq summa broker tomonidan tasdiqlanadi.",
+  why_eye:"Afzalliklar",why_t:"Nega aynan AVTOMOST?",
+  w1t:"To'liq shaffoflik",w1d:"Har bir tiyin grafikda ko'rinadi. Yashirin to'lovlar yo'q.",w2t:"Vositachilarsiz",w2d:"To'g'ridan-to'g'ri Koreya bozoridan.",
+  w3t:"Koreyada inspeksiya",w3d:"Har moshina jismonan tekshiriladi: avariya tarixi, probeg — video bilan.",w4t:"Qonuniy bojxona",w4d:"Litsenziyali broker rasmiylashtiradi.",
+  w5t:"Markaziy Osiyo",w5d:"O'zbekiston, Qozog'iston, Qirg'iziston, Tojikiston.",w6t:"Onlayn kuzatuv",w6d:"Moshinangiz qayerdaligini real vaqtda kuzatasiz.",
+  p_eye:"Logistika tarmog'i",p_t:"3–4 hamkor — bitta eng yaxshi narx",p_l:"Har moshina uchun hamkorlar orasida tender o'tkazib, eng arzon yo'nalishni tanlaymiz.",
+  p1:"🚢 Dengiz konteyner",p2:"⚓ Ro-Ro kema",p3:"🚆 Temir yo'l",p4:"🚚 Avtotransport",p5:"📦 Sug'urta",
+  pb_t:"Yo'nalish: Busan → Toshkent",pb1:"Busan porti (yuklash)",pb2:"Dengiz/quruqlik yo'li",pb3:"Bojxona (broker)",pb4:"Jami muddat",day:"kun",
+  lead_eye:"Buyurtma",lead_t:"Bepul narx so'rovi qoldiring",lead_l:"Forma to'ldiring — 24 soat ichida aniq narx va muddat bilan bog'lanamiz.",
+  lf_name:"Ismingiz",lf_phone:"Telefon / Telegram",lf_car:"Qaysi moshina kerak?",lf_budget:"Byudjet (USD)",lf_btn:"So'rov yuborish",lf_ok:"✅ Rahmat! Tez orada bog'lanamiz.",lf_err:"Ism va telefonni kiriting",
+  cat_h1:"Koreya moshinalari katalogi",cat_sub:"Har bir moshinada Koreya narxi va eshikkacha narx.",ph_search:"Model qidirish: Sonata, K5...",
+  sort_new:"Yangi",sort_cheap:"Arzon → qimmat",sort_exp:"Qimmat → arzon",sort_year:"Yili (yangi)",fl_brand:"Marka",fl_fuel:"Yoqilg'i",fl_body:"Kuzov",fl_price:"Narx (USD)",fl_clear:"Tozalash",
+  res_found:"ta topildi",empty:"Topilmadi",p_korea:"Koreya narxi",p_landed:"Eshikkacha",c_detail:"Batafsil →",
+  rec_good:"Tavsiya",rec_mid:"O'rtacha",rec_no:"Import yo'q",fl_onlyok:"Faqat import mumkin",
+  cmp_btn:"Solishtirish",cmp_added:"Tanlandi",cmp_selected:"tanlandi",cmp_clear:"Tozalash",cmp_open:"Solishtirish",
+  cmp_title:"Moshinalarni solishtirish",cmp_need2:"Solishtirish uchun kamida 2 ta moshina tanlang.",cmp_elig:"Import holati",cmp_markup:"Ustama",cmp_best:"eng arzon",cmp_note:"Narxlar taxminiy. Aniq summa EnCarAPI ulanganda yangilanadi.",
+  rate_live:"Jonli kurs",rate_approx:"Taxminiy kurs",
+  nav_fav:"Sevimlilar",fav_title:"Sevimli moshinalar",fav_sub:"Saqlangan moshinalar va narx o'zgarishi kuzatuvi.",fav_empty:"Hali sevimli moshina yo'q. Katalogdan ❤ bosib saqlang.",fav_saved:"Saqlangan narx",fav_down:"arzonlashdi",fav_up:"qimmatlashdi",fav_nochange:"narx o'zgarmadi",
+  nav_advisor:"🤖 AI Maslahatchi",adv_title:"AI moshina maslahatchi",adv_sub:"Byudjet va ehtiyojingizni ayting — eng mos moshinalarni tanlab beraman va tuzoqlardan ogohlantiraman.",adv_budget:"Byudjetingiz (eshikkacha, $)",adv_use:"Nima uchun kerak?",adv_fuelpref:"Yoqilg'i (ixtiyoriy)",adv_any:"Farqi yo'q",adv_family:"Oilaviy",adv_economy:"Tejamkor",adv_business:"Biznes",adv_premium:"Premium",adv_first:"Birinchi moshina",adv_go:"Tavsiya ber",adv_found:"Sizga {n} ta moshina topdim",adv_none:"Bu byudjetda mos moshina topilmadi. Byudjetni oshiring.",adv_trap:"Tuzoqdan saqlaning",adv_trap_txt:"katta motor — boj va utilizatsiya juda qimmat, import tavsiya etilmaydi.",adv_r_good:"✓ Importga juda mos",adv_r_lowmk:"✓ Past ustama (+{m}%)",adv_r_eco:"✓ Tejamkor (gibrid/elektro)",adv_r_lowkm:"✓ Kam yurgan",adv_r_new:"✓ Yangi (≤4 yil)",adv_r_af:"✓ Avariyasiz",adv_r_family:"✓ Oila uchun keng",adv_r_premium:"✓ Premium brend",adv_r_fit:"✓ Byudjetingizga mos",
+  body_sedan:"Sedan",body_suv:"SUV",body_crossover:"Krossover",body_minivan:"Minivan",
+  d_specs:"Xususiyatlar",d_year:"Yili",d_engine:"Dvigatel",d_km:"Probeg",d_fuel:"Yoqilg'i",d_tr:"Transmissiya",d_body:"Kuzov",d_options:"Jihozlar",d_breakdown:"Narx tarkibi",d_total:"JAMI eshikkacha",d_order:"Buyurtma berish →",d_inspect:"Koreyada inspeksiya",d_inspect_d:"Sotib olishdan oldin moshina jismonan tekshiriladi.",
+  o_title:"Buyurtma berish",o_s1:"Moshina",o_s2:"Ma'lumotlar",o_s3:"To'lov",o_s4:"Tasdiqlash",
+  o_name:"Ism familiya",o_phone:"Telefon",o_tg:"Telegram",o_city:"Shahar",o_passport:"Pasport (ixtiyoriy)",o_model_sel:"Import modeli",o_modelA:"Jismoniy shaxs (aksizsiz)",o_modelB:"Yuridik shaxs",
+  o_plan_t:"3 bosqichli to'lov",o_p1:"1. Bron (inspeksiya)",o_p2:"2. Asosiy (moshina + logistika)",o_p3:"3. Yakuniy (boj + xizmat + yetkazish)",
+  o_next:"Keyingisi →",o_prev:"← Orqaga",o_confirm:"Tasdiqlash",o_done_t:"Buyurtma qabul qilindi!",o_done_d:"Tez orada bog'lanamiz. Raqamingiz:",o_track:"Buyurtmani kuzatish",o_sum:"Buyurtma xulosasi",o_total_pay:"Jami to'lov",o_err:"Ism va telefonni kiriting",
+  t_title:"Buyurtmani kuzatish",t_sub:"Buyurtma raqamingizni kiriting.",t_ph:"Raqam (masalan AVM-1042)",t_btn:"Kuzatish",t_demo:"Demo: AVM-1042 ni kiriting.",t_notfound:"Buyurtma topilmadi. AVM-1042 ni sinab ko'ring.",t_status:"Joriy holat",t_eta:"Taxminiy yetkazish",
+  st_ordered:"Buyurtma qabul qilindi",st_inspect:"Koreyada inspeksiya",st_bought:"Sotib olindi",st_ship:"Yo'lda (kema)",st_customs:"Bojxonada",st_delivery:"Yetkazishda",st_done:"Topshirildi",
+  faq_t:"Ko'p so'raladigan savollar",faq_l:"Jarayon, to'lov va qonuniylik haqida.",ask_t:"Savolingiz qoldimi?",ask_l:"Telegram yoki forma orqali bog'laning.",
+  foot_desc:"Koreyadan Markaziy Osiyoga to'g'ridan-to'g'ri moshina import platformasi.",foot_demo:"Demo MVP versiya."},
+
+ ru:{nav_catalog:"Автомобили",nav_how:"Как работает",nav_calc:"Калькулятор",nav_track:"Отслеживание",nav_faq:"Вопросы",nav_order:"Заказать",
+  hero_tag:"Корея → Центральная Азия · напрямую",hero_h1:"Авто из Кореи.",hero_h1b:"Прозрачная цена. Ноль хлопот.",
+  hero_sub:"Вы выбираете машину — мы точно по закону считаем каждый платёж «до двери». Без посредников, без скрытых сумм.",
+  hero_b1:"Смотреть авто →",hero_b2:"Как это работает?",st1:"логист. партнёра",st2:"прозрачная цена",st3:"языков · 4 страны",st4:"дней доставка",
+  ft1:"Инспекция ✓",ft2:"До двери",ft3:"Легальная таможня",
+  how_eye:"Процесс",how_t:"4 простых шага",how_l:"Клиент сам выбирает машину, остальное делаем мы.",
+  h1t:"Выбор машины",h1d:"Клиент выбирает авто на корейском рынке или просит рекомендацию.",h2t:"Расчёт цены",h2d:"Калькулятор показывает полную цену до двери — пошлины, акциз, НДС.",
+  h3t:"Покупка + доставка",h3d:"Покупаем авто и выбираем самого выгодного из 3–4 партнёров.",h4t:"Таможня + доставка",h4d:"Лицензированный брокер растаможит, доставим до двери.",
+  calc_eye:"Умный калькулятор",calc_t:"Точная цена до двери",calc_l:"По закону Узбекистана (2026): пошлина, акциз, НДС, утильсбор. Каждый платёж на живой диаграмме.",
+  gl_base:"Основное",gl_tech:"Технические",f_country:"Страна",f_model:"На кого импорт",m_a:"Физлицо (без акциза)",m_b:"Юрлицо (торговля)",
+  f_cond:"Состояние",co_clean:"Целая",co_dmg:"Битая",f_price:"Цена покупки (USD)",f_cval:"Тамож. стоимость (USD)",f_repair:"Ремонт (USD)",
+  f_fuel:"Топливо",fu_petrol:"Бензин",fu_hybrid:"Гибрид",fu_ev:"Электро",f_year:"Год выпуска",f_cc:"Объём (см³)",f_logi:"Логистика",
+  c_uz:"Узбекистан",c_kz:"Казахстан",c_kg:"Кыргызстан",c_tj:"Таджикистан",l_sea:"Морской контейнер (~$2500)",l_roro:"Ro-Ro судно (~$1800)",l_land:"Суша (~$3500)",
+  adv:"⚙️ Расширенные настройки",s_excise:"Акциз $/см³ (юрлицо)",s_vat:"НДС %",s_brv:"БРВ (сум)",s_rate:"Курс USD (сум)",s_comm:"Комиссия %",s_fix:"Фикс. сервис $",
+  r_total:"ИТОГО до двери",r_price:"Цена авто",r_repair:"Ремонт",r_logi:"Логистика",r_duty:"Пошлина",r_excise:"Акциз",r_util:"Утильсбор",r_vat:"НДС (12%)",r_comm:"Наша услуга",
+  ev_badge:"⚡ Электромобиль — пошлина 0%, акциз 0",r_btn:"Выбрать это авто →",w_age:"⚠️ Бензин/гибрид старше 7 лет физлицо ввезти не может.",
+  r_note:"⚠️ Примерно. Таможня оценивает по своей базе. Точную сумму подтверждает брокер.",
+  why_eye:"Преимущества",why_t:"Почему именно AVTOMOST?",
+  w1t:"Полная прозрачность",w1d:"Виден каждый цент. Нет скрытых платежей.",w2t:"Без посредников",w2d:"Напрямую с корейского рынка.",
+  w3t:"Инспекция в Корее",w3d:"Каждое авто проверяется физически: история ДТП, пробег — с видео.",w4t:"Легальная таможня",w4d:"Лицензированный брокер оформляет.",
+  w5t:"Центральная Азия",w5d:"Узбекистан, Казахстан, Кыргызстан, Таджикистан.",w6t:"Онлайн-трекинг",w6d:"Следите, где машина, в реальном времени.",
+  p_eye:"Логистическая сеть",p_t:"3–4 партнёра — одна лучшая цена",p_l:"По каждому авто проводим тендер и выбираем самый дешёвый маршрут.",
+  p1:"🚢 Морской контейнер",p2:"⚓ Ro-Ro судно",p3:"🚆 Ж/д",p4:"🚚 Автотранспорт",p5:"📦 Страховка",
+  pb_t:"Маршрут: Пусан → Ташкент",pb1:"Порт Пусан (погрузка)",pb2:"Морской/сухопутный путь",pb3:"Таможня (брокер)",pb4:"Общий срок",day:"дн",
+  lead_eye:"Заказ",lead_t:"Оставьте бесплатную заявку",lead_l:"Заполните форму — в течение 24 часов свяжемся.",
+  lf_name:"Ваше имя",lf_phone:"Телефон / Telegram",lf_car:"Какая машина нужна?",lf_budget:"Бюджет (USD)",lf_btn:"Отправить",lf_ok:"✅ Спасибо! Скоро свяжемся.",lf_err:"Введите имя и телефон",
+  cat_h1:"Каталог авто из Кореи",cat_sub:"Для каждого авто — цена в Корее и до двери.",ph_search:"Поиск: Sonata, K5...",
+  sort_new:"Новые",sort_cheap:"Дешевле → дороже",sort_exp:"Дороже → дешевле",sort_year:"Год",fl_brand:"Марка",fl_fuel:"Топливо",fl_body:"Кузов",fl_price:"Цена (USD)",fl_clear:"Сбросить",
+  res_found:"найдено",empty:"Не найдено",p_korea:"Цена в Корее",p_landed:"До двери",c_detail:"Подробнее →",
+  rec_good:"Рекомендуем",rec_mid:"Средне",rec_no:"Нельзя ввезти",fl_onlyok:"Только разрешённые",
+  cmp_btn:"Сравнить",cmp_added:"Выбрано",cmp_selected:"выбрано",cmp_clear:"Очистить",cmp_open:"Сравнить",
+  cmp_title:"Сравнение авто",cmp_need2:"Выберите минимум 2 авто для сравнения.",cmp_elig:"Статус ввоза",cmp_markup:"Наценка",cmp_best:"дешевле",cmp_note:"Цены примерные. Точная сумма обновится после подключения EnCarAPI.",
+  rate_live:"Живой курс",rate_approx:"Примерный курс",
+  nav_fav:"Избранное",fav_title:"Избранные авто",fav_sub:"Сохранённые авто и отслеживание изменения цены.",fav_empty:"Пока нет избранных авто. Нажмите ❤ в каталоге.",fav_saved:"Сохранённая цена",fav_down:"дешевле",fav_up:"дороже",fav_nochange:"цена не изменилась",
+  nav_advisor:"🤖 AI Советник",adv_title:"AI подбор авто",adv_sub:"Укажите бюджет и потребности — подберу лучшие авто и предупрежу о ловушках.",adv_budget:"Ваш бюджет (до двери, $)",adv_use:"Для чего нужно?",adv_fuelpref:"Топливо (необязательно)",adv_any:"Без разницы",adv_family:"Семейное",adv_economy:"Экономное",adv_business:"Бизнес",adv_premium:"Премиум",adv_first:"Первое авто",adv_go:"Подобрать",adv_found:"Нашёл для вас {n} авто",adv_none:"В этом бюджете подходящих авто нет. Увеличьте бюджет.",adv_trap:"Избегайте ловушки",adv_trap_txt:"большой двигатель — пошлина и утильсбор очень дорогие, ввоз не рекомендуется.",adv_r_good:"✓ Отлично подходит для ввоза",adv_r_lowmk:"✓ Низкая наценка (+{m}%)",adv_r_eco:"✓ Экономичное (гибрид/электро)",adv_r_lowkm:"✓ Малый пробег",adv_r_new:"✓ Новое (≤4 лет)",adv_r_af:"✓ Без ДТП",adv_r_family:"✓ Просторное для семьи",adv_r_premium:"✓ Премиум-бренд",adv_r_fit:"✓ Подходит под бюджет",
+  body_sedan:"Седан",body_suv:"Внедорожник",body_crossover:"Кроссовер",body_minivan:"Минивэн",
+  d_specs:"Характеристики",d_year:"Год",d_engine:"Двигатель",d_km:"Пробег",d_fuel:"Топливо",d_tr:"Коробка",d_body:"Кузов",d_options:"Опции",d_breakdown:"Состав цены",d_total:"ИТОГО до двери",d_order:"Оформить заказ →",d_inspect:"Инспекция в Корее",d_inspect_d:"Перед покупкой авто проверяется физически.",
+  o_title:"Оформление заказа",o_s1:"Авто",o_s2:"Данные",o_s3:"Оплата",o_s4:"Подтверждение",
+  o_name:"Имя и фамилия",o_phone:"Телефон",o_tg:"Telegram",o_city:"Город",o_passport:"Паспорт (необяз.)",o_model_sel:"Модель импорта",o_modelA:"Физлицо (без акциза)",o_modelB:"Юрлицо",
+  o_plan_t:"Оплата в 3 этапа",o_p1:"1. Бронь (инспекция)",o_p2:"2. Основной (авто + логистика)",o_p3:"3. Финальный (пошлина + услуга + доставка)",
+  o_next:"Далее →",o_prev:"← Назад",o_confirm:"Подтвердить",o_done_t:"Заказ принят!",o_done_d:"Скоро свяжемся. Ваш номер:",o_track:"Отследить заказ",o_sum:"Итог заказа",o_total_pay:"Всего",o_err:"Введите имя и телефон",
+  t_title:"Отслеживание заказа",t_sub:"Введите номер заказа.",t_ph:"Номер (например AVM-1042)",t_btn:"Отследить",t_demo:"Демо: введите AVM-1042.",t_notfound:"Заказ не найден. Попробуйте AVM-1042.",t_status:"Текущий статус",t_eta:"Примерная доставка",
+  st_ordered:"Заказ принят",st_inspect:"Инспекция в Корее",st_bought:"Куплено",st_ship:"В пути (судно)",st_customs:"На таможне",st_delivery:"Доставка",st_done:"Передано",
+  faq_t:"Частые вопросы",faq_l:"О процессе, оплате и легальности.",ask_t:"Остался вопрос?",ask_l:"Свяжитесь через Telegram или форму.",
+  foot_desc:"Платформа прямого импорта авто из Кореи в Центральную Азию.",foot_demo:"Демо MVP версия."}
+};
+['kz','kg','tg','en'].forEach(l=>{});
+/* qisqalik uchun kz,kg,tg,en uchun ru asosini ishlatamiz, en ni alohida beramiz */
+I18N.en=Object.assign({},I18N.ru,{
+ nav_catalog:"Cars",nav_how:"How it works",nav_calc:"Calculator",nav_track:"Tracking",nav_faq:"FAQ",nav_order:"Order",
+ hero_tag:"Korea → Central Asia · direct",hero_h1:"Cars from Korea.",hero_h1b:"Transparent price. Zero hassle.",
+ hero_sub:"You pick the car — we calculate every door-to-door payment exactly by law. No middlemen, no hidden sums.",
+ hero_b1:"Browse cars →",hero_b2:"How it works?",st1:"logistics partners",st2:"transparent price",st3:"languages · 4 countries",st4:"days delivery",
+ ft1:"Inspection ✓",ft2:"To your door",ft3:"Legal customs",
+ how_eye:"Process",how_t:"4 simple steps",how_l:"The client picks the car, we handle the rest.",
+ h1t:"Pick a car",h1d:"The client selects a car from the Korean market or asks for a recommendation.",h2t:"Calculate price",h2d:"The calculator shows the full door-to-door price.",
+ h3t:"Buy + ship",h3d:"We buy the car and pick the cheapest of 3–4 partners.",h4t:"Customs + delivery",h4d:"A licensed broker clears customs, we deliver to your door.",
+ calc_eye:"Smart calculator",calc_t:"See the exact door-to-door price",calc_l:"By Uzbekistan law (2026): duty, excise, VAT, recycling fee. Every payment on a live chart.",
+ gl_base:"Basics",gl_tech:"Technical",f_country:"Country",f_model:"Imported under",m_a:"Individual (no excise)",m_b:"Legal entity (trading)",
+ f_cond:"Condition",co_clean:"Clean",co_dmg:"Damaged",f_price:"Purchase price (USD)",f_cval:"Customs value (USD)",f_repair:"Repair (USD)",
+ f_fuel:"Fuel",fu_petrol:"Petrol",fu_hybrid:"Hybrid",fu_ev:"Electric",f_year:"Year",f_cc:"Engine (cc)",f_logi:"Logistics",
+ c_uz:"Uzbekistan",c_kz:"Kazakhstan",c_kg:"Kyrgyzstan",c_tj:"Tajikistan",l_sea:"Sea container (~$2500)",l_roro:"Ro-Ro ship (~$1800)",l_land:"Land (~$3500)",
+ adv:"⚙️ Advanced settings",s_excise:"Excise $/cc (legal)",s_vat:"VAT %",s_brv:"BRV (sum)",s_rate:"USD rate (sum)",s_comm:"Commission %",s_fix:"Fixed fee $",
+ r_total:"TOTAL door-to-door",r_price:"Car price",r_repair:"Repair",r_logi:"Logistics",r_duty:"Customs duty",r_excise:"Excise",r_util:"Recycling fee",r_vat:"VAT (12%)",r_comm:"Our service",
+ ev_badge:"⚡ EV — duty 0%, excise 0",r_btn:"Choose this car →",w_age:"⚠️ Petrol/hybrid older than 7 years can't be imported by an individual.",
+ r_note:"⚠️ Estimate. Customs values by its own base. The exact amount is confirmed by a broker.",
+ why_eye:"Advantages",why_t:"Why AVTOMOST?",w1t:"Full transparency",w1d:"Every cent on a chart. No hidden fees.",w2t:"No middlemen",w2d:"Straight from the Korean market.",
+ w3t:"Inspection in Korea",w3d:"Every car physically checked: accident history, mileage — with video.",w4t:"Legal customs",w4d:"A licensed broker handles clearance.",
+ w5t:"Central Asia",w5d:"Uzbekistan, Kazakhstan, Kyrgyzstan, Tajikistan.",w6t:"Online tracking",w6d:"Track where your car is in real time.",
+ p_eye:"Logistics network",p_t:"3–4 partners — one best price",p_l:"For each car we run a tender and pick the cheapest route.",
+ p1:"🚢 Sea container",p2:"⚓ Ro-Ro ship",p3:"🚆 Rail",p4:"🚚 Trucking",p5:"📦 Insurance",
+ pb_t:"Route: Busan → Tashkent",pb1:"Busan port (loading)",pb2:"Sea/land transit",pb3:"Customs (broker)",pb4:"Total time",day:"d",
+ lead_eye:"Order",lead_t:"Leave a free quote request",lead_l:"Fill the form — we'll contact you within 24 hours.",
+ lf_name:"Your name",lf_phone:"Phone / Telegram",lf_car:"Which car?",lf_budget:"Budget (USD)",lf_btn:"Send",lf_ok:"✅ Thank you! We'll be in touch.",lf_err:"Enter name and phone",
+ cat_h1:"Korean car catalog",cat_sub:"Every car shows the Korea price and door-to-door price.",ph_search:"Search: Sonata, K5...",
+ sort_new:"Newest",sort_cheap:"Cheap → expensive",sort_exp:"Expensive → cheap",sort_year:"Year",fl_brand:"Brand",fl_fuel:"Fuel",fl_body:"Body",fl_price:"Price (USD)",fl_clear:"Clear",
+ res_found:"found",empty:"No cars found",p_korea:"Korea price",p_landed:"Door-to-door",c_detail:"Details →",
+  rec_good:"Recommended",rec_mid:"Average",rec_no:"Not importable",fl_onlyok:"Only importable",
+  cmp_btn:"Compare",cmp_added:"Selected",cmp_selected:"selected",cmp_clear:"Clear",cmp_open:"Compare",
+  cmp_title:"Compare cars",cmp_need2:"Select at least 2 cars to compare.",cmp_elig:"Import status",cmp_markup:"Markup",cmp_best:"cheapest",cmp_note:"Prices are approximate. Exact figures update once EnCarAPI is connected.",
+  rate_live:"Live rate",rate_approx:"Approx. rate",
+  nav_fav:"Saved",fav_title:"Saved cars",fav_sub:"Your saved cars with price-change tracking.",fav_empty:"No saved cars yet. Tap ❤ in the catalog.",fav_saved:"Saved price",fav_down:"cheaper",fav_up:"pricier",fav_nochange:"no price change",
+  nav_advisor:"🤖 AI Advisor",adv_title:"AI car advisor",adv_sub:"Tell us your budget and needs — we'll pick the best-fit cars and warn you about traps.",adv_budget:"Your budget (door-to-door, $)",adv_use:"What is it for?",adv_fuelpref:"Fuel (optional)",adv_any:"Any",adv_family:"Family",adv_economy:"Economy",adv_business:"Business",adv_premium:"Premium",adv_first:"First car",adv_go:"Recommend",adv_found:"Found {n} cars for you",adv_none:"No matching cars in this budget. Try a higher budget.",adv_trap:"Avoid this trap",adv_trap_txt:"big engine — duty and recycling fee are very expensive, import not recommended.",adv_r_good:"✓ Great for import",adv_r_lowmk:"✓ Low markup (+{m}%)",adv_r_eco:"✓ Economical (hybrid/EV)",adv_r_lowkm:"✓ Low mileage",adv_r_new:"✓ Newer (≤4 yrs)",adv_r_af:"✓ Accident-free",adv_r_family:"✓ Roomy for family",adv_r_premium:"✓ Premium brand",adv_r_fit:"✓ Fits your budget",
+ body_sedan:"Sedan",body_suv:"SUV",body_crossover:"Crossover",body_minivan:"Minivan",
+ d_specs:"Specifications",d_year:"Year",d_engine:"Engine",d_km:"Mileage",d_fuel:"Fuel",d_tr:"Transmission",d_body:"Body",d_options:"Options",d_breakdown:"Price breakdown",d_total:"TOTAL door-to-door",d_order:"Place an order →",d_inspect:"Inspection in Korea",d_inspect_d:"Before purchase the car is physically checked.",
+ o_title:"Place an order",o_s1:"Car",o_s2:"Details",o_s3:"Payment",o_s4:"Confirm",
+ o_name:"Full name",o_phone:"Phone",o_tg:"Telegram",o_city:"City",o_passport:"Passport (optional)",o_model_sel:"Import model",o_modelA:"Individual (no excise)",o_modelB:"Legal entity",
+ o_plan_t:"Payment in 3 stages",o_p1:"1. Booking (inspection)",o_p2:"2. Main (car + logistics)",o_p3:"3. Final (duty + service + delivery)",
+ o_next:"Next →",o_prev:"← Back",o_confirm:"Confirm",o_done_t:"Order received!",o_done_d:"We'll contact you soon. Your number:",o_track:"Track order",o_sum:"Order summary",o_total_pay:"Total",o_err:"Enter name and phone",
+ t_title:"Track your order",t_sub:"Enter your order number.",t_ph:"Number (e.g. AVM-1042)",t_btn:"Track",t_demo:"Demo: enter AVM-1042.",t_notfound:"Order not found. Try AVM-1042.",t_status:"Current status",t_eta:"Estimated delivery",
+ st_ordered:"Order received",st_inspect:"Inspection in Korea",st_bought:"Purchased",st_ship:"In transit (ship)",st_customs:"At customs",st_delivery:"Out for delivery",st_done:"Delivered",
+ faq_t:"Frequently asked questions",faq_l:"About the process, payment and legality.",ask_t:"Still have a question?",ask_l:"Contact us via Telegram or the form.",
+ foot_desc:"Direct car import platform from Korea to Central Asia.",foot_demo:"Demo MVP version."
+});
+I18N.kz=Object.assign({},I18N.ru); I18N.kg=Object.assign({},I18N.ru); I18N.tg=Object.assign({},I18N.ru);
+
+const FAQ={
+ uz:[["Moshinani bojxonadan kim o'tkazadi?","Litsenziyali bojxona brokeri sizning ishonchnomangiz asosida o'tkazadi. Siz bojxonada turishingiz shart emas."],
+  ["Pulni qanday to'layman?","3 bosqichda: bron (inspeksiya), asosiy (moshina + logistika), yakuniy (boj + xizmat + yetkazish). Hammasi kompaniya hisobiga, hisob-faktura bilan."],
+  ["Jismoniy shaxs yiliga nechta moshina olib kela oladi?","Yiliga 1 ta. Ko'p kerak bo'lsa — yuridik shaxs (B2B) modeli orqali."],
+  ["Aksiz nima va men to'laymanmi?","Aksiz — moshinaga maxsus soliq. Jismoniy shaxs benzin/gibridga aksiz to'lamaydi — narx arzonlashadi. Faqat yuridik shaxs to'laydi."],
+  ["Urilgan moshina bilan farqi bormi?","Ha — urilgan arzon, lekin ta'mir qo'shiladi va bojxona o'z baza qiymati bilan baholashi mumkin."],
+  ["Moshina necha kunda keladi?","Odatda 25–50 kun. Har bosqichni onlayn kuzatasiz."],
+  ["Qanday moshinalarni olib kelish mumkin?","Jismoniy shaxs uchun: 7 yoshgacha, Yevro-5+, o'ng rul taqiqlangan. Elektromobil — yoshi cheklovsiz."]],
+ ru:[["Кто растаможивает авто?","Лицензированный таможенный брокер по вашей доверенности. Вам не нужно стоять на таможне."],
+  ["Как я оплачиваю?","В 3 этапа: бронь (инспекция), основной (авто + логистика), финальный (пошлина + услуга + доставка). Всё на счёт компании."],
+  ["Сколько авто в год может ввезти физлицо?","1 в год. Больше — через модель юрлица (B2B)."],
+  ["Что такое акциз?","Спецналог на авто. Физлицо не платит акциз на бензин/гибрид — это удешевляет цену. Платит только юрлицо."],
+  ["Разница с битым авто?","Да — битое дешевле, но добавляется ремонт, а таможня может оценить по своей базе."],
+  ["За сколько дней приходит авто?","Обычно 25–50 дней. Каждый этап отслеживается онлайн."],
+  ["Какие авто можно ввозить?","Для физлица: до 7 лет, Евро-5+, праворульные запрещены. Электромобиль — без ограничения по возрасту."]],
+ en:[["Who clears the car through customs?","A licensed customs broker does it under your power of attorney. You don't need to be at customs."],
+  ["How do I pay?","In 3 stages: booking (inspection), main (car + logistics), final (duty + service + delivery). All to the company account."],
+  ["How many cars per year for an individual?","One per year. More — via the legal-entity (B2B) model."],
+  ["What is excise?","A special car tax. An individual does NOT pay excise on petrol/hybrid — this lowers the price. Only legal entities pay it."],
+  ["Difference with a damaged car?","Yes — cheaper, but repair is added and customs may value it by its reference base."],
+  ["How long does delivery take?","Usually 25–50 days. You track each stage online."],
+  ["Which cars can be imported?","For an individual: up to 7 years, Euro-5+, right-hand drive banned. EVs have no age limit."]]
+};
+FAQ.kz=FAQ.ru;FAQ.kg=FAQ.ru;FAQ.tg=FAQ.ru;
+
+/* ===== Qo'shimcha matnlar (boy katalog/detal) ===== */
+Object.assign(I18N.uz,{
+ d_tab_basic:"Asosiy",d_tab_option:"Jihozlar",d_tab_cond:"Holati",d_tab_guarantee:"Kafolat",
+ op_sunroof:"Lyuk",op_led:"LED faralar",op_parking:"Parking sensor",op_camera:"Orqa kamera",op_ac:"Klimat",op_smartkey:"Smart kalit",op_nav:"Navigatsiya",op_heatseat:"Isitiladigan o‘rindiq",op_ventseat:"Ventilyatsiya",op_leather:"Teri salon",
+ srt_date:"Yangi",srt_cheap:"Arzon",srt_exp:"Qimmat",srt_lowkm:"Kam probeg",srt_year:"Yili",
+ fl_year:"Yili",fl_km:"Probeg",fl_tr:"Transmissiya",fl_accident:"Faqat avariyasiz",c_records:"Texnik hisobot",c_af:"Avariyasiz",
+ cond_title:"Avariyasiz deb tasdiqlangan",cond_frame:"Karkas diagnostikasi",cond_panel:"Tashqi panel",cond_normal:"Normal",cond_keys:"Kalitlar soni",cond_tint:"Tonirovka",cond_tint_v:"Bor",cond_tread:"Shina qoldig‘i (old/orqa)",cond_inspect:"AVTOMOST holatni tekshirdi",cond_inspect_txt:"Tashqi tirnalish, yorug‘lik, shinadan salon hidigacha to‘liq hisobot beramiz.",cond_items:"69 ta tekshiruv banddan o‘tdi",cond_front:"Old · aniq diagnostika",cond_rear:"Orqa · aniq diagnostika",
+ d_views:"ko‘rishlar",d_recommend:"Nega bu moshinani tavsiya qilamiz",d_recommend_txt:"Bu moshina to‘liq tekshiruvdan o‘tgan, holati zo‘r va hujjatlari tayyor. Koreyada inspektor jismonan ko‘rgan — video bilan.",
+ d_guarantee:"Kafolat holati",d_guar_txt:"AVTOMOST orqali sotib olsangiz, yetkazishgacha holat va hujjat kafolati beriladi. Bojxona litsenziyali broker tomonidan rasmiylashtiriladi.",d_diag:"AVTOMOST quyidagilarni tekshirdi",d_diag1:"Avariyasiz tasdig‘i",d_diag2:"Kuzov va bo‘yoq holati",d_diag3:"Dvigatel va xodovoy diagnostikasi",
+ bb_total_calc:"To‘liq narx kalkulyatori",bb_compare_new:"Yangi moshinaga nisbatan",bb_market:"Bozor narxi",bb_sold:"Sotilganlar",bb_similar:"O‘xshashlari",bb_contact:"Bog‘lanish",bb_order:"Buyurtma berish",
+ sec_photo:"Tanlangan moshinalar",sec_general:"Barcha e'lonlar"
+});
+Object.assign(I18N.ru,{
+ d_tab_basic:"Основное",d_tab_option:"Опции",d_tab_cond:"Состояние",d_tab_guarantee:"Гарантия",
+ op_sunroof:"Люк",op_led:"LED фары",op_parking:"Парктроник",op_camera:"Камера заднего вида",op_ac:"Климат",op_smartkey:"Смарт-ключ",op_nav:"Навигация",op_heatseat:"Подогрев сидений",op_ventseat:"Вентиляция",op_leather:"Кожаный салон",
+ srt_date:"Новые",srt_cheap:"Дешевле",srt_exp:"Дороже",srt_lowkm:"Малый пробег",srt_year:"Год",
+ fl_year:"Год",fl_km:"Пробег",fl_tr:"Коробка",fl_accident:"Только без ДТП",c_records:"Тех. отчёт",c_af:"Без ДТП",
+ cond_title:"Подтверждено без ДТП",cond_frame:"Диагностика рамы",cond_panel:"Внешние панели",cond_normal:"Норма",cond_keys:"Кол-во ключей",cond_tint:"Тонировка",cond_tint_v:"Есть",cond_tread:"Остаток шин (перед/зад)",cond_inspect:"AVTOMOST проверил состояние",cond_inspect_txt:"Полный отчёт: от внешних царапин, света и шин до запаха в салоне.",cond_items:"Пройдено 69 пунктов проверки",cond_front:"Перёд · точная диагностика",cond_rear:"Зад · точная диагностика",
+ d_views:"просмотров",d_recommend:"Почему мы рекомендуем это авто",d_recommend_txt:"Авто прошло полную проверку, состояние отличное, документы готовы. Инспектор в Корее осмотрел его лично — с видео.",
+ d_guarantee:"Гарантия",d_guar_txt:"При покупке через AVTOMOST до доставки даётся гарантия состояния и документов. Растаможка — лицензированный брокер.",d_diag:"AVTOMOST проверил следующее",d_diag1:"Подтверждение без ДТП",d_diag2:"Состояние кузова и краски",d_diag3:"Диагностика двигателя и ходовой",
+ bb_total_calc:"Полный калькулятор цены",bb_compare_new:"К цене нового авто",bb_market:"Рыночная цена",bb_sold:"Проданные",bb_similar:"Похожие",bb_contact:"Связаться",bb_order:"Оформить заказ",
+ sec_photo:"Избранные авто",sec_general:"Все объявления"
+});
+Object.assign(I18N.en,{
+ d_tab_basic:"Basic",d_tab_option:"Options",d_tab_cond:"Condition",d_tab_guarantee:"Guarantee",
+ op_sunroof:"Sunroof",op_led:"LED headlamps",op_parking:"Parking sensor",op_camera:"Rear camera",op_ac:"Climate",op_smartkey:"Smart key",op_nav:"Navigation",op_heatseat:"Heated seats",op_ventseat:"Ventilated",op_leather:"Leather",
+ srt_date:"Newest",srt_cheap:"Cheaper",srt_exp:"Pricier",srt_lowkm:"Low mileage",srt_year:"Year",
+ fl_year:"Year",fl_km:"Mileage",fl_tr:"Transmission",fl_accident:"Accident-free only",c_records:"Tech report",c_af:"Accident-free",
+ cond_title:"Confirmed accident-free",cond_frame:"Frame diagnosis",cond_panel:"Exterior panels",cond_normal:"Normal",cond_keys:"Number of keys",cond_tint:"Tinting",cond_tint_v:"Available",cond_tread:"Tire tread (front/rear)",cond_inspect:"AVTOMOST checked the condition",cond_inspect_txt:"Full report: from exterior scratches, lights and tires to interior odor.",cond_items:"69 inspection items passed",cond_front:"Front · precision diagnosis",cond_rear:"Rear · precision diagnosis",
+ d_views:"views",d_recommend:"Why we recommend this car",d_recommend_txt:"This car passed a full inspection, is in great condition and the documents are ready. An inspector in Korea checked it in person — with video.",
+ d_guarantee:"Guarantee",d_guar_txt:"Buying through AVTOMOST gives a condition and document guarantee up to delivery. Customs handled by a licensed broker.",d_diag:"AVTOMOST checked the following",d_diag1:"Accident-free confirmation",d_diag2:"Body & paint condition",d_diag3:"Engine & chassis diagnosis",
+ bb_total_calc:"Full price calculator",bb_compare_new:"Vs. new car price",bb_market:"Market price",bb_sold:"Sold",bb_similar:"Similar",bb_contact:"Contact",bb_order:"Place order",
+ sec_photo:"Featured cars",sec_general:"All listings"
+});
+I18N.kz=Object.assign({},I18N.ru);I18N.kg=Object.assign({},I18N.ru);I18N.tg=Object.assign({},I18N.ru);
+
+let LANG='uz';
+function T(k){return (I18N[LANG]&&I18N[LANG][k])||I18N.uz[k]||k;}
+</script>
+
+<script>
+/* ============ ROUTER + VIEWS ============ */
+let VIEW={name:'catalog',id:null};
+let CAT={brand:new Set(),fuel:new Set(),body:new Set(),tr:new Set(),q:'',sort:'new',pmin:0,pmax:Infinity,yearMin:0,kmMax:Infinity,accident:false,onlyOk:false,view:'grid'};
+let COMPARE=[]; /* solishtirish uchun tanlangan moshina id'lari (maks 3) */
+/* ---- SEVIMLILAR + NARX KUZATUVI (localStorage) ---- */
+function favLoad(){try{return JSON.parse(localStorage.getItem('avtomost_fav')||'[]');}catch(e){return [];}}
+let FAV=favLoad();
+function favSave(){try{localStorage.setItem('avtomost_fav',JSON.stringify(FAV));}catch(e){}}
+function isFav(id){return FAV.some(f=>f.id===id);}
+function toggleFav(id){const i=FAV.findIndex(f=>f.id===id);if(i>=0)FAV.splice(i,1);else{const c=CARS.find(x=>x.id===id);if(c)FAV.push({id:id,price:c.landed,t:Date.now()});}favSave();updateFavBadge();render();}
+function updateFavBadge(){const b=document.getElementById('favCount');if(b){b.textContent=FAV.length;b.style.display=FAV.length?'inline-flex':'none';}}
+function favHeart(c){return `<button class="favbtn ${isFav(c.id)?'on':''}" onclick="event.stopPropagation();toggleFav(${c.id})" aria-label="fav">${ICON('heart',isFav(c.id)?'#e11d48':'#9aa6c9',16)}</button>`;}
+let DTAB='basic',DPHOTO=0;
+let ORD={step:1,model:'A',cond:'clean'};
+let CALCSTATE={cond:'clean',fuel:'petrol'};
+
+function nav(name,id){VIEW={name,id:id||null};document.getElementById('menu').classList.remove('open');window.scrollTo(0,0);render();}
+function scrollToId(x){const e=document.getElementById(x);if(e)e.scrollIntoView({behavior:'smooth'});}
+function setLang(l){LANG=l;document.documentElement.lang=l;document.getElementById('langSel').value=l;applyStatic();render();}
+function applyStatic(){
+  document.querySelectorAll('header [data-i],footer [data-i]').forEach(el=>{el.textContent=T(el.dataset.i);});
+}
+
+function render(){
+  const app=document.getElementById('app');
+  if(VIEW.name==='home')app.innerHTML=homeView();
+  else if(VIEW.name==='catalog')app.innerHTML=catalogView();
+  else if(VIEW.name==='detail')app.innerHTML=detailView(VIEW.id);
+  else if(VIEW.name==='order')app.innerHTML=orderView(VIEW.id);
+  else if(VIEW.name==='tracking')app.innerHTML=trackingView();
+  else if(VIEW.name==='compare')app.innerHTML=compareView();
+  else if(VIEW.name==='favorites')app.innerHTML=favoritesView();
+  else if(VIEW.name==='advisor')app.innerHTML=advisorView();
+  else if(VIEW.name==='faq')app.innerHTML=faqView();
+  // post-render hooks
+  if(VIEW.name==='home'){bindCalc();}
+  if(VIEW.name==='catalog'){bindCatalog();}
+  if(VIEW.name==='detail'){renderDetail(VIEW.id);}
+  if(VIEW.name==='order'){renderOrderStep();}
+  // sahifa o'tish animatsiyasini qayta ishga tushirish
+  app.style.animation='none';void app.offsetWidth;app.style.animation='viewfade .38s cubic-bezier(.2,.7,.2,1)';
+  // sarlavha
+  const titles={home:'AVTOMOST — Koreyadan Markaziy Osiyoga moshina',catalog:T('cat_h1')+' · AVTOMOST',detail:'AVTOMOST',order:T('o_title')+' · AVTOMOST',tracking:T('t_title')+' · AVTOMOST',faq:T('faq_t')+' · AVTOMOST'};
+  document.title=titles[VIEW.name]||'AVTOMOST';
+  // faol menyu
+  document.querySelectorAll('#menu a[data-view]').forEach(a=>a.classList.toggle('act',a.dataset.view===VIEW.name));
+  updateFavBadge();
+}
+
+/* ---------- HOME ---------- */
+function homeView(){
+  const steps=[['1','h1t','h1d'],['2','h2t','h2d'],['3','h3t','h3d'],['4','h4t','h4d']]
+    .map(s=>`<div class="card hov"><div class="step-num">${s[0]}</div><h3>${T(s[1])}</h3><p>${T(s[2])}</p></div>`).join('');
+  const whys=[['eye','w1t','w1d'],['swap','w2t','w2d'],['search','w3t','w3d'],['shield','w4t','w4d'],['globe','w5t','w5d'],['phone','w6t','w6d']]
+    .map(w=>`<div class="card hov"><div class="ico-box">${ICON(w[0])}</div><h3>${T(w[1])}</h3><p>${T(w[2])}</p></div>`).join('');
+  return `
+  <section class="hero"><div class="wrap hero-grid">
+    <div>
+      <div class="chip"><span class="pulse"></span>${T('hero_tag')}</div>
+      <h1>${T('hero_h1')}<br><span class="grad-txt">${T('hero_h1b')}</span></h1>
+      <p class="sub">${T('hero_sub')}</p>
+      <div class="cta"><button class="btn lg" onclick="nav('catalog')">${T('hero_b1')}</button><button class="btn ghost lg" onclick="scrollToId('how')">${T('hero_b2')}</button></div>
+      <div class="stats">
+        <div class="stat"><b class="grad-txt">3–4</b><span>${T('st1')}</span></div>
+        <div class="stat"><b class="grad-txt">100%</b><span>${T('st2')}</span></div>
+        <div class="stat"><b class="grad-txt">6</b><span>${T('st3')}</span></div>
+        <div class="stat"><b class="grad-txt">25–50</b><span>${T('st4')}</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="ring"></div><div class="ring ring2"></div>
+      <div class="car">${carSVG('#4f8cff')}</div>
+      <div class="ftag" style="top:14px;left:-6px"><span class="d" style="background:var(--a2)"></span>${T('ft1')}</div>
+      <div class="ftag" style="bottom:30px;right:-6px"><span class="d" style="background:var(--ok)"></span>${T('ft2')}</div>
+      <div class="ftag" style="bottom:4px;left:24px"><span class="d" style="background:var(--a3)"></span>${T('ft3')}</div>
+    </div>
+  </div></section>
+
+  <section id="how"><div class="wrap">
+    <div class="eyebrow">${T('how_eye')}</div><h2 class="title">${T('how_t')}</h2><p class="lead">${T('how_l')}</p>
+    <div class="grid g4">${steps}</div>
+  </div></section>
+
+  <section id="calc" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+    <div style="margin-bottom:28px"><div class="eyebrow">${T('calc_eye')}</div><h2 class="title">${T('calc_t')}</h2><p class="lead">${T('calc_l')}</p></div>
+    ${calcWidget()}
+  </div></section>
+
+  <section id="why"><div class="wrap">
+    <div class="eyebrow">${T('why_eye')}</div><h2 class="title">${T('why_t')}</h2>
+    <div class="grid g3">${whys}</div>
+  </div></section>
+
+  <section id="partners"><div class="wrap g2 grid">
+    <div>
+      <div class="eyebrow">${T('p_eye')}</div><h2 class="title">${T('p_t')}</h2><p class="lead">${T('p_l')}</p>
+      <div>${[['ship','p1'],['anchor','p2'],['train','p3'],['truck','p4'],['package','p5']].map(p=>`<span class="pill">${ICON(p[0],'#9aa6c9',16)} ${T(p[1]).replace(/^[^\p{L}]+/u,'')}</span>`).join('')}</div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:14px;font-size:18px">${T('pb_t')}</h3>
+      <div class="tl-item"><span class="l"><span class="dotc"></span>${T('pb1')}</span><span>1–3 ${T('day')}</span></div>
+      <div class="tl-item"><span class="l"><span class="dotc"></span>${T('pb2')}</span><span>20–40 ${T('day')}</span></div>
+      <div class="tl-item"><span class="l"><span class="dotc"></span>${T('pb3')}</span><span>3–7 ${T('day')}</span></div>
+      <div class="tl-item tot"><span class="l"><span class="dotc"></span>${T('pb4')}</span><span class="grad-txt">25–50 ${T('day')}</span></div>
+    </div>
+  </div></section>
+
+  <section id="lead"><div class="wrap narrow">
+    <div class="eyebrow">${T('lead_eye')}</div><h2 class="title">${T('lead_t')}</h2><p class="lead">${T('lead_l')}</p>
+    <div class="formbox">
+      <div class="row2"><div><label>${T('lf_name')}</label><input id="lf_name"></div><div><label>${T('lf_phone')}</label><input id="lf_phone" placeholder="+998 ..."></div></div>
+      <div class="row2"><div><label>${T('lf_car')}</label><input id="lf_car" placeholder="Hyundai Sonata, Kia EV6..."></div><div><label>${T('lf_budget')}</label><input id="lf_budget" placeholder="20000"></div></div>
+      <button class="btn" style="margin-top:18px;width:100%" onclick="submitLead()">${T('lf_btn')}</button>
+      <p id="lf_ok" style="display:none;color:var(--ok);margin-top:14px;text-align:center">${T('lf_ok')}</p>
+    </div>
+  </div></section>`;
+}
+function submitLead(){const n=val('lf_name'),p=val('lf_phone');if(!n||!p){alert(T('lf_err'));return;}document.getElementById('lf_ok').style.display='block';}
+
+/* ---------- CALCULATOR widget (used in home) ---------- */
+function calcWidget(){
+  return `<div class="calc-shell"><div class="calc-box">
+    <div class="calc-pane">
+      <div class="group-label first">${T('gl_base')}</div>
+      <div class="row2">
+        <div><label>${T('f_country')}</label><select class="field" id="x_country" oninput="doCalc()"><option>${T('c_uz')}</option><option>${T('c_kz')}</option><option>${T('c_kg')}</option><option>${T('c_tj')}</option></select></div>
+        <div><label>${T('f_model')}</label><select class="field" id="x_model" oninput="doCalc()"><option value="A">${T('m_a')}</option><option value="B">${T('m_b')}</option></select></div>
+      </div>
+      <label>${T('f_cond')}</label>
+      <div class="seg" id="x_cond">
+        <button class="${CALCSTATE.cond==='clean'?'on':''}" onclick="pickCalc('cond','clean',this)">${T('co_clean')}</button>
+        <button class="${CALCSTATE.cond==='damaged'?'on':''}" onclick="pickCalc('cond','damaged',this)">${T('co_dmg')}</button>
+      </div>
+      <label>${T('f_price')}</label><input type="number" id="x_price" value="15000" oninput="doCalc()">
+      <div class="row2" id="x_repairRow" style="display:${CALCSTATE.cond==='damaged'?'grid':'none'};margin-top:0"><div><label>${T('f_repair')}</label><input type="number" id="x_repair" value="0" oninput="doCalc()"></div><div></div></div>
+      <div class="group-label">${T('gl_tech')}</div>
+      <label>${T('f_fuel')}</label>
+      <div class="seg" id="x_fuel">
+        <button class="${CALCSTATE.fuel==='petrol'?'on':''}" onclick="pickCalc('fuel','petrol',this)">${T('fu_petrol')}</button>
+        <button class="${CALCSTATE.fuel==='hybrid'?'on':''}" onclick="pickCalc('fuel','hybrid',this)">${T('fu_hybrid')}</button>
+        <button class="${CALCSTATE.fuel==='ev'?'on':''}" onclick="pickCalc('fuel','ev',this)">${T('fu_ev')}</button>
+      </div>
+      <div class="row2"><div><label>${T('f_year')}</label><input type="number" id="x_year" value="2021" oninput="doCalc()"></div><div><label>${T('f_cc')}</label><input type="number" id="x_cc" value="1600" oninput="doCalc()"></div></div>
+      <label>${T('f_logi')}</label><select class="field" id="x_logi" oninput="doCalc()"><option value="2500">${T('l_sea')}</option><option value="1800">${T('l_roro')}</option><option value="3500">${T('l_land')}</option></select>
+      <details class="settings"><summary>${T('adv')}</summary>
+        <div class="row2"><div><label>${T('s_excise')}</label><input type="number" id="x_ex" value="4.8" step="0.1" oninput="doCalc()"></div><div><label>${T('s_vat')}</label><input type="number" id="x_vat" value="12" oninput="doCalc()"></div></div>
+        <div class="row2"><div><label>${T('s_brv')}</label><input type="number" id="x_brv" value="412000" oninput="doCalc()"></div><div><label>${T('s_rate')}</label><input type="number" id="x_rate" value="12900" oninput="doCalc()"></div></div>
+        <div class="row2"><div><label>${T('s_comm')}</label><input type="number" id="x_comm" value="5" oninput="doCalc()"></div><div><label>${T('s_fix')}</label><input type="number" id="x_fix" value="500" oninput="doCalc()"></div></div>
+      </details>
+    </div>
+    <div class="receipt">
+      <div class="total-wrap"><div class="total-lbl">${T('r_total')}</div><div class="total-val" id="x_total">$0</div></div>
+      <div class="bar" id="x_bar"></div>
+      ${['price','repair','logi','duty','excise','util','vat'].map(k=>{
+        const lblK={price:'r_price',repair:'r_repair',logi:'r_logi',duty:'r_duty',excise:'r_excise',util:'r_util',vat:'r_vat'}[k];
+        const col={price:'#4f8cff',repair:'#3b82f6',logi:'#22d3ee',duty:'#8b5cf6',excise:'#f472b6',util:'#fbbf24',vat:'#fb7185'}[k];
+        return `<div class="ln" id="ln_${k}"><span class="lbl"><span class="dotc" style="background:${col}"></span>${T(lblK)}</span><span class="v" id="o_${k}">$0</span></div>${k==='logi'?'<div class="divider"></div>':''}`;
+      }).join('')}
+      <div id="x_evbadge" style="display:none"><span class="badge">${T('ev_badge')}</span></div>
+      <div id="x_alert"></div>
+      <button class="btn" style="width:100%;margin-top:16px" onclick="nav('catalog')">${T('r_btn')}</button>
+      <div class="note">${T('r_note')}</div>
+    </div>
+  </div></div>`;
+}
+let cvalTouched=false,lastTotal=0;
+function pickCalc(g,v,el){CALCSTATE[g]=v;el.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));el.classList.add('on');
+  if(g==='cond')document.getElementById('x_repairRow').style.display=v==='damaged'?'grid':'none';doCalc();}
+function onPrice(){if(!cvalTouched)document.getElementById('x_cval').value=document.getElementById('x_price').value;doCalc();}
+function val(id){const e=document.getElementById(id);return e?e.value:'';}
+function numv(id){return parseFloat(val(id))||0;}
+function bindCalc(){cvalTouched=false;lastTotal=0;doCalc();}
+function animTotal(to){const el=document.getElementById('x_total');if(!el)return;const from=lastTotal,t0=performance.now();
+  function step(t){const p=Math.min(1,(t-t0)/420);el.textContent=fmt(from+(to-from)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);lastTotal=to;}
+function doCalc(){
+  if(!document.getElementById('x_price'))return;
+  const price=numv('x_price');
+  const r=CALC({price:price,customsValue:price,repair:CALCSTATE.cond==='damaged'?numv('x_repair'):0,
+    cc:numv('x_cc'),year:numv('x_year'),fuel:CALCSTATE.fuel,model:val('x_model'),logistics:parseFloat(val('x_logi'))||2500,
+    exciseRate:numv('x_ex'),vatRate:numv('x_vat')/100,brv:numv('x_brv'),usdRate:numv('x_rate'),commRate:numv('x_comm')/100,fixFee:numv('x_fix')});
+  /* Xizmat haqi (komissiya) ko'rsatilmaydi — moshina narxi va logistikaga jimgina qo'shiladi */
+  const commPerc=(numv('x_comm')/100)*r.price, commFix=numv('x_fix');
+  const priceDisp=r.price+commPerc, logiDisp=r.logi+commFix;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=fmt(v);};
+  set('o_price',priceDisp);set('o_repair',r.repair);set('o_logi',logiDisp);set('o_duty',r.duty);set('o_excise',r.excise);set('o_util',r.util);set('o_vat',r.vat);
+  animTotal(r.total);
+  const lr=document.getElementById('ln_repair');if(lr)lr.style.display=CALCSTATE.cond==='damaged'?'flex':'none';
+  const le=document.getElementById('ln_excise');if(le)le.style.display=r.excise>0?'flex':'none';
+  document.getElementById('x_evbadge').style.display=CALCSTATE.fuel==='ev'?'block':'none';
+  document.getElementById('x_alert').innerHTML=r.eligible?'':`<div class="alert">${T('w_age')}</div>`;
+  const colors={price:'#4f8cff',repair:'#3b82f6',logi:'#22d3ee',duty:'#8b5cf6',excise:'#f472b6',util:'#fbbf24',vat:'#fb7185'};
+  const segs=[['price',priceDisp],['repair',r.repair],['logi',logiDisp],['duty',r.duty],['excise',r.excise],['util',r.util],['vat',r.vat]];
+  document.getElementById('x_bar').innerHTML=segs.filter(s=>s[1]>0).map(s=>`<i style="width:${s[1]/r.total*100}%;background:${colors[s[0]]}"></i>`).join('');
+}
+
+/* ---------- CATALOG ---------- */
+function catalogView(){
+  return `<div class="wrap" style="padding-top:24px">
+    <h1 style="font-size:30px;font-weight:800">${T('cat_h1')}</h1>
+    <p style="color:var(--muted);margin:6px 0 16px">${T('cat_sub')}</p>
+    <div class="searchrow">
+      <div class="searchinput"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#9aa6c9" stroke-width="2"/><path d="M20 20l-3-3" stroke="#9aa6c9" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="catq" placeholder="${T('ph_search')}" oninput="CAT.q=this.value;renderCars()"></div>
+      <div class="viewtoggle">
+        <button id="vGrid" class="${CAT.view==='grid'?'on':''}" onclick="setView('grid')" title="Grid">▦</button>
+        <button id="vList" class="${CAT.view==='list'?'on':''}" onclick="setView('list')" title="List">≣</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap layout">
+    <aside class="filters" id="fSidebar"></aside>
+    <main>
+      <div class="sorttabs">
+        ${[['new','srt_date'],['cheap','srt_cheap'],['exp','srt_exp'],['lowkm','srt_lowkm'],['year','srt_year']].map(s=>`<button class="${CAT.sort===s[0]?'on':''}" onclick="CAT.sort='${s[0]}';renderCars()">${T(s[1])}</button>`).join('')}
+      </div>
+      <div class="results-top"><div class="cnt"><b id="catcnt">0</b> ${T('res_found')}</div><span id="rateStatus"></span></div>
+      <div class="cars" id="catcars"></div>
+    </main>
+  </div>
+  <div id="cmpbarHost"></div>`;
+}
+/* Filtr yon paneli (akkordeon) */
+function buildFilters(){
+  const counts={}; CARS.forEach(c=>counts[c.brand]=(counts[c.brand]||0)+1);
+  const fcount={}; CARS.forEach(c=>fcount[c.fuel]=(fcount[c.fuel]||0)+1);
+  const bcount={}; CARS.forEach(c=>bcount[c.body]=(bcount[c.body]||0)+1);
+  const row=(type,val,label,cnt)=>{const on=CAT[type]&&CAT[type].has&&CAT[type].has(val);
+    return `<div class="frow ${on?'on':''}" onclick="togF('${type}','${val}')"><span>${label}</span><span style="display:flex;gap:9px;align-items:center"><span class="cnt">${cnt||''}</span><span class="ck">${on?'✓':''}</span></span></div>`;};
+  const acc=(titleKey,body,open)=>`<div class="facc ${open?'open':''}"><h4 onclick="this.parentElement.classList.toggle('open')">${T(titleKey)} <span class="cv">▾</span></h4><div class="fbody">${body}</div></div>`;
+  const brands=[...new Set(CARS.map(c=>c.brand))];
+  const brandRows=brands.map(b=>row('brand',b,b,counts[b])).join('');
+  const fuelRows=[['petrol','fu_petrol'],['hybrid','fu_hybrid'],['ev','fu_ev']].map(f=>row('fuel',f[0],T(f[1]),fcount[f[0]])).join('');
+  const bodyRows=[['sedan','body_sedan'],['suv','body_suv'],['crossover','body_crossover'],['minivan','body_minivan']].map(b=>row('body',b[0],T(b[1]),bcount[b[0]])).join('');
+  const yearBody=`<input type="number" placeholder="2018+" value="${CAT.yearMin||''}" oninput="CAT.yearMin=+this.value||0;renderCars()">`;
+  const kmBody=`<input type="number" placeholder="max km" value="${CAT.kmMax===Infinity?'':CAT.kmMax}" oninput="CAT.kmMax=+this.value||Infinity;renderCars()">`;
+  const priceBody=`<div class="frange"><input type="number" placeholder="min $" value="${CAT.pmin||''}" oninput="CAT.pmin=+this.value||0;renderCars()"><input type="number" placeholder="max $" value="${CAT.pmax===Infinity?'':CAT.pmax}" oninput="CAT.pmax=+this.value||Infinity;renderCars()"></div>`;
+  const accBody=`<div class="frow ${CAT.accident?'on':''}" onclick="CAT.accident=!CAT.accident;buildFilters();renderCars()"><span>${T('fl_accident')}</span><span class="ck">${CAT.accident?'✓':''}</span></div>`
+    +`<div class="frow ${CAT.onlyOk?'on':''}" onclick="CAT.onlyOk=!CAT.onlyOk;buildFilters();renderCars()"><span>${T('fl_onlyok')}</span><span class="ck">${CAT.onlyOk?'✓':''}</span></div>`;
+  document.getElementById('fSidebar').innerHTML=
+    acc('fl_brand',brandRows,true)+acc('fl_fuel',fuelRows,true)+acc('fl_body',bodyRows,false)+
+    acc('fl_year',yearBody,false)+acc('fl_km',kmBody,false)+acc('fl_price',priceBody,true)+acc('cond_title',accBody,true)+
+    `<button class="fclear" onclick="clearF()">${T('fl_clear')}</button>`;
+}
+function bindCatalog(){ buildFilters(); const q=document.getElementById('catq'); if(q)q.value=CAT.q; renderCars(); }
+function setView(v){CAT.view=v;document.getElementById('vGrid').classList.toggle('on',v==='grid');document.getElementById('vList').classList.toggle('on',v==='list');renderCars();}
+function togF(t,v){const s=CAT[t];if(!s||!s.has)return;if(s.has(v))s.delete(v);else s.add(v);buildFilters();renderCars();}
+function clearF(){CAT.brand.clear();CAT.fuel.clear();CAT.body.clear();CAT.q='';CAT.pmin=0;CAT.pmax=Infinity;CAT.yearMin=0;CAT.kmMax=Infinity;CAT.accident=false;CAT.onlyOk=false;const q=document.getElementById('catq');if(q)q.value='';buildFilters();renderCars();}
+function diagBadge(c){return c.diag?`<span class="cb" style="background:rgba(34,211,238,.9);color:#04122e">✓ AVTOMOST${c.diag}</span>`:'';}
+function tagsHtml(c){let h=c.accidentFree?`<span class="ltag af">${T('c_af')}</span>`:'';h+=c.tags.map(t=>`<span class="ltag ${t==='HOT'?'hot':(t==='ECO'?'eco':'')}">${t}</span>`).join('');return h;}
+function carIllustration(c,colOverride){
+  const col=colOverride||c.color||'#5b6b86';
+  return `<div class="ph-illus"><svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">`
+   +`<ellipse cx="180" cy="172" rx="140" ry="13" fill="rgba(20,30,55,.10)"/>`
+   +`<path d="M40,151 L40,129 C40,117 49,111 63,109 L97,105 C106,86 122,74 152,73 L214,73 C243,74 259,87 269,107 L301,113 C321,117 327,123 327,135 L327,151 Z" fill="${col}"/>`
+   +`<path d="M122,105 C129,90 139,82 156,81 L206,81 C224,82 236,90 244,105 Z" fill="rgba(255,255,255,.46)"/>`
+   +`<line x1="183" y1="81" x2="183" y2="105" stroke="rgba(20,30,55,.16)" stroke-width="3"/>`
+   +`<rect x="311" y="115" width="15" height="9" rx="2" fill="rgba(255,86,64,.9)"/>`
+   +`<rect x="44" y="120" width="13" height="9" rx="2" fill="rgba(255,234,150,.95)"/>`
+   +`<circle cx="110" cy="151" r="27" fill="#1b2230"/><circle cx="110" cy="151" r="13" fill="#cfd6e2"/><circle cx="110" cy="151" r="5" fill="#7a8294"/>`
+   +`<circle cx="250" cy="151" r="27" fill="#1b2230"/><circle cx="250" cy="151" r="13" fill="#cfd6e2"/><circle cx="250" cy="151" r="5" fill="#7a8294"/>`
+   +`</svg><span class="ph-wm">${c.brand}</span></div>`;
+}
+function photoArea(c,big){
+  const illus=carIllustration(c);
+  if(c.photo)return `<img class="ph-img" src="${c.photo}" alt="${c.brand} ${c.model}" loading="lazy" onload="var s=this.nextElementSibling;if(s)s.style.display='none'" onerror="this.remove()">${illus}`;
+  return illus;
+}
+function gridCard(c){const isEV=c.fuel==='ev';const fl={petrol:T('fu_petrol'),hybrid:T('fu_hybrid'),ev:T('fu_ev')};const ev=carEval(c);const inC=COMPARE.includes(c.id);
+  return `<div class="carcard">
+    <div class="car-img" onclick="nav('detail',${c.id})">${photoArea(c)}<div class="recwrap">${recBadge(c)}</div><div class="car-badges"><span class="cb">${c.year}</span></div><div class="favwrap">${favHeart(c)}</div></div>
+    <div class="car-body">
+      <div onclick="nav('detail',${c.id})"><div class="car-title">${c.brand} ${c.model}</div>
+      <div class="car-sub">${fmtKm(c.km)} · ${isEV?'EV':(c.cc+' sm³')} · ${fl[c.fuel]}</div>
+      <div class="cp-land">${fmt(c.landed)}</div>
+      <div class="cp-kor">${T('p_korea')}: ${fmtUSD(c.price)} · <span class="mk">+${ev.markup}%</span></div></div>
+      <button class="cmpbtn ${inC?'on':''}" onclick="event.stopPropagation();toggleCompare(${c.id})">${inC?'✓ '+T('cmp_added'):'⇄ '+T('cmp_btn')}</button>
+    </div></div>`;}
+function listCard(c){const isEV=c.fuel==='ev';const fl={petrol:T('fu_petrol'),hybrid:T('fu_hybrid'),ev:T('fu_ev')};const ev=carEval(c);const inC=COMPARE.includes(c.id);
+  return `<div class="lcard">
+    <div class="lphotos" style="grid-template-columns:1fr;position:relative"><div class="lph" style="height:118px;aspect-ratio:auto" onclick="nav('detail',${c.id})">${photoArea(c)}<div class="recwrap">${recBadge(c)}</div></div><div class="favwrap">${favHeart(c)}</div></div>
+    <div class="linfo" onclick="nav('detail',${c.id})"><div class="lt">${c.brand} ${c.model}</div><div class="ls">${fmtKm(c.km)} · ${isEV?'EV':(c.cc+' sm³')} · ${fl[c.fuel]}</div>
+      <button class="cmpbtn ${inC?'on':''}" style="margin-top:8px" onclick="event.stopPropagation();toggleCompare(${c.id})">${inC?'✓ '+T('cmp_added'):'⇄ '+T('cmp_btn')}</button></div>
+    <div class="lprice" onclick="nav('detail',${c.id})"><div class="lk">${T('p_korea')}: ${fmtUSD(c.price)}</div><div class="llv">${fmt(c.landed)}</div><div class="lk" style="color:var(--a2)">${T('p_landed')} · +${ev.markup}%</div></div>
+  </div>`;}
+function toggleCompare(id){const i=COMPARE.indexOf(id);if(i>=0)COMPARE.splice(i,1);else{if(COMPARE.length>=3){COMPARE.shift();}COMPARE.push(id);}renderCars();}
+function compareBarHtml(){if(!COMPARE.length)return '';
+  const chips=COMPARE.map(id=>{const c=CARS.find(x=>x.id===id);return `<span class="cmpchip">${c.brand} ${c.model}<b onclick="toggleCompare(${id})">×</b></span>`;}).join('');
+  return `<div class="cmpbar"><div class="cmpbar-in"><span class="cmpcount">⇄ ${COMPARE.length} ${T('cmp_selected')}</span>${chips}<div style="flex:1"></div>
+    <button class="btn sm ghost" onclick="COMPARE=[];renderCars()">${T('cmp_clear')}</button>
+    <button class="btn sm" ${COMPARE.length<2?'disabled':''} onclick="nav('compare')">${T('cmp_open')} →</button></div></div>`;}
+function renderCars(){
+  let list=CARS.filter(c=>{
+    if(CAT.brand.size&&!CAT.brand.has(c.brand))return false;
+    if(CAT.fuel.size&&!CAT.fuel.has(c.fuel))return false;
+    if(CAT.body.size&&!CAT.body.has(c.body))return false;
+    if(CAT.q&&!(`${c.brand} ${c.model}`.toLowerCase().includes(CAT.q.toLowerCase())))return false;
+    if(c.landed<CAT.pmin||c.landed>CAT.pmax)return false;
+    if(CAT.yearMin&&c.year<CAT.yearMin)return false;
+    if(c.km>CAT.kmMax)return false;
+    if(CAT.accident&&!c.accidentFree)return false;
+    if(CAT.onlyOk&&!carEval(c).eligible)return false;
+    return true;});
+  if(CAT.sort==='cheap')list.sort((a,b)=>a.landed-b.landed);
+  else if(CAT.sort==='exp')list.sort((a,b)=>b.landed-a.landed);
+  else if(CAT.sort==='year')list.sort((a,b)=>b.year-a.year);
+  else if(CAT.sort==='lowkm')list.sort((a,b)=>a.km-b.km);
+  // sort tablar aktivligi
+  document.querySelectorAll('.sorttabs button').forEach((btn,i)=>{const keys=['new','cheap','exp','lowkm','year'];btn.classList.toggle('on',keys[i]===CAT.sort);});
+  document.getElementById('catcnt').textContent=list.length;
+  const el=document.getElementById('catcars');
+  const host=document.getElementById('cmpbarHost');if(host)host.innerHTML=compareBarHtml();
+  const rs=document.getElementById('rateStatus');if(rs)rs.innerHTML=rateStatusHtml();
+  if(!list.length){el.innerHTML=`<div class="empty">${T('empty')}</div>`;el.style.display='block';return;}
+  if(CAT.view==='list'){ el.style.display='block'; el.innerHTML=list.map(listCard).join(''); el.querySelectorAll('.lcard').forEach((n,i)=>n.style.marginBottom='14px'); }
+  else { el.style.display='grid'; el.innerHTML=list.map(gridCard).join(''); }
+}
+
+/* ---------- COMPARE ---------- */
+function compareView(){
+  const cs=COMPARE.map(id=>CARS.find(x=>x.id===id)).filter(Boolean);
+  if(cs.length<2)return `<div class="wrap" style="padding-top:24px"><div class="crumb"><a onclick="nav('catalog')">${T('nav_catalog')}</a> / ${T('cmp_title')}</div><div class="card" style="text-align:center;padding:48px 20px"><div style="font-size:40px;margin-bottom:10px">⇄</div><p style="color:var(--muted)">${T('cmp_need2')}</p><button class="btn" style="margin-top:16px" onclick="nav('catalog')">${T('nav_catalog')}</button></div></div>`;
+  const evs=cs.map(carEval);const fl={petrol:T('fu_petrol'),hybrid:T('fu_hybrid'),ev:T('fu_ev')};
+  const best=Math.min(...cs.map(c=>c.landed));
+  const row=(label,fn,cls)=>`<tr><td class="rl">${label}</td>${cs.map((c,i)=>`<td class="${cls||''}">${fn(c,evs[i])}</td>`).join('')}</tr>`;
+  return `<div class="wrap" style="padding-top:20px">
+    <div class="crumb"><a onclick="nav('catalog')">${T('nav_catalog')}</a> / ${T('cmp_title')}</div>
+    <h1 style="font-size:26px;font-weight:800;margin:4px 0 16px">${T('cmp_title')}</h1>
+    <div class="cmptable-wrap"><table class="cmptable">
+      <tr class="cmphead"><td></td>${cs.map(c=>`<th><div class="cmpph">${carIllustration(c)}</div><div class="cmpt">${c.brand} ${c.model}</div></th>`).join('')}</tr>
+      ${row(T('d_year'),c=>c.year)}
+      ${row(T('d_km'),c=>fmtKm(c.km))}
+      ${row(T('d_engine'),c=>c.fuel==='ev'?'EV':c.cc+' sm³')}
+      ${row(T('d_fuel'),c=>fl[c.fuel])}
+      ${row(T('d_body'),c=>T('body_'+c.body))}
+      ${row(T('cmp_elig'),(c,e)=>`<span class="recb ${e.rec==='no'?'no':(e.rec==='good'?'ok':'mid')}">${T('rec_'+e.rec)}</span>`)}
+      ${row(T('p_korea'),c=>fmtUSD(c.price))}
+      ${row(T('cmp_markup'),(c,e)=>'+'+e.markup+'%')}
+      ${row(T('p_landed'),c=>`<b class="${c.landed===best?'bestcell':''}">${fmt(c.landed)}${c.landed===best?' <span class="besttag">'+T('cmp_best')+'</span>':''}</b>`,'big')}
+      <tr><td class="rl"></td>${cs.map(c=>`<th><button class="btn sm" onclick="nav('order',${c.id})">${T('bb_order')}</button></th>`).join('')}</tr>
+    </table></div>
+    <p class="note" style="margin-top:12px">${T('cmp_note')}</p>
+  </div>`;
+}
+
+/* ---------- SEVIMLILAR + NARX KUZATUVI ---------- */
+function favoritesView(){
+  const cs=FAV.map(f=>({f,car:CARS.find(c=>c.id===f.id)})).filter(x=>x.car);
+  if(!cs.length)return `<div class="wrap" style="padding-top:24px"><h1 style="font-size:28px;font-weight:800">${T('fav_title')}</h1><div class="card" style="text-align:center;padding:48px 20px;margin-top:16px"><div style="font-size:42px">🤍</div><p style="color:var(--muted);margin-top:10px">${T('fav_empty')}</p><button class="btn" style="margin-top:16px" onclick="nav('catalog')">${T('nav_catalog')}</button></div></div>`;
+  return `<div class="wrap" style="padding-top:24px">
+    <h1 style="font-size:28px;font-weight:800">${T('fav_title')} <span style="color:var(--faint);font-weight:600;font-size:18px">(${cs.length})</span></h1>
+    <p style="color:var(--muted);margin:4px 0 18px">${T('fav_sub')}</p>
+    <div class="cars">${cs.map(x=>favCard(x.car,x.f)).join('')}</div>
+  </div>`;
+}
+function favCard(c,f){
+  const base=f.price||c.landed, diff=Math.round(c.landed-base);
+  const dHtml=diff<-0.5?`<span class="pd down">▼ ${fmt(-diff)} ${T('fav_down')}</span>`:(diff>0.5?`<span class="pd up">▲ ${fmt(diff)} ${T('fav_up')}</span>`:`<span class="pd flat">● ${T('fav_nochange')}</span>`);
+  return `<div class="carcard">
+    <div class="car-img" onclick="nav('detail',${c.id})">${photoArea(c)}<div class="recwrap">${recBadge(c)}</div><div class="favwrap">${favHeart(c)}</div></div>
+    <div class="car-body">
+      <div onclick="nav('detail',${c.id})"><div class="car-title">${c.brand} ${c.model}</div>
+      <div class="car-sub">${fmtKm(c.km)} · ${c.fuel==='ev'?'EV':(c.cc+' sm³')}</div>
+      <div class="cp-land">${fmt(c.landed)}</div>
+      <div class="cp-kor">${T('fav_saved')}: ${fmt(base)} · ${dHtml}</div></div>
+      <button class="cmpbtn on" onclick="event.stopPropagation();nav('order',${c.id})">${ICON('cart','#2563eb',15)} ${T('bb_order')}</button>
+    </div></div>`;
+}
+
+/* ---------- AI MOSHINA MASLAHATCHI ---------- */
+let ADV={budget:35000,use:'economy',fuel:'any'};
+function advisorView(){
+  const uses=[['family','adv_family'],['economy','adv_economy'],['business','adv_business'],['premium','adv_premium'],['first','adv_first']];
+  const fuels=[['any','adv_any'],['petrol','fu_petrol'],['hybrid','fu_hybrid'],['ev','fu_ev']];
+  const chip=(g,v,lbl)=>`<button class="advchip ${ADV[g]===v?'on':''}" data-g="${g}" data-v="${v}" onclick="advPick(this)">${T(lbl)}</button>`;
+  return `<div class="wrap" style="padding-top:24px">
+    <div class="advhead"><div class="advbot">🤖</div><div><h1 style="font-size:27px;font-weight:800">${T('adv_title')}</h1><p style="color:var(--muted);margin-top:3px">${T('adv_sub')}</p></div></div>
+    <div class="card advform">
+      <label class="advl">${T('adv_budget')}</label>
+      <div class="advbudget"><span>$</span><input id="advBudget" type="number" value="${ADV.budget}" oninput="ADV.budget=+this.value||0"></div>
+      <label class="advl">${T('adv_use')}</label>
+      <div class="advchips">${uses.map(u=>chip('use',u[0],u[1])).join('')}</div>
+      <label class="advl">${T('adv_fuelpref')}</label>
+      <div class="advchips">${fuels.map(f=>chip('fuel',f[0],f[1])).join('')}</div>
+      <button class="btn lg" style="margin-top:18px;width:100%" onclick="runAdvisor()">${T('adv_go')} →</button>
+    </div>
+    <div id="advResults" style="margin-top:22px"></div>
+  </div>`;
+}
+function advPick(el){ADV[el.dataset.g]=el.dataset.v;el.parentElement.querySelectorAll('.advchip').forEach(b=>b.classList.toggle('on',b===el));}
+function advScore(c,use){
+  const ev=carEval(c),age=2026-c.year;let s=0;
+  s+=Math.max(0,60-ev.markup)/2;
+  s+=(c.km<40000?10:c.km<80000?5:0);
+  s+=(age<=4?10:age<=6?5:0);
+  if(c.accidentFree)s+=6;
+  if(use==='family'){if(c.body==='suv'||c.body==='minivan'||c.body==='crossover')s+=22;if(c.cc>=2000)s+=5;}
+  else if(use==='economy'){if(c.cc<=1600)s+=15;if(c.fuel==='hybrid'||c.fuel==='ev')s+=16;s+=Math.max(0,40000-c.landed)/2200;}
+  else if(use==='premium'){if(['Genesis','BMW','Mercedes','Audi','Lexus'].includes(c.brand))s+=26;if((c.options||[]).length>5)s+=5;}
+  else if(use==='business'){if(c.body==='sedan')s+=15;if(['Genesis','BMW','Mercedes','Hyundai','Kia'].includes(c.brand))s+=10;}
+  else if(use==='first'){if(c.landed<25000)s+=16;if(c.cc<=2000)s+=10;if(c.km<60000)s+=6;}
+  return s;
+}
+function advReasons(c){
+  const ev=carEval(c),age=2026-c.year,out=[];
+  if(ev.rec==='good')out.push(T('adv_r_good'));
+  if(ev.markup<=45)out.push(T('adv_r_lowmk').replace('{m}',ev.markup));
+  if(c.fuel==='ev'||c.fuel==='hybrid')out.push(T('adv_r_eco'));
+  if(ADV.use==='family'&&(c.body==='suv'||c.body==='minivan'||c.body==='crossover'))out.push(T('adv_r_family'));
+  if(ADV.use==='premium'&&['Genesis','BMW','Mercedes','Lexus','Audi'].includes(c.brand))out.push(T('adv_r_premium'));
+  if(c.km<45000)out.push(T('adv_r_lowkm'));
+  if(age<=4)out.push(T('adv_r_new'));
+  if(c.accidentFree)out.push(T('adv_r_af'));
+  return out.length?out:[T('adv_r_fit')];
+}
+function advCard(c,rank){
+  const reasons=advReasons(c).slice(0,3);
+  return `<div class="carcard advrec"><div class="advrank">#${rank+1}</div>
+    <div class="car-img" onclick="nav('detail',${c.id})">${photoArea(c)}<div class="recwrap">${recBadge(c)}</div><div class="favwrap">${favHeart(c)}</div></div>
+    <div class="car-body">
+      <div onclick="nav('detail',${c.id})"><div class="car-title">${c.brand} ${c.model}</div>
+      <div class="car-sub">${fmtKm(c.km)} · ${c.fuel==='ev'?'EV':c.cc+' sm³'}</div>
+      <div class="cp-land">${fmt(c.landed)}</div></div>
+      <ul class="advwhy">${reasons.map(r=>`<li>${r}</li>`).join('')}</ul>
+      <button class="cmpbtn on" onclick="event.stopPropagation();nav('order',${c.id})">${ICON('cart','#2563eb',15)} ${T('bb_order')}</button>
+    </div></div>`;
+}
+function runAdvisor(){
+  const budget=ADV.budget>0?ADV.budget:1e9;
+  let pool=CARS.filter(c=>carEval(c).eligible&&c.landed<=budget*1.03);
+  if(ADV.fuel!=='any')pool=pool.filter(c=>c.fuel===ADV.fuel);
+  if(!pool.length)pool=CARS.filter(c=>carEval(c).eligible&&c.landed<=budget*1.18);
+  const top=pool.map(c=>({c,s:advScore(c,ADV.use)})).sort((a,b)=>b.s-a.s).slice(0,3).map(x=>x.c);
+  const host=document.getElementById('advResults');if(!host)return;
+  if(!top.length){host.innerHTML=`<div class="card" style="text-align:center;padding:30px;color:var(--muted)">${T('adv_none')}</div>`;return;}
+  const trap=CARS.filter(c=>c.landed<=budget*1.5&&carEval(c).rec!=='good'&&c.cc>2500).sort((a,b)=>b.cc-a.cc)[0];
+  host.innerHTML=`<div class="advsummary">✨ ${T('adv_found').replace('{n}',top.length)} · ${T('adv_'+ADV.use)} · ≤ ${fmt(budget)}</div>
+    <div class="cars">${top.map((c,i)=>advCard(c,i)).join('')}</div>
+    ${trap?`<div class="advtrap">⚠️ <b>${T('adv_trap')}:</b> ${trap.brand} ${trap.model} (${trap.cc} sm³, +${carEval(trap).markup}%) — ${T('adv_trap_txt')}</div>`:''}`;
+  if(host.scrollIntoView)host.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---------- DETAIL ---------- */
+function detailView(id){const c=CARS.find(x=>x.id===id)||CARS[0];DTAB='basic';DPHOTO=0;
+  const photoColors=[c.color,'#3b6fd4','#1f9e75','#8b5cf6'];
+  return `<div class="wrap">
+    <div class="crumb"><a onclick="nav('catalog')">${T('nav_catalog')}</a> / ${c.brand} ${c.model}</div>
+    <div class="detail">
+      <div>
+        <div class="galmain" id="galmain"><div class="galmeta">${c.brand} ${c.model} · ${c.views.toLocaleString()} ${T('d_views')}</div>${photoArea(c,true)}
+          <div class="galnav"><button onclick="movePhoto(-1)">${ICON('chevL','#5a6679',18)}</button><button onclick="movePhoto(1)">${ICON('chevR','#5a6679',18)}</button></div></div>
+        <div class="thumbrow" id="thumbrow">${[0,1,2,3].map(i=>`<div class="thumb ${i===0?'on':''}" onclick="setPhoto(${i})">${carIllustration(c,photoColors[i])}</div>`).join('')}</div>
+        <div class="dtabs">
+          ${[['basic','d_tab_basic'],['option','d_tab_option'],['cond','d_tab_cond'],['guarantee','d_tab_guarantee']].map(t=>`<button class="${t[0]==='basic'?'on':''}" data-dt="${t[0]}" onclick="setDTab('${t[0]}')">${T(t[1])}</button>`).join('')}
+        </div>
+        <div class="dsec show" id="ds_basic">
+          <div class="card"><h3 style="font-size:18px;margin-bottom:8px">${T('d_specs')}</h3><div class="spectable" id="dspecs"></div></div>
+          <div class="card" style="margin-top:16px"><div class="condhead"><span class="ok">${ICON('check','#34d399',16)}</span>${T('d_diag')}</div>
+            ${['d_diag1','d_diag2','d_diag3'].map(k=>`<div style="display:flex;gap:10px;align-items:center;padding:8px 0;color:var(--muted);font-size:14.5px"><span>${ICON('check','#34d399',18)}</span>${T(k)}</div>`).join('')}</div>
+          <div class="card" style="margin-top:16px"><h3 style="font-size:16px;margin-bottom:8px">${T('d_breakdown')}</h3><div class="bar" id="dbar" style="margin-bottom:14px"></div><div id="dbd"></div></div>
+          <div class="card" style="margin-top:16px"><h3 style="font-size:16px;margin-bottom:6px">${T('d_recommend')}</h3><p style="color:var(--muted);font-size:14.5px">${T('d_recommend_txt')}</p></div>
+        </div>
+        <div class="dsec" id="ds_option"><div class="card"><h3 style="font-size:18px;margin-bottom:8px">${T('d_options')}</h3><div class="optgrid" id="optgrid"></div></div></div>
+        <div class="dsec" id="ds_cond"><div class="card">
+          <div class="condhead"><span class="ok">${ICON('check','#34d399',16)}</span>${c.accidentFree?T('cond_title'):T('d_diag1')}</div>
+          <div class="condrow"><span>${T('cond_frame')}</span><span class="cg">${T('cond_normal')}</span></div>
+          <div class="condrow"><span>${T('cond_panel')}</span><span class="cg">${T('cond_normal')}</span></div>
+          <div class="condrow"><span>${T('cond_keys')}</span><span class="cg">${c.keys}</span></div>
+          <div class="condrow"><span>${T('cond_tint')}</span><span class="cg">${T('cond_tint_v')}</span></div>
+          <div class="condrow"><span>${T('cond_tread')}</span><span class="cg">${c.tread}mm / ${c.tread}mm</span></div>
+          <div class="inspcard"><div class="ih">${ICON('check','#34d399',18)} ${T('cond_items')}</div>
+            <div class="inspbars"><div class="inspbar">${T('cond_front')}</div><div class="inspbar">${T('cond_rear')}</div></div></div>
+          <div style="margin-top:14px;color:var(--muted);font-size:14px"><b style="color:var(--txt)">${T('cond_inspect')}.</b> ${T('cond_inspect_txt')}</div>
+        </div></div>
+        <div class="dsec" id="ds_guarantee"><div class="card">
+          <div class="condhead"><span class="ok">${ICON('shield','#34d399',16)}</span>${T('d_guarantee')}</div>
+          <p style="color:var(--muted);font-size:14.5px">${T('d_guar_txt')}</p>
+          <div class="optgrid" style="grid-template-columns:repeat(3,1fr);margin-top:14px">
+            <div class="optitem"><div class="oi">${ICON('search','#7dd3fc',24)}</div><div class="ol">${T('why3_t')}</div></div>
+            <div class="optitem"><div class="oi">${ICON('shield','#7dd3fc',24)}</div><div class="ol">${T('why4_t')}</div></div>
+            <div class="optitem"><div class="oi">${ICON('phone','#7dd3fc',24)}</div><div class="ol">${T('why6_t')}</div></div>
+          </div></div></div>
+      </div>
+      <div><div class="buybox">
+        <div class="bb-sub">🇺🇿 ${T('p_landed')}</div>
+        <div class="bb-price" id="bbPrice">$0</div>
+        <div class="bb-tcc" onclick="nav('home');setTimeout(()=>scrollToId('calc'),80)"><span style="display:flex;gap:8px;align-items:center">${ICON('file','#9aa6c9',18)} ${T('bb_total_calc')}</span><span>${ICON('chevR','#9aa6c9',16)}</span></div>
+        <div class="bb-row"><span>🇰🇷 ${T('p_korea')}</span><span class="v">${fmt(c.price)}</span></div>
+        <div class="bb-row"><span>${T('bb_compare_new')}</span><span class="v" style="color:var(--a2)">−${c.compareNew}%</span></div>
+        <div class="bb-row"><span>${T('d_km')}</span><span class="v">${fmtKm(c.km)}</span></div>
+        <div id="bbAlert"></div>
+        <button class="btn lg" style="width:100%;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="nav('order',${c.id})">${ICON('cart','#04122e',18)} ${T('bb_order')}</button>
+        <button class="btn ghost" style="width:100%;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="nav('home');setTimeout(()=>scrollToId('lead'),80)">${ICON('phonecall','#f3f5ff',16)} ${T('bb_contact')}</button>
+        <div class="bb-actions"><div class="bb-mini">${T('bb_market')}</div><div class="bb-mini">${T('bb_sold')}</div><div class="bb-mini">${T('bb_similar')}</div></div>
+      </div></div>
+    </div></div>`;
+}
+function setDTab(t){DTAB=t;document.querySelectorAll('.dtabs button').forEach(b=>b.classList.toggle('on',b.dataset.dt===t));['basic','option','cond','guarantee'].forEach(s=>{const e=document.getElementById('ds_'+s);if(e)e.classList.toggle('show',s===t);});window.scrollTo({top:0,behavior:'smooth'});}
+function setPhoto(i){i=((i%4)+4)%4;DPHOTO=i;document.querySelectorAll('#thumbrow .thumb').forEach((t,k)=>t.classList.toggle('on',k===i));}
+function movePhoto(d){setPhoto(DPHOTO+d);}
+function renderDetail(id){const c=CARS.find(x=>x.id===id)||CARS[0];const isEV=c.fuel==='ev';
+  const specs=[['d_year',c.year],['d_engine',isEV?'Elektro':(c.cc+' sm³')],['d_km',fmtKm(c.km)],['d_fuel',T('fu_'+c.fuel)],['d_tr',c.tr],['d_body',T('body_'+c.body)]];
+  document.getElementById('dspecs').innerHTML=specs.map(s=>`<div class="si"><div class="k">${T(s[0])}</div><div class="v">${s[1]}</div></div>`).join('');
+  document.getElementById('optgrid').innerHTML=carOptions(c).map(o=>`<div class="optitem ${o.on?'':'off'}"><div class="oi">${ICON(o.icon,o.on?'#7dd3fc':'#6b7699',26)}</div><div class="ol">${T(o.key)}</div></div>`).join('');
+  const r=CALC({price:c.price,customsValue:c.price,cc:c.cc,year:c.year,fuel:c.fuel,model:'A'});
+  const commPerc=r.price*0.05,commFix=500;
+  const colors={price:'#4f8cff',logi:'#22d3ee',duty:'#8b5cf6',excise:'#f472b6',util:'#fbbf24',vat:'#fb7185'};
+  const lblK={price:'r_price',logi:'r_logi',duty:'r_duty',excise:'r_excise',util:'r_util',vat:'r_vat'};
+  const disp=[['price',r.price+r.repair+commPerc],['logi',r.logi+commFix],['duty',r.duty],['excise',r.excise],['util',r.util],['vat',r.vat]];
+  document.getElementById('dbar').innerHTML=disp.filter(b=>b[1]>0).map(b=>`<i style="width:${b[1]/r.total*100}%;background:${colors[b[0]]}"></i>`).join('');
+  let h='';disp.forEach(b=>{if(b[0]==='excise'&&b[1]<=0)return;h+=`<div class="bd-line"><span class="lbl"><span class="dotc" style="background:${colors[b[0]]}"></span>${T(lblK[b[0]])}</span><span class="v">${fmt(b[1])}</span></div>`;});
+  h+=`<div class="bd-line total"><span class="lbl">${T('d_total')}</span><span class="v">${fmt(r.total)}</span></div>`;
+  document.getElementById('dbd').innerHTML=h;
+  document.getElementById('bbPrice').textContent=fmt(r.total);
+  document.getElementById('bbAlert').innerHTML=r.eligible?'':`<div class="alert" style="margin-top:12px">${T('w_age')}</div>`;
+}
+
+/* ---------- ORDER ---------- */
+function orderView(id){const c=CARS.find(x=>x.id===id)||CARS[0];ORD={step:1,model:'A',cond:'clean',carId:c.id};
+  const r=CALC({price:c.price,customsValue:c.price,cc:c.cc,year:c.year,fuel:c.fuel,model:'A'});
+  return `<div class="wrap narrow" style="padding-top:24px">
+    <div class="crumb"><a onclick="nav('catalog')">${T('nav_catalog')}</a> / ${T('o_title')}</div>
+    <h1 style="font-size:28px;font-weight:800">${T('o_title')}</h1>
+    <div class="stepper"><div class="s on" id="sp1">${T('o_s1')}</div><div class="s" id="sp2">${T('o_s2')}</div><div class="s" id="sp3">${T('o_s3')}</div><div class="s" id="sp4">${T('o_s4')}</div></div>
+    <div id="ostep"></div>
+  </div>`;
+}
+function renderOrderStep(){
+  const c=CARS.find(x=>x.id===ORD.carId)||CARS[0];const isEV=c.fuel==='ev';
+  const r=CALC({price:c.price,customsValue:c.price,cc:c.cc,year:c.year,fuel:c.fuel,model:ORD.model});
+  const box=document.getElementById('ostep');
+  ['sp1','sp2','sp3','sp4'].forEach((s,i)=>{const e=document.getElementById(s);if(e){e.classList.toggle('on',i+1===ORD.step);e.classList.toggle('done',i+1<ORD.step);}});
+  if(ORD.step===1){
+    box.innerHTML=`<div class="card" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+      <div style="width:150px;flex:none">${carSVG(c.color)}</div>
+      <div><div style="font-family:'Manrope';font-weight:800;font-size:20px">${c.brand} ${c.model}</div>
+      <div style="color:var(--faint);font-size:13.5px;margin:3px 0 8px">${c.year} · ${isEV?'EV':(c.cc+' sm³')} · ${fmtKm(c.km)}</div>
+      <div style="display:flex;gap:18px;flex-wrap:wrap"><div><div style="font-size:12px;color:var(--faint)">🇰🇷 ${T('p_korea')}</div><div style="font-family:'Manrope';font-weight:700">${fmt(c.price)}</div></div>
+      <div><div style="font-size:12px;color:var(--a2)">🇺🇿 ${T('p_landed')}</div><div class="grad-txt" style="font-family:'Manrope';font-weight:800">${fmt(r.total)}</div></div></div></div></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:18px"><button class="btn" onclick="ostep(2)">${T('o_next')}</button></div>`;
+  } else if(ORD.step===2){
+    box.innerHTML=`<div class="card">
+      <div class="row2"><div><label>${T('o_name')}</label><input id="o_name"></div><div><label>${T('o_phone')}</label><input id="o_phone" placeholder="+998 ..."></div></div>
+      <div class="row2"><div><label>${T('o_tg')}</label><input id="o_tg" placeholder="@username"></div><div><label>${T('o_city')}</label><input id="o_city"></div></div>
+      <label>${T('o_model_sel')}</label>
+      <div class="opt-card ${ORD.model==='A'?'sel':''}" onclick="ORD.model='A';renderOrderStep()"><div class="rd"></div><div><b>${T('o_modelA')}</b></div></div>
+      <div class="opt-card ${ORD.model==='B'?'sel':''}" onclick="ORD.model='B';renderOrderStep()"><div class="rd"></div><div><b>${T('o_modelB')}</b></div></div>
+      <label>${T('o_passport')}</label><input id="o_passport"><div id="oerr" class="alert" style="display:none"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:18px"><button class="btn ghost" onclick="ostep(1)">${T('o_prev')}</button><button class="btn" onclick="validateOrder()">${T('o_next')}</button></div>`;
+    if(ORD._name){document.getElementById('o_name').value=ORD._name;document.getElementById('o_phone').value=ORD._phone||'';}
+  } else if(ORD.step===3){
+    const p1=400,p2=c.price+r.logi,p3=Math.round(r.total-p1-p2);
+    box.innerHTML=`<div class="card"><h3 style="font-size:18px;margin-bottom:6px">${T('o_plan_t')}</h3>
+      <div class="paystage"><span>${T('o_p1')}</span><span class="v">${fmt(p1)}</span></div>
+      <div class="paystage"><span>${T('o_p2')}</span><span class="v">${fmt(p2)}</span></div>
+      <div class="paystage"><span>${T('o_p3')}</span><span class="v">${fmt(p3)}</span></div>
+      <div class="paystage" style="border-top:2px solid var(--line2)"><span style="font-weight:700">${T('o_total_pay')}</span><span class="v grad-txt" style="font-size:20px">${fmt(r.total)}</span></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:18px"><button class="btn ghost" onclick="ostep(2)">${T('o_prev')}</button><button class="btn" onclick="ostep(4)">${T('o_next')}</button></div>`;
+  } else if(ORD.step===4){
+    box.innerHTML=`<div class="card"><h3 style="font-size:18px;margin-bottom:10px">${T('o_sum')}</h3>
+      <div class="paystage"><span>${c.brand} ${c.model} (${c.year})</span><span class="v">${fmt(c.price)}</span></div>
+      <div class="paystage"><span>${T('o_name')}</span><span class="v">${ORD._name||'—'}</span></div>
+      <div class="paystage"><span>${T('o_phone')}</span><span class="v">${ORD._phone||'—'}</span></div>
+      <div class="paystage"><span>${T('o_model_sel')}</span><span class="v">${ORD.model==='A'?T('o_modelA'):T('o_modelB')}</span></div>
+      <div class="paystage" style="border-top:2px solid var(--line2)"><span style="font-weight:700">${T('o_total_pay')}</span><span class="v grad-txt" style="font-size:20px">${fmt(r.total)}</span></div>
+      <div class="note">${T('r_note')}</div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:18px"><button class="btn ghost" onclick="ostep(3)">${T('o_prev')}</button><button class="btn" onclick="confirmOrder()">${T('o_confirm')}</button></div>`;
+  } else if(ORD.step===5){
+    const num='AVM-'+(1000+Math.floor(Math.random()*9000));
+    box.innerHTML=`<div class="card success"><div class="ic">✅</div><h2 style="font-size:24px">${T('o_done_t')}</h2>
+      <p style="color:var(--muted);margin-top:8px">${T('o_done_d')}</p><div class="ordernum grad-txt">${num}</div>
+      <button class="btn" onclick="nav('tracking')">${T('o_track')}</button></div>`;
+    document.querySelectorAll('.stepper .s').forEach(s=>s.classList.add('done'));
+  }
+}
+function ostep(n){ORD.step=n;window.scrollTo(0,0);renderOrderStep();}
+function validateOrder(){const n=val('o_name'),p=val('o_phone');const e=document.getElementById('oerr');
+  if(!n||!p){e.textContent=T('o_err');e.style.display='block';return;}ORD._name=n;ORD._phone=p;ostep(3);}
+function confirmOrder(){ORD.step=5;window.scrollTo(0,0);renderOrderStep();}
+
+/* ---------- TRACKING ---------- */
+const TORDERS={'AVM-1042':{carId:1,stage:3,eta:'2026-07-18'},'AVM-2087':{carId:7,stage:5,eta:'2026-07-02'}};
+const TSTEPS=['st_ordered','st_inspect','st_bought','st_ship','st_customs','st_delivery','st_done'];
+function trackingView(){return `<div class="wrap narrow" style="padding-top:26px">
+  <h1 style="font-size:28px;font-weight:800">${T('t_title')}</h1><p style="color:var(--muted);margin-bottom:18px">${T('t_sub')}</p>
+  <div class="card" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><input id="tid" value="AVM-1042" style="flex:1;min-width:220px" placeholder="${T('t_ph')}"><button class="btn" onclick="doTrack()">${T('t_btn')}</button></div>
+  <div class="note">${T('t_demo')}</div><div id="tres" style="margin-top:22px"></div></div>`;}
+function doTrack(){const idv=(val('tid')||'').trim().toUpperCase();const o=TORDERS[idv];const box=document.getElementById('tres');
+  if(!o){box.innerHTML=`<div class="alert">${T('t_notfound')}</div>`;return;}
+  const c=CARS.find(x=>x.id===o.carId);
+  const steps=TSTEPS.map((s,i)=>{const cls=i<o.stage?'done':i===o.stage?'now':'future';const ic=i<o.stage?'✓':(i===o.stage?'●':'');
+    return `<div class="ts ${cls}"><div class="dot">${ic}</div><div><div class="tt">${T(s)}</div></div></div>`;}).join('');
+  box.innerHTML=`<div class="card" style="display:flex;gap:16px;align-items:center;margin-bottom:18px"><div style="width:130px;flex:none">${carSVG(c.color)}</div>
+    <div><div style="font-family:'Manrope';font-weight:800;font-size:19px">${c.brand} ${c.model}</div><div style="color:var(--faint);font-size:13px;margin:3px 0">${idv} · ${c.year}</div>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:6px"><div><div style="font-size:12px;color:var(--faint)">${T('t_status')}</div><div class="grad-txt" style="font-family:'Manrope';font-weight:700">${T(TSTEPS[o.stage])}</div></div>
+    <div><div style="font-size:12px;color:var(--faint)">${T('t_eta')}</div><div style="font-family:'Manrope';font-weight:600">${o.eta}</div></div></div></div></div>
+    <div class="card">${steps}</div>`;}
+
+/* ---------- FAQ ---------- */
+function faqView(){const list=FAQ[LANG]||FAQ.uz;
+  return `<div class="wrap narrow" style="padding-top:26px">
+    <h1 style="font-size:28px;font-weight:800">${T('faq_t')}</h1><p style="color:var(--muted);margin-bottom:22px">${T('faq_l')}</p>
+    <div>${list.map((qa,i)=>`<div class="faq-item" id="fq${i}"><div class="faq-q" onclick="document.getElementById('fq${i}').classList.toggle('open')"><span>${qa[0]}</span><span class="pm">+</span></div><div class="faq-a"><p>${qa[1]}</p></div></div>`).join('')}</div>
+    <div class="card" style="margin-top:24px;text-align:center"><h3 style="font-size:18px">${T('ask_t')}</h3><p style="color:var(--muted);margin:8px 0 14px">${T('ask_l')}</p><button class="btn" onclick="nav('catalog')">${T('nav_order')}</button></div>
+  </div>`;
+}
+
+/* ---------- JONLI VALYUTA KURSI ---------- */
+let RATES_LIVE=false, RATES_TIME='';
+const RATE_MAP={uz:'UZS',ru:'RUB',kz:'KZT',kg:'KGS',tg:'TJS'};
+const RATE_CACHE_KEY='avtomost_rates_v1', RATE_TTL=6*60*60*1000; // 6 soat kesh — limitni tejaydi
+function applyRates(rates,time){
+  Object.keys(RATE_MAP).forEach(k=>{const v=rates[RATE_MAP[k]];if(v&&CUR[k])CUR[k].r=v;});
+  RATES_LIVE=true; RATES_TIME=time||new Date().toLocaleDateString();
+  if(typeof render==='function')render();
+}
+function rateCacheGet(){try{const r=JSON.parse(localStorage.getItem(RATE_CACHE_KEY));if(r&&r.rates&&Date.now()-r.t<RATE_TTL)return r;}catch(e){}return null;}
+function rateCacheSet(rates,time){try{localStorage.setItem(RATE_CACHE_KEY,JSON.stringify({t:Date.now(),rates,time}));}catch(e){}}
+async function loadRates(){
+  // 0) Kesh — 6 soat ichida bo'lsa so'rov yubormaymiz (limit tejaladi)
+  const cached=rateCacheGet();
+  if(cached){applyRates(cached.rates,cached.time);return;}
+  // 1) Kalitli endpoint (asosiy)  2) kalitsiz ochiq endpoint (zaxira)
+  const KEY='3329235cc4f0d4b61f41bb75';
+  const sources=[`https://v6.exchangerate-api.com/v6/${KEY}/latest/USD`,'https://open.er-api.com/v6/latest/USD'];
+  for(const url of sources){
+    try{
+      const res=await fetch(url,{cache:'no-store'});
+      const j=await res.json();
+      const rates=j&&(j.conversion_rates||j.rates);
+      if(rates&&rates.UZS){
+        const time=j.time_last_update_utc?new Date(j.time_last_update_utc).toLocaleDateString():new Date().toLocaleDateString();
+        applyRates(rates,time); rateCacheSet(rates,time); return;
+      }
+    }catch(e){/* internet yo'q — zaxira (taxminiy) kurslar ishlaydi */}
+  }
+}
+function rateStatusHtml(){
+  return RATES_LIVE
+    ? `<span class="ratechip live" title="${RATES_TIME}">🟢 ${T('rate_live')}</span>`
+    : `<span class="ratechip" title="zaxira">⚪ ${T('rate_approx')}</span>`;
+}
+
+/* ---------- INIT ---------- */
+applyStatic();
+render();
+loadRates();
+</script>
+</body>
+</html>
