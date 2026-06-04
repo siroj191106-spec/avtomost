@@ -1160,7 +1160,19 @@ function homeView(){
     </div>
   </div></section>`;
 }
-function submitLead(){const n=val('lf_name'),p=val('lf_phone');if(!n||!p){alert(T('lf_err'));return;}document.getElementById('lf_ok').style.display='block';}
+/* ===== Buyurtmani yuborish: email (info@avtomostuz.com) + lokal saqlash ===== */
+function avtomostSaveLocal(o){try{const a=JSON.parse(localStorage.getItem('avtomost_orders')||'[]');a.unshift(Object.assign({sana:new Date().toLocaleString()},o));localStorage.setItem('avtomost_orders',JSON.stringify(a.slice(0,200)));}catch(e){}}
+function avtomostSend(payload){
+  avtomostSaveLocal(payload);
+  return fetch('https://formsubmit.co/ajax/info@avtomostuz.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(Object.assign({_subject:'🚗 AVTOMOST — yangi buyurtma',_template:'table'},payload))})
+    .then(r=>r.json()).catch(()=>({success:false}));
+}
+function submitLead(){const n=val('lf_name'),p=val('lf_phone');if(!n||!p){alert(T('lf_err'));return;}
+  const btn=(typeof event!=='undefined'&&event)?event.target:null;if(btn){btn.disabled=true;btn.style.opacity='.6';}
+  avtomostSend({Turi:'Narx so‘rovi',Ism:n,Telefon:p,Moshina:val('lf_car')||'—',Byudjet:val('lf_budget')||'—'})
+    .then(()=>{const ok=document.getElementById('lf_ok');if(ok)ok.style.display='block';if(btn){btn.disabled=false;btn.style.opacity='1';}});
+}
 
 /* ---------- CALCULATOR widget (used in home) ---------- */
 function calcWidget(){
@@ -1610,7 +1622,7 @@ function renderOrderStep(){
       <div class="note">${T('r_note')}</div></div>
       <div style="display:flex;justify-content:space-between;margin-top:18px"><button class="btn ghost" onclick="ostep(3)">${T('o_prev')}</button><button class="btn" onclick="confirmOrder()">${T('o_confirm')}</button></div>`;
   } else if(ORD.step===5){
-    const num='AVM-'+(1000+Math.floor(Math.random()*9000));
+    const num=ORD._num||('AVM-'+(1000+Math.floor(Math.random()*9000)));
     box.innerHTML=`<div class="card success"><div class="ic">✅</div><h2 style="font-size:24px">${T('o_done_t')}</h2>
       <p style="color:var(--muted);margin-top:8px">${T('o_done_d')}</p><div class="ordernum grad-txt">${num}</div>
       <button class="btn" onclick="nav('tracking')">${T('o_track')}</button></div>`;
@@ -1619,8 +1631,14 @@ function renderOrderStep(){
 }
 function ostep(n){ORD.step=n;window.scrollTo(0,0);renderOrderStep();}
 function validateOrder(){const n=val('o_name'),p=val('o_phone');const e=document.getElementById('oerr');
-  if(!n||!p){e.textContent=T('o_err');e.style.display='block';return;}ORD._name=n;ORD._phone=p;ostep(3);}
-function confirmOrder(){ORD.step=5;window.scrollTo(0,0);renderOrderStep();}
+  if(!n||!p){e.textContent=T('o_err');e.style.display='block';return;}ORD._name=n;ORD._phone=p;ORD._tg=val('o_tg');ORD._city=val('o_city');ORD._passport=val('o_passport');ostep(3);}
+function confirmOrder(){
+  const c=CARS.find(x=>x.id===ORD.carId)||CARS[0];
+  const r=CALC({price:c.price,customsValue:c.price,cc:c.cc,year:c.year,fuel:c.fuel,model:ORD.model});
+  ORD._num='AVM-'+(1000+Math.floor(Math.random()*9000));
+  avtomostSend({Turi:'BUYURTMA',Raqam:ORD._num,Moshina:c.brand+' '+c.model+' ('+c.year+')',Eshikkacha:fmt(r.total),Ism:ORD._name||'—',Telefon:ORD._phone||'—',Telegram:ORD._tg||'—',Shahar:ORD._city||'—',Model:(ORD.model==='A'?T('o_modelA'):T('o_modelB'))});
+  ORD.step=5;window.scrollTo(0,0);renderOrderStep();
+}
 
 /* ---------- TRACKING ---------- */
 const TORDERS={'AVM-1042':{carId:1,stage:3,eta:'2026-07-18'},'AVM-2087':{carId:7,stage:5,eta:'2026-07-02'}};
