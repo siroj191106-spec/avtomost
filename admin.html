@@ -15,8 +15,9 @@
   .btn{background:var(--a);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;font-size:14px}
   .btn.ghost{background:#fff;color:var(--txt);border:1px solid var(--line)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .gate{max-width:380px;margin:12vh auto}
-  .gate input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:10px 0}
+  .gate{max-width:400px;margin:12vh auto;text-align:center}
+  .gbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 20px;font-weight:700;font-size:15px;cursor:pointer;margin-top:16px}
+  .gbtn img{width:20px;height:20px}
   .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;flex:1;min-width:120px}
   .stat .n{font-size:26px;font-weight:800}.stat .l{color:var(--muted);font-size:13px}
@@ -27,97 +28,114 @@
   .tag{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700}
   .tag.yangi{background:#dbeafe;color:#1d4ed8}.tag.tasdiq{background:#dcfce7;color:#15803d}.tag.bekor{background:#fee2e2;color:#b91c1c}
   select.st{border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:13px}
-  .src{font-size:11px;color:var(--muted)}
   .empty{text-align:center;padding:40px;color:var(--muted)}
   .wrap{max-width:1100px;margin:0 auto}
+  a{color:var(--a)}
   @media(max-width:640px){table,thead,tbody,th,td,tr{display:block}th{display:none}td{border:0;padding:4px 0}tr{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;display:block}td:before{content:attr(data-l);font-weight:700;color:var(--muted);font-size:12px;display:block}}
 </style>
 </head>
 <body>
 
-<!-- ====== SOZLAMA: index.html dagi bilan bir xil bo'lsin ====== -->
-<script>
-  const FB_PROJECT='avtomost-83c8d';
-  const FB_KEY='AIzaSyBJjLI7UthElbehkTRGkbm9a3Z4_aNyRsM';
-  const ADMIN_PASS='avtomost2026'; // admin parolingiz — o'zgartiring
-</script>
-
 <div id="gate" class="gate card" style="display:none">
-  <div class="logo" style="text-align:center">AVTO<span>MOST</span></div>
-  <div class="muted" style="text-align:center;margin:6px 0 4px">Admin panel</div>
-  <input id="pw" type="password" placeholder="Parol" onkeydown="if(event.key==='Enter')tryLogin()">
-  <button class="btn" style="width:100%" onclick="tryLogin()">Kirish</button>
-  <div id="gerr" style="color:var(--bad);font-size:13px;margin-top:8px;display:none">Parol noto‘g‘ri</div>
+  <div class="logo" style="font-size:26px">AVTO<span>MOST</span></div>
+  <div class="muted" style="margin:6px 0 4px">Admin panel</div>
+  <div class="muted" style="font-size:13px">Faqat ruxsat berilgan akkaunt kira oladi</div>
+  <button class="gbtn" id="signin">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">Google bilan kirish
+  </button>
+  <div id="gerr" style="color:var(--bad);font-size:13px;margin-top:12px;display:none"></div>
 </div>
+
+<div id="loading" class="empty">Yuklanmoqda…</div>
 
 <div id="app" class="wrap" style="display:none">
   <div class="top">
     <div class="logo">AVTO<span>MOST</span> <span class="muted" style="font-weight:600;font-size:15px">· Buyurtmalar</span></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn ghost" onclick="load()">↻ Yangilash</button>
-      <button class="btn ghost" onclick="exportCsv()">⬇ CSV</button>
-      <button class="btn ghost" onclick="logout()">Chiqish</button>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span class="muted" id="who" style="font-size:13px"></span>
+      <button class="btn ghost" id="refresh">↻ Yangilash</button>
+      <button class="btn ghost" id="csv">⬇ CSV</button>
+      <button class="btn ghost" id="logout">Chiqish</button>
     </div>
   </div>
-  <div id="cfgwarn" class="card" style="display:none;border-color:#fcd34d;background:#fffbeb;margin-bottom:14px;font-size:14px">
-    ⚠️ Firebase hali ulanmagan. Hozir faqat shu brauzerdagi (lokal) buyurtmalar ko‘rinadi. To‘liq ishlashi uchun <b>FB_PROJECT</b> va <b>FB_KEY</b> ni sozlang.
-  </div>
   <div class="stats" id="stats"></div>
-  <input id="q" placeholder="🔍 Qidirish: ism, telefon, moshina, raqam..." oninput="render()" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;margin-bottom:14px">
+  <input id="q" placeholder="🔍 Qidirish: ism, telefon, moshina, raqam..." oninput="ADMIN.render()" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;margin-bottom:14px">
   <div id="list"></div>
 </div>
 
-<script>
-function tryLogin(){
-  if(document.getElementById('pw').value===ADMIN_PASS){sessionStorage.setItem('avm_admin','1');show();}
-  else document.getElementById('gerr').style.display='block';
-}
-function logout(){sessionStorage.removeItem('avm_admin');location.reload();}
-let REFRESH=null;
-function show(){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';load();if(!REFRESH)REFRESH=setInterval(load,30000);}
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-function fbList(){
-  if(!FB_PROJECT)return Promise.resolve(null);
-  const url='https://firestore.googleapis.com/v1/projects/'+FB_PROJECT+'/databases/(default)/documents/orders?pageSize=300'+(FB_KEY?('&key='+FB_KEY):'');
-  return fetch(url).then(r=>r.json()).then(d=>{
-    if(!d.documents)return [];
-    return d.documents.map(doc=>{
-      const f=doc.fields||{},o={_name:doc.name};
-      Object.keys(f).forEach(k=>{o[k]=f[k].stringValue!==undefined?f[k].stringValue:(f[k].integerValue!==undefined?+f[k].integerValue:'');});
-      return o;
-    });
-  }).catch(()=>[]);
-}
-function localList(){try{return JSON.parse(localStorage.getItem('avtomost_orders')||'[]').map(o=>Object.assign({holat:o.holat||'yangi',_local:true},o));}catch(e){return [];}}
+const firebaseConfig = {
+  apiKey: "AIzaSyBJjLI7UthElbehkTRGkbm9a3Z4_aNyRsM",
+  authDomain: "avtomost-83c8d.firebaseapp.com",
+  projectId: "avtomost-83c8d",
+  storageBucket: "avtomost-83c8d.firebasestorage.app",
+  messagingSenderId: "939227026884",
+  appId: "1:939227026884:web:e3548b551dd0400b318091"
+};
+const ADMIN_EMAILS = ["siroj.191106@gmail.com"]; // ruxsat berilgan adminlar
 
-let ROWS=[];
-function load(){
-  document.getElementById('cfgwarn').style.display=FB_PROJECT?'none':'block';
-  fbList().then(fb=>{
-    let rows=[];
-    if(fb===null){rows=localList();}
-    else{rows=fb.slice();}
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+const $ = id => document.getElementById(id);
+let ROWS = [], REFRESH = null;
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function showGate(msg){
+  $('loading').style.display='none';$('app').style.display='none';$('gate').style.display='block';
+  if(msg){$('gerr').textContent=msg;$('gerr').style.display='block';}
+}
+function showApp(user){
+  $('loading').style.display='none';$('gate').style.display='none';$('app').style.display='block';
+  $('who').textContent=user.email;
+  load();
+  if(!REFRESH)REFRESH=setInterval(load,30000);
+}
+
+onAuthStateChanged(auth, user=>{
+  if(user && ADMIN_EMAILS.includes((user.email||'').toLowerCase())) showApp(user);
+  else if(user){ signOut(auth); showGate('Bu akkaunt uchun ruxsat yo‘q: '+user.email); }
+  else showGate('');
+});
+
+$('signin').onclick = ()=>{ $('gerr').style.display='none'; signInWithPopup(auth,provider).catch(e=>showGate('Kirishda xato: '+e.message)); };
+$('logout').onclick = ()=> signOut(auth).then(()=>location.reload());
+$('refresh').onclick = load;
+$('csv').onclick = exportCsv;
+
+async function load(){
+  try{
+    const snap = await getDocs(collection(db,'orders'));
+    const rows=[];
+    snap.forEach(d=>{const o=d.data();o._id=d.id;rows.push(o);});
     rows.sort((a,b)=>(b.ts||0)-(a.ts||0));
-    ROWS=rows;render();
-  });
+    ROWS=rows; render();
+  }catch(e){ $('list').innerHTML='<div class="card empty">O‘qishda xato: '+esc(e.message)+'</div>'; }
 }
+
 function render(){
-  const stats=document.getElementById('stats');
-  const total=ROWS.length, yangi=ROWS.filter(r=>(r.holat||'yangi')==='yangi').length, buy=ROWS.filter(r=>r.Turi&&r.Turi.toUpperCase().indexOf('BUYURTMA')>=0).length;
-  stats.innerHTML=`
+  const total=ROWS.length, yangi=ROWS.filter(r=>(r.holat||'yangi')==='yangi').length,
+        buy=ROWS.filter(r=>r.Turi&&String(r.Turi).toUpperCase().indexOf('BUYURTMA')>=0).length;
+  $('stats').innerHTML=`
     <div class="stat"><div class="n">${total}</div><div class="l">Jami</div></div>
     <div class="stat"><div class="n" style="color:var(--a)">${yangi}</div><div class="l">Yangi</div></div>
     <div class="stat"><div class="n" style="color:var(--a2)">${buy}</div><div class="l">Buyurtma</div></div>`;
-  const list=document.getElementById('list');
-  const q=((document.getElementById('q')||{}).value||'').toLowerCase().trim();
+  const list=$('list');
+  const q=(($('q')||{}).value||'').toLowerCase().trim();
   const view=ROWS.map((r,i)=>({r,i})).filter(({r})=>!q||JSON.stringify(r).toLowerCase().indexOf(q)>=0);
   if(!view.length){list.innerHTML='<div class="card empty">'+(ROWS.length?'Hech narsa topilmadi.':'Hozircha buyurtma yo‘q.')+'</div>';return;}
   list.innerHTML='<table><thead><tr><th>Sana</th><th>Turi</th><th>Ism</th><th>Telefon</th><th>Telegram</th><th>Shahar</th><th>Moshina</th><th>Narx</th><th>Raqam</th><th>Holat</th></tr></thead><tbody>'+
     view.map(({r,i})=>{
       const h=r.holat||'yangi';const tagc=h==='tasdiqlandi'?'tasdiq':(h==='bekor'?'bekor':'yangi');
-      const canEdit=!!r._name; // faqat Firestore yozuvlarini o'zgartirsa bo'ladi
       return `<tr>
-        <td data-l="Sana">${esc(r.sana||'')}${r._local?' <span class="src">(lokal)</span>':''}</td>
+        <td data-l="Sana">${esc(r.sana||'')}</td>
         <td data-l="Turi">${esc(r.Turi||'—')}</td>
         <td data-l="Ism">${esc(r.Ism||'—')}</td>
         <td data-l="Telefon">${r.Telefon?`<a href="tel:${esc(String(r.Telefon).replace(/[^+\d]/g,''))}">${esc(r.Telefon)}</a>`:'—'}</td>
@@ -126,26 +144,27 @@ function render(){
         <td data-l="Moshina">${esc(r.Moshina||'—')}</td>
         <td data-l="Narx">${esc(r.Eshikkacha||'—')}</td>
         <td data-l="Raqam">${esc(r.Raqam||'—')}</td>
-        <td data-l="Holat"><span class="tag ${tagc}">${esc(h)}</span>${canEdit?`<br><select class="st" onchange="setStatus(${i},this.value)"><option ${h==='yangi'?'selected':''}>yangi</option><option ${h==='tasdiqlandi'?'selected':''}>tasdiqlandi</option><option ${h==='bekor'?'selected':''}>bekor</option></select>`:''}</td>
+        <td data-l="Holat"><span class="tag ${tagc}">${esc(h)}</span><br><select class="st" data-id="${esc(r._id)}"><option ${h==='yangi'?'selected':''}>yangi</option><option ${h==='tasdiqlandi'?'selected':''}>tasdiqlandi</option><option ${h==='bekor'?'selected':''}>bekor</option></select></td>
       </tr>`;
     }).join('')+'</tbody></table>';
+  list.querySelectorAll('select.st').forEach(sel=>{
+    sel.onchange=async()=>{
+      try{ await updateDoc(doc(db,'orders',sel.dataset.id),{holat:sel.value});
+        const row=ROWS.find(r=>r._id===sel.dataset.id);if(row)row.holat=sel.value;render();
+      }catch(e){alert('Saqlanmadi: '+e.message);}
+    };
+  });
 }
-function setStatus(i,val){
-  const r=ROWS[i];if(!r||!r._name||!FB_PROJECT)return;
-  const url='https://firestore.googleapis.com/v1/'+r._name+'?updateMask.fieldPaths=holat'+(FB_KEY?('&key='+FB_KEY):'');
-  fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{holat:{stringValue:val}}})})
-    .then(()=>{r.holat=val;render();}).catch(()=>alert('Saqlanmadi'));
-}
-function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
 function exportCsv(){
   const cols=['sana','Turi','Ism','Telefon','Telegram','Shahar','Moshina','Eshikkacha','Raqam','holat'];
   const lines=[cols.join(',')].concat(ROWS.map(r=>cols.map(c=>'"'+String(r[c]||'').replace(/"/g,'""')+'"').join(',')));
   const blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='avtomost-buyurtmalar.csv';a.click();
 }
-/* boshlanish */
-if(sessionStorage.getItem('avm_admin')==='1')show();
-else document.getElementById('gate').style.display='block';
+
+// search input uses inline ADMIN.render
+window.ADMIN={render};
 </script>
 </body>
 </html>

@@ -578,6 +578,11 @@ h1{letter-spacing:-1.2px}
 
 <main id="app"></main>
 <div id="authModal" class="authmodal" onclick="if(event.target===this)closeAuth()"></div>
+<button id="floatContact" onclick="nav('home');setTimeout(()=>scrollToId('lead'),120)" aria-label="Bog'lanish"
+  style="position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2563eb,#1f9e75);color:#fff;border:0;border-radius:999px;padding:13px 20px;font-weight:800;font-size:15px;box-shadow:0 8px 24px rgba(37,99,235,.35);cursor:pointer">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span data-i="float_contact">Bepul maslahat</span>
+</button>
 
 <footer>
   <div class="wrap foot">
