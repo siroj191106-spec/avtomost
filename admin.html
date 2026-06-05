@@ -10,23 +10,30 @@
   :root{--bg:#f4f6fb;--card:#fff;--line:#e6eaf2;--txt:#0e1726;--muted:#5a6679;--a:#2563eb;--a2:#1f9e75;--warn:#d97706;--bad:#e11d48}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);padding:18px}
-  .wrap{max-width:1200px;margin:0 auto}
+  .wrap{max-width:1220px;margin:0 auto}
   .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px}
   .logo{font-weight:800;font-size:22px}.logo span{color:var(--a2)}
   .muted{color:var(--muted)}
   .btn{background:var(--a);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;font-size:14px}
   .btn.ghost{background:#fff;color:var(--txt);border:1px solid var(--line)}
+  .btn.red{background:var(--bad)}
+  .btn.sm{padding:7px 12px;font-size:13px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
   .gate{max-width:400px;margin:12vh auto;text-align:center}
   .gbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 20px;font-weight:700;font-size:15px;cursor:pointer;margin-top:16px}
   .gbtn img{width:20px;height:20px}
-  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .stat .n{font-size:24px;font-weight:800;line-height:1}.stat .l{color:var(--muted);font-size:12.5px;margin-top:6px}
+  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .stat .n{font-size:22px;font-weight:800;line-height:1}.stat .l{color:var(--muted);font-size:12px;margin-top:6px}
+  .stats2{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
   .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:16px}
+  .bar2{display:flex;flex-direction:column;gap:6px}
+  .bar2 .row{display:flex;justify-content:space-between;font-size:13.5px;padding:3px 0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--muted)}
   .chip.on{background:var(--a);color:#fff;border-color:var(--a)}
+  select.inp{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px;background:#fff}
   table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
   th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
   th{background:#eef2f9;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
@@ -37,20 +44,21 @@
   .tag.yangi{background:#dbeafe;color:#1d4ed8}.tag.bogl{background:#fef3c7;color:#b45309}.tag.tasdiq{background:#dcfce7;color:#15803d}.tag.bekor{background:#fee2e2;color:#b91c1c}
   .typetag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px}
   .typetag.buy{background:#ede9fe;color:#6d28d9}.typetag.sorov{background:#e0f2fe;color:#0369a1}
-  select.st{border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:13px}
   .empty{text-align:center;padding:40px;color:var(--muted)}
   a{color:var(--a)}
-  /* modal */
   .modal{position:fixed;inset:0;background:rgba(8,12,24,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}
   .modal.on{display:flex}
-  .sheet{background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:22px}
+  .sheet{background:#fff;border-radius:16px;max-width:580px;width:100%;max-height:92vh;overflow:auto;padding:22px}
   .sheet h3{font-size:20px;margin-bottom:4px}
   .frow{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
   .frow .k{color:var(--muted)}.frow .v{font-weight:600;text-align:right}
-  textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px;font-family:inherit;min-height:70px;margin-top:6px}
+  label.fl{font-weight:700;font-size:13px;display:block;margin:10px 0 4px}
+  input.inp,textarea.inp{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px;font-family:inherit}
+  textarea.inp{min-height:60px}
+  .grid-f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:var(--a2);color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:200;display:none}
-  @media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
-  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}table,thead,tbody,th,td,tr{display:block}th{display:none}td{border:0;padding:4px 0}tr{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;display:block}td:before{content:attr(data-l);font-weight:700;color:var(--muted);font-size:12px;display:block}}
+  @media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.stats2{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}.grid-f{grid-template-columns:1fr}table,thead,tbody,th,td,tr{display:block}th{display:none}td{border:0;padding:4px 0}tr{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;display:block}td:before{content:attr(data-l);font-weight:700;color:var(--muted);font-size:12px;display:block}}
 </style>
 </head>
 <body>
@@ -70,31 +78,43 @@
     <div class="logo">AVTO<span>MOST</span> <span class="muted" style="font-weight:600;font-size:15px">· Boshqaruv paneli</span></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span class="muted" id="who" style="font-size:13px"></span>
-      <button class="btn ghost" id="refresh">↻ Yangilash</button>
-      <button class="btn ghost" id="csv">⬇ CSV</button>
-      <button class="btn ghost" id="logout">Chiqish</button>
+      <button class="btn sm" id="add">+ Yangi buyurtma</button>
+      <button class="btn ghost sm" id="refresh">↻ Yangilash</button>
+      <button class="btn ghost sm" id="csv">⬇ CSV</button>
+      <button class="btn ghost sm" id="sound" title="Ovoz">🔊</button>
+      <button class="btn ghost sm" id="logout">Chiqish</button>
     </div>
   </div>
 
   <div class="stats" id="stats"></div>
+  <div class="stats2" id="stats2"></div>
 
   <div class="grid2">
-    <div class="card"><div style="font-weight:700;margin-bottom:10px">So‘nggi 14 kun — buyurtmalar</div><div style="height:220px"><canvas id="chartDays"></canvas></div></div>
-    <div class="card"><div style="font-weight:700;margin-bottom:10px">Holatlar bo‘yicha</div><div style="height:220px"><canvas id="chartStatus"></canvas></div></div>
+    <div class="card"><div style="font-weight:700;margin-bottom:10px">So‘nggi 14 kun — buyurtmalar</div><div style="height:210px"><canvas id="chartDays"></canvas></div></div>
+    <div class="card"><div style="font-weight:700;margin-bottom:10px">Holatlar bo‘yicha</div><div style="height:210px"><canvas id="chartStatus"></canvas></div></div>
   </div>
 
+  <div class="grid2">
+    <div class="card"><div style="font-weight:700;margin-bottom:10px">🏙 Top shaharlar</div><div class="bar2" id="topCities"></div></div>
+    <div class="card"><div style="font-weight:700;margin-bottom:10px">🚗 Top modellar</div><div class="bar2" id="topModels"></div></div>
+  </div>
+
+  <div class="toolbar">
+    <select class="inp" id="range"><option value="0">Hamma vaqt</option><option value="1">Bugun</option><option value="7">7 kun</option><option value="30">30 kun</option></select>
+    <input class="inp" id="q" placeholder="🔍 Qidirish: ism, telefon, moshina, raqam, shahar..." oninput="ADMIN.render()" style="flex:1;min-width:200px">
+  </div>
   <div class="chips" id="chips"></div>
-  <input id="q" placeholder="🔍 Qidirish: ism, telefon, moshina, raqam, shahar..." oninput="ADMIN.render()" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;margin-bottom:14px">
   <div id="list"></div>
 </div>
 
 <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="modal" id="addModal"><div class="sheet" id="addSheet"></div></div>
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJjLI7UthElbehkTRGkbm9a3Z4_aNyRsM",
@@ -112,17 +132,19 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 const $ = id => document.getElementById(id);
-let ROWS=[], REFRESH=null, FILTER='all', SORTK='ts', SORTD=-1, lastCount=-1, chD=null, chS=null;
+let ROWS=[], REFRESH=null, FILTER='all', SORTK='ts', SORTD=-1, RANGE=0, lastCount=-1, chD=null, chS=null;
+let SOUND = localStorage.getItem('avm_sound')!=='0';
 const STATUSES=['yangi','bogʻlanildi','tasdiqlandi','bekor'];
 const tagClass={yangi:'yangi','bogʻlanildi':'bogl',tasdiqlandi:'tasdiq',bekor:'bekor'};
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function isBuy(r){return r.Turi&&String(r.Turi).toUpperCase().indexOf('BUYURTMA')>=0;}
 function priceNum(r){const m=String(r.Eshikkacha||r.Byudjet||'').replace(/[^\d]/g,'');return m?+m:0;}
+function fmtSum(n){return (n?Math.round(n).toLocaleString('ru-RU'):'0')+" so‘m";}
 function dayKey(ts){const d=new Date(+ts||Date.now());return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 
 function showGate(msg){$('loading').style.display='none';$('app').style.display='none';$('gate').style.display='block';if(msg){$('gerr').textContent=msg;$('gerr').style.display='block';}}
-function showApp(user){$('loading').style.display='none';$('gate').style.display='none';$('app').style.display='block';$('who').textContent=user.email;load();if(!REFRESH)REFRESH=setInterval(load,30000);}
+function showApp(user){$('loading').style.display='none';$('gate').style.display='none';$('app').style.display='block';$('who').textContent=user.email;$('sound').textContent=SOUND?'🔊':'🔇';load();if(!REFRESH)REFRESH=setInterval(load,30000);}
 
 onAuthStateChanged(auth,user=>{
   if(user && ADMIN_EMAILS.includes((user.email||'').toLowerCase())) showApp(user);
@@ -134,20 +156,23 @@ $('signin').onclick=()=>{$('gerr').style.display='none';signInWithPopup(auth,pro
 $('logout').onclick=()=>signOut(auth).then(()=>location.reload());
 $('refresh').onclick=load;
 $('csv').onclick=exportCsv;
+$('add').onclick=openAdd;
+$('range').onchange=()=>{RANGE=+$('range').value;render();};
+$('sound').onclick=()=>{SOUND=!SOUND;localStorage.setItem('avm_sound',SOUND?'1':'0');$('sound').textContent=SOUND?'🔊':'🔇';};
 $('modal').onclick=e=>{if(e.target===$('modal'))$('modal').classList.remove('on');};
+$('addModal').onclick=e=>{if(e.target===$('addModal'))$('addModal').classList.remove('on');};
 
 async function load(){
   try{
     const snap=await getDocs(collection(db,'orders'));
     const rows=[];snap.forEach(d=>{const o=d.data();o._id=d.id;rows.push(o);});
-    if(lastCount>=0 && rows.length>lastCount){toast('🔔 Yangi buyurtma keldi!');beep();}
+    if(lastCount>=0 && rows.length>lastCount){toast('🔔 Yangi buyurtma keldi!');if(SOUND)beep();}
     lastCount=rows.length;
     ROWS=rows;render();drawCharts();
   }catch(e){$('list').innerHTML='<div class="card empty">O‘qishda xato: '+esc(e.message)+'</div>';}
 }
 
 function statBox(n,l,c){return `<div class="stat"><div class="n"${c?` style="color:${c}"`:''}>${n}</div><div class="l">${l}</div></div>`;}
-function fmtSum(n){return n?Math.round(n).toLocaleString('ru-RU'):'0';}
 
 function render(){
   const now=Date.now(), d1=864e5;
@@ -156,19 +181,30 @@ function render(){
   const buy=ROWS.filter(isBuy).length, sorov=total-buy;
   const bugun=ROWS.filter(r=>(now-(+r.ts||0))<d1).length;
   const hafta=ROWS.filter(r=>(now-(+r.ts||0))<7*d1).length;
-  const buys=ROWS.filter(isBuy).map(priceNum).filter(x=>x>0);
-  const avg=buys.length?buys.reduce((a,b)=>a+b,0)/buys.length:0;
+  const buyArr=ROWS.filter(isBuy).map(priceNum).filter(x=>x>0);
+  const pipeline=buyArr.reduce((a,b)=>a+b,0);
+  const avg=buyArr.length?pipeline/buyArr.length:0;
+  const won=ROWS.filter(r=>r.holat==='tasdiqlandi').map(priceNum).reduce((a,b)=>a+b,0);
   $('stats').innerHTML=
     statBox(total,'Jami')+statBox(yangi,'Yangi','#2563eb')+statBox(buy,'Buyurtma','#6d28d9')+
     statBox(sorov,'So‘rov','#0369a1')+statBox(bugun,'Bugun','#1f9e75')+statBox(hafta,'7 kun');
+  $('stats2').innerHTML=
+    statBox(fmtSum(pipeline),'Pipeline qiymati','#6d28d9')+statBox(fmtSum(avg),'O‘rtacha narx')+
+    statBox(fmtSum(won),'Tasdiqlangan','#15803d')+statBox(total?Math.round(ROWS.filter(r=>r.holat==='tasdiqlandi').length/total*100)+'%':'0%','Konversiya','#1f9e75');
+  // top cities / models
+  const freq=(key)=>{const m={};ROWS.forEach(r=>{const v=(r[key]||'').trim();if(v)m[v]=(m[v]||0)+1;});return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5);};
+  const renderTop=(arr)=>arr.length?arr.map(([k,v])=>`<div class="row"><span>${esc(k)}</span><b>${v}</b></div>`).join(''):'<div class="muted" style="font-size:13px">Ma‘lumot yo‘q</div>';
+  $('topCities').innerHTML=renderTop(freq('Shahar'));
+  $('topModels').innerHTML=renderTop(freq('Moshina'));
   // chips
-  const counts={all:total,yangi:ROWS.filter(r=>(r.holat||'yangi')==='yangi').length,'bogʻlanildi':ROWS.filter(r=>r.holat==='bogʻlanildi').length,tasdiqlandi:ROWS.filter(r=>r.holat==='tasdiqlandi').length,bekor:ROWS.filter(r=>r.holat==='bekor').length,buy:buy,sorov:sorov};
+  const counts={all:total,yangi,'bogʻlanildi':ROWS.filter(r=>r.holat==='bogʻlanildi').length,tasdiqlandi:ROWS.filter(r=>r.holat==='tasdiqlandi').length,bekor:ROWS.filter(r=>r.holat==='bekor').length,buy,sorov};
   const chipDefs=[['all','Hammasi'],['yangi','Yangi'],['bogʻlanildi','Bogʻlanildi'],['tasdiqlandi','Tasdiqlangan'],['bekor','Bekor'],['buy','Buyurtmalar'],['sorov','So‘rovlar']];
   $('chips').innerHTML=chipDefs.map(c=>`<div class="chip ${FILTER===c[0]?'on':''}" data-f="${c[0]}">${c[1]} <span style="opacity:.7">${counts[c[0]]||0}</span></div>`).join('');
   $('chips').querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{FILTER=ch.dataset.f;render();});
-  // filter + search
+  // filter + search + range
   const q=(($('q')||{}).value||'').toLowerCase().trim();
   let view=ROWS.map((r,i)=>({r,i})).filter(({r})=>{
+    if(RANGE&&(now-(+r.ts||0))>=RANGE*d1)return false;
     if(FILTER==='buy'&&!isBuy(r))return false;
     if(FILTER==='sorov'&&isBuy(r))return false;
     if(['yangi','bogʻlanildi','tasdiqlandi','bekor'].includes(FILTER)&&(r.holat||'yangi')!==FILTER)return false;
@@ -201,54 +237,99 @@ function render(){
   list.querySelectorAll('tbody tr').forEach(tr=>tr.onclick=()=>openModal(+tr.dataset.i));
 }
 
+function field(lbl,id,val,ph){return `<div><label class="fl">${lbl}</label><input class="inp" id="${id}" value="${esc(val||'')}" placeholder="${ph||''}"></div>`;}
+
 function openModal(i){
   const r=ROWS[i];if(!r)return;
-  const fields=[['Tur',isBuy(r)?'Buyurtma':'Narx so‘rovi'],['Raqam',r.Raqam],['Sana',r.sana],['Ism',r.Ism],['Telefon',r.Telefon],['Telegram',r.Telegram],['Shahar',r.Shahar],['Moshina',r.Moshina],['Narx',r.Eshikkacha],['Byudjet',r.Byudjet]];
   const h=r.holat||'yangi';
   $('sheet').innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:start">
-      <div><h3>${esc(r.Ism||'Buyurtma')}</h3><div class="muted" style="font-size:13px">${esc(r.Raqam||'')}</div></div>
+      <div><h3>${esc(r.Ism||'Buyurtma')}</h3><div class="muted" style="font-size:13px">${esc(r.Raqam||'')} · ${esc(r.sana||'')}</div></div>
       <span class="tag ${tagClass[h]||'yangi'}">${esc(h)}</span>
     </div>
     <div style="margin:10px 0">
-      ${r.Telefon?`<a class="btn" style="text-decoration:none;display:inline-block;margin-right:8px" href="tel:${esc(String(r.Telefon).replace(/[^+\d]/g,''))}">📞 Qo‘ng‘iroq</a>`:''}
-      ${r.Telegram&&r.Telegram!=='—'?`<a class="btn ghost" style="text-decoration:none;display:inline-block" target="_blank" href="https://t.me/${esc(String(r.Telegram).replace(/^@/,''))}">✈️ Telegram</a>`:''}
+      ${r.Telefon?`<a class="btn sm" style="text-decoration:none;display:inline-block;margin-right:8px" href="tel:${esc(String(r.Telefon).replace(/[^+\d]/g,''))}">📞 Qo‘ng‘iroq</a>`:''}
+      ${r.Telegram&&r.Telegram!=='—'?`<a class="btn ghost sm" style="text-decoration:none;display:inline-block;margin-right:8px" target="_blank" href="https://t.me/${esc(String(r.Telegram).replace(/^@/,''))}">✈️ Telegram</a>`:''}
+      <button class="btn ghost sm" id="m_print">🖨 Chop etish</button>
     </div>
-    ${fields.filter(f=>f[1]&&f[1]!=='—').map(f=>`<div class="frow"><span class="k">${f[0]}</span><span class="v">${esc(f[1])}</span></div>`).join('')}
-    <div style="margin-top:14px"><label style="font-weight:700;font-size:14px">Holat</label><br>
-      <select id="m_status" class="st" style="margin-top:6px">${STATUSES.map(s=>`<option ${h===s?'selected':''}>${s}</option>`).join('')}</select>
+    <div class="grid-f">
+      ${field('Ism','m_Ism',r.Ism)}${field('Telefon','m_Telefon',r.Telefon)}
+      ${field('Telegram','m_Telegram',r.Telegram)}${field('Shahar','m_Shahar',r.Shahar)}
+      ${field('Moshina','m_Moshina',r.Moshina)}${field('Narx','m_Eshikkacha',r.Eshikkacha||r.Byudjet)}
+      ${field('Raqam','m_Raqam',r.Raqam)}
+      <div><label class="fl">Holat</label><select class="inp" id="m_status">${STATUSES.map(s=>`<option ${h===s?'selected':''}>${s}</option>`).join('')}</select></div>
     </div>
-    <div style="margin-top:14px"><label style="font-weight:700;font-size:14px">Izoh (faqat siz ko‘rasiz)</label>
-      <textarea id="m_note" placeholder="Mijoz haqida eslatma...">${esc(r.izoh||'')}</textarea></div>
-    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
-      <button class="btn ghost" id="m_close">Yopish</button>
-      <button class="btn" id="m_save">Saqlash</button>
+    <label class="fl">Izoh (faqat siz ko‘rasiz)</label>
+    <textarea class="inp" id="m_note" placeholder="Mijoz haqida eslatma...">${esc(r.izoh||'')}</textarea>
+    <div style="display:flex;justify-content:space-between;gap:8px;margin-top:16px">
+      <button class="btn red sm" id="m_del">🗑 O‘chirish</button>
+      <div style="display:flex;gap:8px"><button class="btn ghost" id="m_close">Yopish</button><button class="btn" id="m_save">Saqlash</button></div>
     </div>`;
   $('modal').classList.add('on');
   $('m_close').onclick=()=>$('modal').classList.remove('on');
+  $('m_print').onclick=()=>printOrder(r);
   $('m_save').onclick=async()=>{
     try{
-      const st=$('m_status').value, note=$('m_note').value;
-      await updateDoc(doc(db,'orders',r._id),{holat:st,izoh:note});
-      r.holat=st;r.izoh=note;$('modal').classList.remove('on');render();drawCharts();toast('✓ Saqlandi');
+      const upd={Ism:gv('m_Ism'),Telefon:gv('m_Telefon'),Telegram:gv('m_Telegram'),Shahar:gv('m_Shahar'),Moshina:gv('m_Moshina'),Eshikkacha:gv('m_Eshikkacha'),Raqam:gv('m_Raqam'),holat:gv('m_status'),izoh:gv('m_note')};
+      await updateDoc(doc(db,'orders',r._id),upd);
+      Object.assign(r,upd);$('modal').classList.remove('on');render();drawCharts();toast('✓ Saqlandi');
     }catch(e){alert('Saqlanmadi: '+e.message);}
   };
+  $('m_del').onclick=async()=>{
+    if(!confirm('Bu buyurtmani o‘chirilsinmi? Qaytarib bo‘lmaydi.'))return;
+    try{await deleteDoc(doc(db,'orders',r._id));$('modal').classList.remove('on');load();toast('🗑 O‘chirildi');}
+    catch(e){alert('O‘chirilmadi: '+e.message);}
+  };
+}
+const gv=id=>($(id)||{}).value||'';
+
+function openAdd(){
+  $('addSheet').innerHTML=`
+    <h3>Yangi buyurtma qo‘shish</h3><div class="muted" style="font-size:13px;margin-bottom:10px">Telefon orqali kelgan mijozni qo‘lda kiriting</div>
+    <div class="grid-f">
+      ${field('Ism *','a_Ism','')}${field('Telefon *','a_Telefon','','+998...')}
+      ${field('Telegram','a_Telegram','','@username')}${field('Shahar','a_Shahar','')}
+      ${field('Moshina','a_Moshina','','Hyundai Sonata 2021')}${field('Narx','a_Eshikkacha','','310 000 000 so‘m')}
+      <div><label class="fl">Turi</label><select class="inp" id="a_Turi"><option value="BUYURTMA">Buyurtma</option><option value="Narx so‘rovi">So‘rov</option></select></div>
+      <div><label class="fl">Holat</label><select class="inp" id="a_status">${STATUSES.map(s=>`<option>${s}</option>`).join('')}</select></div>
+    </div>
+    <label class="fl">Izoh</label><textarea class="inp" id="a_note"></textarea>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px"><button class="btn ghost" id="a_close">Bekor</button><button class="btn" id="a_save">Qo‘shish</button></div>`;
+  $('addModal').classList.add('on');
+  $('a_close').onclick=()=>$('addModal').classList.remove('on');
+  $('a_save').onclick=async()=>{
+    const ism=gv('a_Ism'),tel=gv('a_Telefon');
+    if(!ism||!tel){alert('Ism va telefon majburiy');return;}
+    try{
+      await addDoc(collection(db,'orders'),{
+        Turi:gv('a_Turi'),Ism:ism,Telefon:tel,Telegram:gv('a_Telegram'),Shahar:gv('a_Shahar'),
+        Moshina:gv('a_Moshina'),Eshikkacha:gv('a_Eshikkacha'),Raqam:'AVM-'+(1000+Math.floor(Math.random()*9000)),
+        holat:gv('a_status'),izoh:gv('a_note'),ts:Date.now(),sana:new Date().toLocaleString(),manual:'ha'
+      });
+      $('addModal').classList.remove('on');load();toast('✓ Qo‘shildi');
+    }catch(e){alert('Qo‘shilmadi: '+e.message);}
+  };
+}
+
+function printOrder(r){
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>${esc(r.Raqam||'Buyurtma')}</title><style>body{font-family:sans-serif;padding:40px;color:#0e1726}h1{color:#1f9e75}.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee}</style></head><body>
+    <h1>AVTOMOST — Buyurtma</h1><p><b>${esc(r.Raqam||'')}</b> · ${esc(r.sana||'')}</p>
+    ${[['Ism',r.Ism],['Telefon',r.Telefon],['Telegram',r.Telegram],['Shahar',r.Shahar],['Moshina',r.Moshina],['Narx',r.Eshikkacha||r.Byudjet],['Holat',r.holat],['Izoh',r.izoh]].filter(f=>f[1]).map(f=>`<div class="row"><span>${f[0]}</span><b>${esc(f[1])}</b></div>`).join('')}
+    <p style="margin-top:30px;color:#888">avtomostuz.com</p></body></html>`);
+  w.document.close();w.print();
 }
 
 function drawCharts(){
   if(typeof Chart==='undefined')return;
-  // last 14 days
   const labels=[],data=[];const now=new Date();
   for(let k=13;k>=0;k--){const d=new Date(now);d.setDate(now.getDate()-k);labels.push((d.getMonth()+1)+'/'+d.getDate());const key=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();data.push(ROWS.filter(r=>dayKey(r.ts)===key).length);}
-  const dc=$('chartDays').getContext('2d');
   if(chD)chD.destroy();
-  chD=new Chart(dc,{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#2563eb',borderRadius:5}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}}},responsive:true,maintainAspectRatio:false}});
-  // status donut
+  chD=new Chart($('chartDays').getContext('2d'),{type:'bar',data:{labels,datasets:[{data,backgroundColor:'#2563eb',borderRadius:5}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}}},responsive:true,maintainAspectRatio:false}});
   const order=['yangi','bogʻlanildi','tasdiqlandi','bekor'];
   const cnt=order.map(s=>ROWS.filter(r=>(r.holat||'yangi')===s).length);
-  const sc=$('chartStatus').getContext('2d');
   if(chS)chS.destroy();
-  chS=new Chart(sc,{type:'doughnut',data:{labels:['Yangi','Bogʻlanildi','Tasdiqlangan','Bekor'],datasets:[{data:cnt,backgroundColor:['#3b82f6','#f59e0b','#22c55e','#ef4444']}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},responsive:true,maintainAspectRatio:false}});
+  chS=new Chart($('chartStatus').getContext('2d'),{type:'doughnut',data:{labels:['Yangi','Bogʻlanildi','Tasdiqlangan','Bekor'],datasets:[{data:cnt,backgroundColor:['#3b82f6','#f59e0b','#22c55e','#ef4444']}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},responsive:true,maintainAspectRatio:false}});
 }
 
 let toastT=null;
