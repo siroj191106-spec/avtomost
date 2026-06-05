@@ -562,6 +562,9 @@ h1{letter-spacing:-1.2px}
       <div class="menu-lang">
         <button onclick="setLang('uz')">🇺🇿 O'zbek</button><button onclick="setLang('ru')">🇷🇺 Русский</button><button onclick="setLang('kz')">🇰🇿 Qazaq</button><button onclick="setLang('kg')">🇰🇬 Кыргыз</button><button onclick="setLang('tg')">🇹🇯 Тоҷик</button><button onclick="setLang('en')">🇬🇧 English</button>
       </div>
+      <div class="menu-lang">
+        <button onclick="setCurrency('uz')">💵 so'm</button><button onclick="setCurrency('kz')">💵 ₸ tenge</button><button onclick="setCurrency('kg')">💵 сом</button><button onclick="setCurrency('tg')">💵 смн</button><button onclick="setCurrency('ru')">💵 ₽ rubl</button><button onclick="setCurrency('en')">💵 $ USD</button>
+      </div>
     </nav>
     <div class="controls">
       <button class="iconbtn" onclick="nav('favorites')" title="Sevimlilar" aria-label="fav"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg><span id="favCount" class="navbadge"></span></button>
@@ -569,6 +572,10 @@ h1{letter-spacing:-1.2px}
       <div class="lang"><select id="langSel" onchange="setLang(this.value)">
         <option value="uz">🇺🇿 O'zbek</option><option value="ru">🇷🇺 Русский</option><option value="kz">🇰🇿 Qazaq</option>
         <option value="kg">🇰🇬 Кыргыз</option><option value="tg">🇹🇯 Тоҷик</option><option value="en">🇬🇧 English</option>
+      </select></div>
+      <div class="lang"><select id="curSel" onchange="setCurrency(this.value)" title="Valyuta">
+        <option value="uz">so'm</option><option value="kz">₸ tenge</option><option value="kg">сом</option>
+        <option value="tg">смн</option><option value="ru">₽ rubl</option><option value="en">$ USD</option>
       </select></div>
       <button class="btn" onclick="nav('catalog')" data-i="nav_order">Buyurtma</button>
       <button class="menu-btn" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
@@ -741,9 +748,10 @@ function CALC(o){
 }
 /* Pul birligi — tanlangan tilga (davlatga) bog'liq. USD baza, kurslar taxminiy (2026). */
 const CUR={uz:{r:12900,suf:" so'm"},ru:{r:90,suf:" ₽"},kz:{r:525,suf:" ₸"},kg:{r:87,suf:" сом"},tg:{r:10.9,suf:" смн"},en:{pre:'$',r:1}};
-function curOf(){return CUR[LANG]||CUR.en;}
+window.CURK='uz'; /* valyuta — tildan ALOHIDA tanlanadi */
+function curOf(){return CUR[window.CURK]||CUR.en;}
 function fmtUSD(n){return '$'+Math.round(+n||0).toLocaleString('en-US');}
-function fmt(n){if(LANG==='en')return fmtUSD(n);const c=curOf();const v=Math.round((+n||0)*c.r);return (c.pre||'')+v.toLocaleString('ru-RU')+(c.suf||'');}
+function fmt(n){if(window.CURK==='en')return fmtUSD(n);const c=curOf();const v=Math.round((+n||0)*c.r);return (c.pre||'')+v.toLocaleString('ru-RU')+(c.suf||'');}
 function fmtKm(n){return Number(n).toLocaleString('en-US')+' km';}
 /* Import baholash: eligibility (qonuniy import mumkinmi) + tavsiya darajasi + ustama % */
 function carEval(c){
@@ -1068,6 +1076,7 @@ let CALCSTATE={cond:'clean',fuel:'petrol'};
 function nav(name,id){VIEW={name,id:id||null};document.getElementById('menu').classList.remove('open');window.scrollTo(0,0);render();}
 function scrollToId(x){const e=document.getElementById(x);if(e)e.scrollIntoView({behavior:'smooth'});}
 function setLang(l){LANG=l;document.documentElement.lang=l;var ls=document.getElementById('langSel');if(ls)ls.value=l;var m=document.getElementById('menu');if(m)m.classList.remove('open');applyStatic();render();}
+function setCurrency(c){window.CURK=c;var cs=document.getElementById('curSel');if(cs)cs.value=c;var m=document.getElementById('menu');if(m)m.classList.remove('open');render();}
 function applyStatic(){
   document.querySelectorAll('header [data-i],footer [data-i]').forEach(el=>{el.textContent=T(el.dataset.i);});
 }
