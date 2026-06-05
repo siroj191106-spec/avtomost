@@ -1168,8 +1168,8 @@ function homeView(){
    Sozlash: console.firebase.google.com da loyiha oching → Firestore Database yoqing →
    Project settings'dan Project ID va Web API key'ni quyiga yozing.
    Bo'sh bo'lsa sayt baribir ishlaydi (faqat email orqali). */
-const FB_PROJECT=''; // masalan: 'avtomost-1a2b3'
-const FB_KEY='';     // Web API key (AIza... bilan boshlanadi)
+const FB_PROJECT='avtomost-83c8d';
+const FB_KEY='AIzaSyBJjLI7UthElbehkTRGkbm9a3Z4_aNyRsM';
 function fbSaveOrder(payload){
   if(!FB_PROJECT)return Promise.resolve();
   const fields={};Object.keys(payload).forEach(k=>{if(k[0]!=='_')fields[k]={stringValue:String(payload[k])};});

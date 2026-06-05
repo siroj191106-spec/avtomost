@@ -37,8 +37,8 @@
 
 <!-- ====== SOZLAMA: index.html dagi bilan bir xil bo'lsin ====== -->
 <script>
-  const FB_PROJECT='';   // index.html dagi FB_PROJECT bilan bir xil
-  const FB_KEY='';       // index.html dagi FB_KEY bilan bir xil
+  const FB_PROJECT='avtomost-83c8d';
+  const FB_KEY='AIzaSyBJjLI7UthElbehkTRGkbm9a3Z4_aNyRsM';
   const ADMIN_PASS='avtomost2026'; // admin parolingiz — o'zgartiring
 </script>
 
@@ -63,6 +63,7 @@
     ⚠️ Firebase hali ulanmagan. Hozir faqat shu brauzerdagi (lokal) buyurtmalar ko‘rinadi. To‘liq ishlashi uchun <b>FB_PROJECT</b> va <b>FB_KEY</b> ni sozlang.
   </div>
   <div class="stats" id="stats"></div>
+  <input id="q" placeholder="🔍 Qidirish: ism, telefon, moshina, raqam..." oninput="render()" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;margin-bottom:14px">
   <div id="list"></div>
 </div>
 
@@ -72,7 +73,8 @@ function tryLogin(){
   else document.getElementById('gerr').style.display='block';
 }
 function logout(){sessionStorage.removeItem('avm_admin');location.reload();}
-function show(){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';load();}
+let REFRESH=null;
+function show(){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';load();if(!REFRESH)REFRESH=setInterval(load,30000);}
 
 function fbList(){
   if(!FB_PROJECT)return Promise.resolve(null);
@@ -107,17 +109,19 @@ function render(){
     <div class="stat"><div class="n" style="color:var(--a)">${yangi}</div><div class="l">Yangi</div></div>
     <div class="stat"><div class="n" style="color:var(--a2)">${buy}</div><div class="l">Buyurtma</div></div>`;
   const list=document.getElementById('list');
-  if(!ROWS.length){list.innerHTML='<div class="card empty">Hozircha buyurtma yo‘q.</div>';return;}
+  const q=((document.getElementById('q')||{}).value||'').toLowerCase().trim();
+  const view=ROWS.map((r,i)=>({r,i})).filter(({r})=>!q||JSON.stringify(r).toLowerCase().indexOf(q)>=0);
+  if(!view.length){list.innerHTML='<div class="card empty">'+(ROWS.length?'Hech narsa topilmadi.':'Hozircha buyurtma yo‘q.')+'</div>';return;}
   list.innerHTML='<table><thead><tr><th>Sana</th><th>Turi</th><th>Ism</th><th>Telefon</th><th>Telegram</th><th>Shahar</th><th>Moshina</th><th>Narx</th><th>Raqam</th><th>Holat</th></tr></thead><tbody>'+
-    ROWS.map((r,i)=>{
+    view.map(({r,i})=>{
       const h=r.holat||'yangi';const tagc=h==='tasdiqlandi'?'tasdiq':(h==='bekor'?'bekor':'yangi');
       const canEdit=!!r._name; // faqat Firestore yozuvlarini o'zgartirsa bo'ladi
       return `<tr>
         <td data-l="Sana">${esc(r.sana||'')}${r._local?' <span class="src">(lokal)</span>':''}</td>
         <td data-l="Turi">${esc(r.Turi||'—')}</td>
         <td data-l="Ism">${esc(r.Ism||'—')}</td>
-        <td data-l="Telefon">${esc(r.Telefon||'—')}</td>
-        <td data-l="Telegram">${esc(r.Telegram||'—')}</td>
+        <td data-l="Telefon">${r.Telefon?`<a href="tel:${esc(String(r.Telefon).replace(/[^+\d]/g,''))}">${esc(r.Telefon)}</a>`:'—'}</td>
+        <td data-l="Telegram">${r.Telegram&&r.Telegram!=='—'?`<a href="https://t.me/${esc(String(r.Telegram).replace(/^@/,''))}" target="_blank">${esc(r.Telegram)}</a>`:'—'}</td>
         <td data-l="Shahar">${esc(r.Shahar||r.Byudjet||'—')}</td>
         <td data-l="Moshina">${esc(r.Moshina||'—')}</td>
         <td data-l="Narx">${esc(r.Eshikkacha||'—')}</td>
